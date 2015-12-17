@@ -3,71 +3,61 @@
           "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
           "http://struts.apache.org/dtds/struts-config_1_2.dtd">
 <struts-config>
-  <form-beans>
-      <form-bean name="enquireForm" type="supercars.form.EnquireForm" />
-      <form-bean name="carForm" type="supercars.form.CarForm" />
-  </form-beans>
-  <action-mappings>
-  <action path="/home" 
-            type="supercars.action.ActionHome">
-      <forward name="success" 
-               path="/home.jsp"/>
-    </action>
-    <action path="/sell" 
-            type="supercars.action.ActionSell"
-            name="carForm" input="sell.jsp">
-      <forward name="success" 
-               path="/sell.jsp"/>
-      <forward name="thanks" 
-               path="/thanks.jsp"/>
-    </action>
-    <action path="/supercars" 
-            type="supercars.action.ActionInventory">
-      <forward name="success" 
-               path="/inventory.jsp"/>
-    </action>
-    <action path="/cars" 
-            type="supercars.action.ActionCars">
-      <forward name="success" 
-               path="/cars.jsp"/>
-    </action>
-    <action path="/car" 
-            type="supercars.action.ActionCar">
-      <forward name="success" 
-               path="/car.jsp"/>
-    </action>
-    <action path="/search" 
-            type="supercars.action.ActionCars">
-      <forward name="success" 
-               path="/search.jsp"/>
-    </action>
-    <action path="/enquire" 
-            type="supercars.action.ActionEnquire"
-            name="enquireForm" input="/enquire.jsp">
-      <forward name="success" 
-               path="/enquire.jsp"/>
-      <forward name="thanks" 
-               path="/thanks.jsp"/>
-    </action>
-    <action path="/insurance" 
-            type="supercars.action.ActionInsurance">
-      <forward name="success" 
-               path="/insurance.jsp"/>
-    </action>
-    <action path="/about" 
-            type="supercars.action.ActionAbout">
-      <forward name="success" 
-               path="/about.jsp"/>
-    </action>
-    <action path="/sort"
-	type="fr.improve.struts.taglib.layout.sort.SortAction"
-	scope="request"
-	validate="false">
-</action>
-<action path="/treeview"
-	type="fr.improve.struts.taglib.layout.treeview.TreeviewAction"
-	scope="request"
-	validate="false">
-</action>
-  </action-mappings>
+    <form-beans>
+        <form-bean name="enquireForm" type="supercars.form.EnquireForm" />
+        <form-bean name="carForm" type="supercars.form.CarForm" />
+    </form-beans>
+    <action-mappings>
+        <action path="/home" 
+                type="supercars.action.ActionHome">
+            <forward name="success" 
+                     path="/home.jsp"/>
+        </action>
+        <action path="/sell" 
+                type="supercars.action.ActionSell"
+                name="carForm" input="sell.jsp">
+            <forward name="success" 
+                     path="/sell.jsp"/>
+            <forward name="thanks" 
+                     path="/thanks.jsp"/>
+        </action>
+        <action path="/supercars" 
+                type="supercars.action.ActionInventory">
+            <forward name="success" 
+                     path="/inventory.jsp"/>
+        </action>
+        <action path="/cars" 
+                type="supercars.action.ActionCars">
+            <forward name="success" 
+                     path="/cars.jsp"/>
+        </action>
+        <action path="/car" 
+                type="supercars.action.ActionCar">
+            <forward name="success" 
+                     path="/car.jsp"/>
+        </action>
+        <action path="/search" 
+                type="supercars.action.ActionCars">
+            <forward name="success" 
+                     path="/search.jsp"/>
+        </action>
+        <action path="/enquire" 
+                type="supercars.action.ActionEnquire"
+                name="enquireForm" input="/enquire.jsp">
+            <forward name="success" 
+                     path="/enquire.jsp"/>
+            <forward name="thanks" 
+                     path="/thanks.jsp"/>
+        </action>
+        <action path="/insurance" 
+                type="supercars.action.ActionInsurance">
+            <forward name="success" 
+                     path="/insurance.jsp"/>
+        </action>
+        <action path="/about" 
+                type="supercars.action.ActionAbout">
+            <forward name="success" 
+                     path="/about.jsp"/>
+        </action>
+    </action-mappings>
 </struts-config>

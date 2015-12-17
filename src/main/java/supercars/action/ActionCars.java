@@ -1,4 +1,4 @@
- /*
+/*
  * Created on 31-May-2005
  *
  * TODO To change the template for this generated file go to
@@ -27,66 +27,65 @@ import supercars.dataloader.ManufacturerDataLoader;
 /**
  * @author v023094
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * TODO To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Style - Code Templates
  */
 public class ActionCars extends Action {
 
-	// Perform Action
-	public ActionForward execute(ActionMapping mapping,
+    // Perform Action
+    @Override
+    public ActionForward execute(ActionMapping mapping,
             ActionForm form,
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-		
-		String query = request.getParameter("query");
-		
-		if(query == null){}
-		else if (query.equals("manu")) {
-			getCarsByManufacturer(request);
-		}
-		else if(query.equals("search")) {
-			getCarsBySearch(request);
-		}
-		return(mapping.findForward("success"));
-	}
-	
-	public void getCarsByManufacturer(HttpServletRequest request){
-		String manuId = request.getParameter("mid");
-		/*try {
+
+        String query = request.getParameter("query");
+
+        if (query == null) {
+        } else if (query.equals("manu")) {
+            getCarsByManufacturer(request);
+        } else if (query.equals("search")) {
+            getCarsBySearch(request);
+        }
+        return (mapping.findForward("success"));
+    }
+
+    public void getCarsByManufacturer(HttpServletRequest request) {
+        String manuId = request.getParameter("mid");
+        /*try {
 			Thread.sleep(2500);
 			}
 			catch(Exception e){
 				e.printStackTrace();
 			}*/
-		request.setAttribute("manufacturer", new ManufacturerDataLoader().getManufacturer(manuId));
-		request.setAttribute("cars", new CarDataLoader().getCarsByManufacturer(manuId));
-	}
-	
-	public void getCarsBySearch(HttpServletRequest request) {
-		
-		Map manufacturers = new HashMap();
-		Manufacturer manufacturer = null;
-		
-		//Get criteria for user request
-		String criteria = request.getParameter("criteria");
-		
-		// Get cars that match criteria
-		ArrayList cars = (ArrayList)new CarDataLoader().getCarsBySearch(criteria);
-		
-		// Get Manufacturer details for all cars
-		Iterator iterator = cars.iterator();
-		while(iterator.hasNext()){
-			Car car = (Car)iterator.next();
-			manufacturer = new Manufacturer();
-			manufacturer = new ManufacturerDataLoader().getManufacturer(car.getManufacturer());
-			manufacturers.put(car.getManufacturer(), manufacturer);
-		}
-		// Put cars in request
-		request.setAttribute("cars", cars);
-		
-		// Put manufacturers in request
-		request.setAttribute("manufacturers", manufacturers);
-		
-	}
-	
+        request.setAttribute("manufacturer", new ManufacturerDataLoader().getManufacturer(manuId));
+        request.setAttribute("cars", new CarDataLoader().getCarsByManufacturer(manuId));
+    }
+
+    public void getCarsBySearch(HttpServletRequest request) {
+
+        Map manufacturers = new HashMap();
+        Manufacturer manufacturer = null;
+
+        //Get criteria for user request
+        String criteria = request.getParameter("criteria");
+
+        // Get cars that match criteria
+        ArrayList cars = (ArrayList) new CarDataLoader().getCarsBySearch(criteria);
+
+        // Get Manufacturer details for all cars
+        Iterator iterator = cars.iterator();
+        while (iterator.hasNext()) {
+            Car car = (Car) iterator.next();
+            manufacturer = new ManufacturerDataLoader().getManufacturer(car.getManufacturer());
+            manufacturers.put(car.getManufacturer(), manufacturer);
+        }
+        // Put cars in request
+        request.setAttribute("cars", cars);
+
+        // Put manufacturers in request
+        request.setAttribute("manufacturers", manufacturers);
+
+    }
+
 }

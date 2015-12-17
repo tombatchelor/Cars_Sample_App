@@ -13,6 +13,9 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import supercars.externaldata.FuelPrices;
+import supercars.logging.LogLevel;
+import supercars.logging.Logger;
 
 /**
  * @author v023094
@@ -27,7 +30,8 @@ public class ActionHome extends Action {
             ActionForm form,
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-		
+		FuelPrices prices = FuelPrices.getFuelPrices();
+                request.setAttribute("prices", prices);
 		return(mapping.findForward("success"));
 	}
 }
