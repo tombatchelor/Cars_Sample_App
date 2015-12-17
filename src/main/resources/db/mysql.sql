@@ -1,3 +1,7 @@
+CREATE DATABASE supercars;
+
+connect supercars;
+
 CREATE TABLE MANUFACTURER (
     MANUFACTURER_ID MEDIUMINT NOT NULL,
     NAME VARCHAR(30),
@@ -38,4 +42,4 @@ INSERT INTO MANUFACTURER (MANUFACTURER_ID, NAME, WEB, EMAIL, LOGO) VALUES
     (5, 'Ford', 'http://www.ford.com', 'web@ford.com', 'Ford.gif'),
     (6, 'Jaguar', 'http://www.jaguarusa.com/index.html', 'web@jaguarusa.com', 'Jaguar.gif'),
     (7, 'Lamborghini', 'http://www.lamborghini.com/en/home/', 'web@lamborghini.com', 'Lamborghini.gif'),
-    (8, 'Lotus', 'http://www.lotuscars.com', 'web@lotuscars.com', 'Lotus.gif')
+    (8, 'Lotus', 'http://www.lotuscars.com', 'web@lotuscars.com', 'Lotus.gif');
