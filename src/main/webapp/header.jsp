@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-layout.tld" prefix="layout" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<script>window['adrum-start-time'] = new Date().getTime();</script><script src="adrum.js"></script>
 <link rel="stylesheet" type="text/css" href="trader.css" />
 <TABLE>
 	<TR><TD colspan="5" align="left"><a href="home.do"><IMG SRC="images/logo.gif"><a/></TD></TR>

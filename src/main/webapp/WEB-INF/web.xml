@@ -58,20 +58,4 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
         <taglib-uri>/tags/c</taglib-uri>
         <taglib-location>/WEB-INF/c.tld</taglib-location>
     </taglib>
-    
-    <env-entry>
-        <env-entry-name>ConnectionString</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>jdbc:oracle:thin:@LOCALHOST:1521:ORCL</env-entry-value>
-    </env-entry>
-    <env-entry>
-        <env-entry-name>Username</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>cars</env-entry-value>
-    </env-entry>
-    <env-entry>
-        <env-entry-name>Password</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>password</env-entry-value>
-    </env-entry>
 </web-app>

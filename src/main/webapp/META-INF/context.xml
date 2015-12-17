@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/Cars_Sample_App"/>
+<Context path="/Cars_Sample_App">
+    <!-- Specify a JDBC datasource for oracle -->
+    <Resource name="jdbc/supercars" 
+              auth="Container"
+              type="javax.sql.DataSource" 
+              username="root" 
+              password="AppDynamics"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/supercars"
+              maxActive="10" 
+              maxIdle="4" />
+</Context>
