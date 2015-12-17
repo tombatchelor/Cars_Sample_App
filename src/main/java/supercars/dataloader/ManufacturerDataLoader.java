@@ -7,7 +7,6 @@
 package supercars.dataloader;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 import supercars.Manufacturer;
+import supercars.logging.Logger;
 
 /**
  * @author v023094
@@ -50,7 +50,7 @@ public class ManufacturerDataLoader {
             statement.close();
             connection.close();
         } catch(Exception e){
-            System.out.println(e);
+            Logger.log(e);
         }
         
         return manufacturers;
@@ -77,7 +77,7 @@ public class ManufacturerDataLoader {
             statement.close();
             connection.close();
         } catch(Exception e){
-            System.out.println(e);
+            Logger.log(e);
         }
         
         return manufacturer;

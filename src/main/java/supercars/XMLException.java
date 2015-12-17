@@ -17,10 +17,12 @@ public class XMLException extends Exception {
 	      this.cause = cause;
 	  }
 
+          @Override
 	  public Throwable getCause() {
 	    return cause;
 	  }
 
+          @Override
 	  public void printStackTrace(java.io.PrintStream ps)
 	  {
 	    super.printStackTrace(ps);
@@ -30,6 +32,7 @@ public class XMLException extends Exception {
 	    }
 	  }
 
+          @Override
 	  public void printStackTrace(java.io.PrintWriter pw)
 	  {
 	    super.printStackTrace(pw);

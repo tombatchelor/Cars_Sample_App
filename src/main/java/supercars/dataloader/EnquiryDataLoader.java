@@ -7,7 +7,6 @@
 package supercars.dataloader;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import supercars.form.EnquireForm;
+import supercars.logging.Logger;
 
 /**
  * @author v023094
@@ -45,7 +45,7 @@ public class EnquiryDataLoader {
             statement.close();
             connection.close();
         } catch(Exception e){
-            e.printStackTrace();
+            Logger.log(e);
         }
         return enquireForm;
     }
@@ -69,7 +69,7 @@ public class EnquiryDataLoader {
             statement.close();
             connection.close();
         } catch(Exception e){
-            e.printStackTrace();
+            Logger.log(e);
         }
         return enquiries;
     }
@@ -86,7 +86,7 @@ public class EnquiryDataLoader {
             pstmt.close();
             connection.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.log(e);
         }
     }
 }
