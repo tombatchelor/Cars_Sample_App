@@ -55,7 +55,7 @@ public class EnquiryDataLoader {
         Collection enquiries = new ArrayList();
         try {
             Connection connection = Constants.getDBConnection();
-            String sql = "SELECT NAME, EMAIL, \"COMMENT\" FROM ENQUIRIES WHERE CAR_ID = "+carId;
+            String sql = "SELECT NAME, EMAIL, COMMENT FROM ENQUIRIES WHERE CAR_ID = "+carId;
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
             while(resultSet.next()) {
@@ -77,7 +77,7 @@ public class EnquiryDataLoader {
     public void saveEnquireForm(EnquireForm enquireForm){
         try {
             Connection connection = Constants.getDBConnection();
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO ENQUIRIES (NAME, EMAIL, \"COMMENT\", CAR_ID) VALUES(?,?,?,?)");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO ENQUIRIES (NAME, EMAIL, COMMENT, CAR_ID) VALUES(?,?,?,?)");
             pstmt.setString(1, enquireForm.getName());
             pstmt.setString(2, enquireForm.getEmail());
             pstmt.setString(3, enquireForm.getComment());
