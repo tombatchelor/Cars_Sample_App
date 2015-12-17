@@ -61,7 +61,7 @@ public class CarDataLoader {
         Car car = new Car();
         Engine engine = new Engine();
         try {
-            String sql = "SELECT CARS.CAR_ID, NAME, MODEL, SUMMARY, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, PHOTO,";
+            String sql = "SELECT CARS.CAR_ID, NAME, MODEL, SUMMARY, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, PHOTO";
             sql += " FROM CARS WHERE CARS.CAR_ID = "+carId;
             
             Connection connection = Constants.getDBConnection();

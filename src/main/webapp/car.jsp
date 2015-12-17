@@ -19,13 +19,7 @@ try {
     <p class="car"><b>Performance Summary:</b><br>
     <%
     Car car = (Car)request.getAttribute("car");
-    Engine engine = car.getEngine();
     %>
-    Engine: <%= engine.getCapacity()%>cc<br>
-    Bhp: <%= engine.getBhp() %><br>
-    Torque: <%= engine.getTorque()%><br>
-    Top Speed: <%= engine.getTopSpeed()%>mph<br>
-	0-60: <%= engine.getZeroSixty() %> sec
     </p>
     <p class="car">Name:&nbsp;<c:out value="${car.name}"/><br>
     Model:&nbsp;<c:out value="${car.model}"/><br>

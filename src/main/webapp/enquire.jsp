@@ -20,7 +20,7 @@ try {
 </head>
 <body>
 <p class="normal">Enquire<br><img src="images/line.gif"></p>
-  <html:form action="/enquire?query=save"> 
+  <html:form action="enquire?query=save"> 
     <table width="80%" border="0"> 
       <tr> 
         <td>Name:<br>&nbsp;<html:text property="name" /></td>
