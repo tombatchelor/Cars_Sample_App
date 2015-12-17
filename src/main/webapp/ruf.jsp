@@ -1,6 +1,6 @@
 <%@ page import="java.util.*" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
-<jsp:include page="header.jsp" />
+<%@ include file="header.jsp" %>
 <p class="normal">Ruf<br><img src="images/line.gif"></p>
 <%
 try {
@@ -18,4 +18,4 @@ try {
 
 The RUF RGT with an elevated power output of 395 bhp. This normally aspirated power-plant performance is achieved through equipping motorsports based engine with four new camshafts, a performance exhaust system, air filter and a remapped engine management system.
 </P>
-<jsp:include page="footer.jsp" />
+<%@ include file="footer.jsp" %>

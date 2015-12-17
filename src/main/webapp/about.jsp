@@ -1,6 +1,6 @@
 <%@ page import="java.util.*" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
-<jsp:include page="header.jsp" />
+<%@ include file="header.jsp" %>
 <%
 try {
 			Random r = new Random();
@@ -18,4 +18,4 @@ try {
  Launched in 2004, Supercar Trader is the biggest selling motoring magazine in Britain and is published across thirteen regional editions. More people buy and read Supercar Trader than any other motoring title and the magazine continues to be the market leader with a circulation of 351,654 (ABC Jan-June 2004) and a readership of 1,800,000 (NRS Jan-Dec 2003). 
 
 Supercar Trader has positioned itself as the synonymous choice for buying and selling a motor vehicle with the success of the magazine built on the combination of photo-ads, choice and a unique structure of regional publishing, offering the combined advantages of local targeting and comprehensive national coverage. </P>
-<jsp:include page="footer.jsp" />
+<%@ include file="footer.jsp" %>

@@ -1,6 +1,6 @@
 <%@ page import="java.util.*" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
-<jsp:include page="header.jsp" />
+<%@ include file="header.jsp" %>
 <%
 try {
 			Random r = new Random();
@@ -21,4 +21,4 @@ Our secure quote pages will provide you with a car insurance quote in minutes. T
 
 And if you want to talk to someone for help or advice about your car insurance quote, there's a national rate number to call. You can even pay for your car insurance over the phone!
 </P>
-<jsp:include page="footer.jsp" />
+<%@ include file="footer.jsp" %>

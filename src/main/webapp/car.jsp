@@ -10,7 +10,7 @@ try {
 			e.printStackTrace();
 		}
 %>
-<jsp:include page="header.jsp" />
+<%@ include file="header.jsp" %>
   <tr> 
     <td>
     <p><img width="150" height="100" src="images/cars/<c:out value="${car.photo}"/>.jpg" align="absmiddle"><img src="images/manufacturers/<c:out value="${manufacturer.logo}"/>">
@@ -48,4 +48,4 @@ try {
 		{}
 	else if (request.getParameter("query").equals("carEnquiries") && al.size() < 1) 
 		out.print("<p>No Enquiries Found.</p>");%>
-<jsp:include page="footer.jsp" />
+<%@ include file="footer.jsp" %>

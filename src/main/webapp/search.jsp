@@ -1,6 +1,6 @@
 <%@ page import="java.util.*" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
-<jsp:include page="header.jsp" />
+<%@ include file="header.jsp" %>
 <%
 try {
                         Random r = new Random();
@@ -35,4 +35,4 @@ try {
         </c:forEach>
     </table>
 </form>
-<jsp:include page="footer.jsp" />
+<%@ include file="footer.jsp" %>

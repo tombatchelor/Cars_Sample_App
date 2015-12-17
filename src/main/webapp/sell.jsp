@@ -11,7 +11,7 @@ try {
 			e.printStackTrace();
 		}
 %>
-<jsp:include page="header.jsp" />
+<%@ include file="header.jsp" %>
 <p class="normal">Sell<br><img src="images/line.gif"></p>
 <p class="normal">Please enter details of your supercar:</p>
   <html:form action="/sell?query=save"> 
@@ -50,4 +50,4 @@ try {
       </tr> 
     </table> 
   </html:form> 
-<jsp:include page="footer.jsp" />
+<%@ include file="footer.jsp" %>

@@ -2,7 +2,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
-<jsp:include page="header.jsp" />
+<%@ include file="header.jsp" %>
 <%
 try {
 			Random r = new Random();
@@ -44,4 +44,4 @@ try {
   </html:form> 
 </body>
 </html>
-<jsp:include page="footer.jsp" />
+<%@ include file="footer.jsp" %>
