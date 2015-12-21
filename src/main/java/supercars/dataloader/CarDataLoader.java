@@ -36,7 +36,7 @@ public class CarDataLoader {
         try {
 
             Connection connection = Constants.getDBConnection();
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO CARS(NAME, MODEL, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, SUMMARY, PHOTO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO CARS(NAME, MODEL, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, SUMMARY, PHOTO) SELECT ?, ?, ?, ?, ?, ?, ?, ?, 0");
             pstmt.setString(1, carForm.getName());
             pstmt.setString(2, carForm.getModel());
             pstmt.setString(3, carForm.getDescription());
@@ -45,7 +45,6 @@ public class CarDataLoader {
             pstmt.setInt(6, carForm.getYear());
             pstmt.setFloat(7, carForm.getPrice());
             pstmt.setString(8, carForm.getSummary());
-            pstmt.setString(9, "0");
             pstmt.execute();
             pstmt.close();
             connection.close();

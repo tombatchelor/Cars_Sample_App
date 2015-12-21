@@ -44,6 +44,7 @@ public class ActionSell extends Action {
 			if (FormHelper.isCarValid((CarForm)form)) {
 				saveCarForm((CarForm)form);
 			}
+                        request.setAttribute("actionText", "selling");
 			forward = "thanks";
 		}
 		request.setAttribute("manufacturers", new ManufacturerDataLoader().getManufacturers());

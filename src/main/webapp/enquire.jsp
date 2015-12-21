@@ -7,7 +7,6 @@
 try {
 			Random r = new Random();
 			int i = r.nextInt(999);
-				i+=1000;
 			Thread.sleep(i);
 		}
 		catch(Exception e){

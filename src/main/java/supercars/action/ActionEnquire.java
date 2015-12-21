@@ -40,6 +40,7 @@ public class ActionEnquire extends Action {
 		}
 		else if(query.equals("save")) {
 			saveEnquireForm((EnquireForm)form);
+                        request.setAttribute("actionText", "enquiring");
 			forward = "thanks";
 		}
 		form.reset(mapping, request);

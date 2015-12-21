@@ -77,7 +77,7 @@ public class EnquiryDataLoader {
     public void saveEnquireForm(EnquireForm enquireForm){
         try {
             Connection connection = Constants.getDBConnection();
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO ENQUIRIES (NAME, EMAIL, COMMENT, CAR_ID) VALUES(?,?,?,?)");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO ENQUIRIES (NAME, EMAIL, COMMENT, CAR_ID, DUMMY) SELECT ?,?,?,?, SLEEP(1)");
             pstmt.setString(1, enquireForm.getName());
             pstmt.setString(2, enquireForm.getEmail());
             pstmt.setString(3, enquireForm.getComment());
