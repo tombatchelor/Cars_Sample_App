@@ -30,8 +30,7 @@ public class EnquiryDataLoader {
     public EnquireForm getEnquiry(int enquiryId) {
         
         EnquireForm enquireForm = new EnquireForm();
-        try {
-            Connection connection = Constants.getDBConnection();
+        try (Connection connection = Constants.getDBConnection()) {
             String sql = "SELECT ENQUIRY_ID, NAME, EMAIL, COMMENT, CAR_ID FROM ENQUIRIES WHERE ENQUIRY_ID = "+enquiryId;
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
@@ -53,8 +52,7 @@ public class EnquiryDataLoader {
     public Collection getEnquirysForCar(int carId) {
         
         Collection enquiries = new ArrayList();
-        try {
-            Connection connection = Constants.getDBConnection();
+        try (Connection connection = Constants.getDBConnection()) {
             String sql = "SELECT NAME, EMAIL, COMMENT FROM ENQUIRIES WHERE CAR_ID = "+carId;
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
@@ -75,8 +73,7 @@ public class EnquiryDataLoader {
     }
     
     public void saveEnquireForm(EnquireForm enquireForm){
-        try {
-            Connection connection = Constants.getDBConnection();
+        try (Connection connection = Constants.getDBConnection()) {
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO ENQUIRIES (NAME, EMAIL, COMMENT, CAR_ID, DUMMY) SELECT ?,?,?,?, SLEEP(1)");
             pstmt.setString(1, enquireForm.getName());
             pstmt.setString(2, enquireForm.getEmail());

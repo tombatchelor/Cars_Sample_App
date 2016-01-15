@@ -32,9 +32,9 @@ public class ManufacturerDataLoader {
         Manufacturer manufacturer = null;
         List manufacturers = new ArrayList();
         
-        try {
+        try (Connection connection = Constants.getDBConnection()) {
             String sql = "SELECT MANUFACTURER_ID, NAME, WEB, EMAIL, LOGO FROM MANUFACTURER ORDER BY NAME";
-            Connection connection = Constants.getDBConnection();
+            
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
             while(resultSet.next()) {
@@ -60,9 +60,9 @@ public class ManufacturerDataLoader {
         
         Manufacturer manufacturer = null;
         
-        try {
+        try (Connection connection = Constants.getDBConnection()) {
             String sql = "SELECT MANUFACTURER_ID, NAME, WEB, EMAIL, LOGO FROM MANUFACTURER WHERE MANUFACTURER_ID = "+manufacturerId;
-            Connection connection = Constants.getDBConnection();
+            
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
             while(resultSet.next()) {
