@@ -14,7 +14,7 @@ import java.io.PrintStream;
 public class Logger {
     
     private static PrintStream outputLocation = System.err;
-       
+        
     public static void setOutputLocation(PrintStream ps) {
         outputLocation = ps;
     }

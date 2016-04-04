@@ -6,6 +6,7 @@
     <form-beans>
         <form-bean name="enquireForm" type="supercars.form.EnquireForm" />
         <form-bean name="carForm" type="supercars.form.CarForm" />
+        <form-bean name="leakForm" type="supercars.form.LeakForm" />
     </form-beans>
     <action-mappings>
         <action path="/home" 
@@ -20,6 +21,14 @@
                      path="/sell.jsp"/>
             <forward name="thanks" 
                      path="/thanks.jsp"/>
+        </action>
+        <action path="/leak" 
+                type="supercars.action.ActionLeak"
+                name="leakForm" input="leak.jsp">
+            <forward name="success" 
+                     path="/leak.jsp"/>
+            <forward name="thanks" 
+                     path="/leak.jsp"/>
         </action>
         <action path="/supercars" 
                 type="supercars.action.ActionInventory">
