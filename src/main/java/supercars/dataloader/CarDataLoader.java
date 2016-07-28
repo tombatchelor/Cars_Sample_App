@@ -59,7 +59,7 @@ public class CarDataLoader {
             pstmt.setString(1, car.getName());
             pstmt.setString(2, car.getModel());
             pstmt.setString(3, car.getDescription());
-            pstmt.setInt(4, Integer.parseInt(car.getManufacturer()));
+            pstmt.setInt(4, car.getManufacturer());
             pstmt.setString(5, car.getColour());
             pstmt.setInt(6, car.getYear());
             pstmt.setFloat(7, car.getPrice());
@@ -91,7 +91,7 @@ public class CarDataLoader {
             car.setModel(resultSet.getString("MODEL"));
             car.setSummary(resultSet.getString("SUMMARY"));
             car.setDescription(resultSet.getString("DESCRIPTION"));
-            car.setManufacturer(resultSet.getString("MANUFACTURER_ID"));
+            car.setManufacturer(Integer.parseInt(resultSet.getString("MANUFACTURER_ID")));
             car.setColour(resultSet.getString("COLOUR"));
             car.setYear(resultSet.getInt("YEAR"));
             car.setPrice(resultSet.getInt("PRICE"));
@@ -106,10 +106,10 @@ public class CarDataLoader {
         return car;
     }
 
-    public Collection getCarsByManufacturer(String manufacturerId) {
+    public Collection getCarsByManufacturer(int manufacturerId) {
 
         List cars = new ArrayList();
-        Car car = null;
+        Car car;
         try (Connection connection = Constants.getDBConnection()) {
             String sql = "SELECT CAR_ID, NAME, MODEL, SUMMARY, DESCRIPTION, PRICE, PHOTO FROM CARS WHERE MANUFACTURER_ID = " + manufacturerId;
             
@@ -138,7 +138,7 @@ public class CarDataLoader {
     public List<Car> getCarsBySearch(String query) {
 
         List cars = new ArrayList();
-        Car car = null;
+        Car car;
         try (Connection connection = Constants.getDBConnection()) {
             String sql = "SELECT CAR_ID, C.NAME, MODEL, SUMMARY, DESCRIPTION, PRICE, PHOTO, M.MANUFACTURER_ID FROM CARS C, MANUFACTURER M WHERE C.MANUFACTURER_ID = M.MANUFACTURER_ID AND (C.NAME LIKE '%" + query + "%' OR C.MODEL LIKE '%" + query + "%' OR M.NAME LIKE '%" + query + "%')";
             
@@ -153,7 +153,7 @@ public class CarDataLoader {
                 car.setDescription(resultSet.getString("DESCRIPTION"));
                 car.setPrice(resultSet.getInt("PRICE"));
                 car.setPhoto(resultSet.getString("PHOTO"));
-                car.setManufacturer(resultSet.getString("MANUFACTURER_ID"));
+                car.setManufacturer(Integer.parseInt(resultSet.getString("MANUFACTURER_ID")));
                 cars.add(car);
             }
             resultSet.close();

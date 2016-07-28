@@ -14,19 +14,19 @@ package supercars;
  */
 public class Manufacturer {
 
-	private long manufacturerId;
+	private int manufacturerId;
 	private String name;
 	private String country;
 	private String web;
 	private String email;
 	private String logo;
-	private long engineId;
+	private int engineId;
 	
 	
-	public long getEngineId() {
+	public int getEngineId() {
 		return engineId;
 	}
-	public void setEngineId(long engineId) {
+	public void setEngineId(int engineId) {
 		this.engineId = engineId;
 	}
 	public String getEmail() {
@@ -41,10 +41,10 @@ public class Manufacturer {
 	public void setLogo(String logo) {
 		this.logo = logo;
 	}
-	public long getManufacturerId() {
+	public int getManufacturerId() {
 		return manufacturerId;
 	}
-	public void setManufacturerId(long manufacturerId) {
+	public void setManufacturerId(int manufacturerId) {
 		this.manufacturerId = manufacturerId;
 	}
 	public String getWeb() {

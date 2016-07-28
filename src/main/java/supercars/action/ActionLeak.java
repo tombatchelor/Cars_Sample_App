@@ -15,6 +15,7 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import supercars.Leak;
 
 import supercars.form.FormHelper;
 import supercars.form.LeakForm;
@@ -26,8 +27,6 @@ import supercars.form.LeakForm;
  * Preferences - Java - Code Style - Code Templates
  */
 public class ActionLeak extends Action {
-
-    public static List<byte[]> leakyCollection = new LinkedList<>();
     
     // Perform Action
     public ActionForward execute(ActionMapping mapping,
@@ -44,18 +43,12 @@ public class ActionLeak extends Action {
         } else if (query.equals("save")) {
             LeakForm leakForm = (LeakForm) form;
             if (FormHelper.isLeakValid(leakForm)) {
-                addToCollection(leakForm.getNumber(), leakForm.getSize());
+                Leak.addToCollection(leakForm.getNumber(), leakForm.getSize());
             }
             request.setAttribute("actionText", "selling");
             forward = "thanks";
         }
         form.reset(mapping, request);
         return (mapping.findForward(forward));
-    }
-    
-    private void addToCollection(int number, int size) {
-        for (int i = 0; i < number; i++) {
-            ActionLeak.leakyCollection.add(new byte[size]);
-        }
     }
 }

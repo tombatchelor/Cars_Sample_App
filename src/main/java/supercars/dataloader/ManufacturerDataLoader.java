@@ -39,7 +39,7 @@ public class ManufacturerDataLoader {
             resultSet = statement.executeQuery(sql);
             while(resultSet.next()) {
                 manufacturer = new Manufacturer();
-                manufacturer.setManufacturerId(resultSet.getLong("MANUFACTURER_ID"));
+                manufacturer.setManufacturerId(resultSet.getInt("MANUFACTURER_ID"));
                 manufacturer.setName(resultSet.getString("NAME"));
                 manufacturer.setWeb(resultSet.getString("WEB"));
                 manufacturer.setEmail(resultSet.getString("EMAIL"));
@@ -56,7 +56,7 @@ public class ManufacturerDataLoader {
         return manufacturers;
     }
     
-    public Manufacturer getManufacturer(String manufacturerId) {
+    public Manufacturer getManufacturer(int manufacturerId) {
         
         Manufacturer manufacturer = null;
         
@@ -67,7 +67,7 @@ public class ManufacturerDataLoader {
             resultSet = statement.executeQuery(sql);
             while(resultSet.next()) {
                 manufacturer = new Manufacturer();
-                manufacturer.setManufacturerId(resultSet.getLong("MANUFACTURER_ID"));
+                manufacturer.setManufacturerId(resultSet.getInt("MANUFACTURER_ID"));
                 manufacturer.setName(resultSet.getString("NAME"));
                 manufacturer.setWeb(resultSet.getString("WEB"));
                 manufacturer.setEmail(resultSet.getString("EMAIL"));

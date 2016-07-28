@@ -17,7 +17,7 @@ public class Car {
 	private int carId;
 	private String name;
 	private String model;
-	private String manufacturer;
+	private int manufacturer;
 	private String colour;
 	private int year;
 	private int price;
@@ -60,10 +60,10 @@ public class Car {
 	public void setManual(boolean isManual) {
 		this.isManual = isManual;
 	}
-	public String getManufacturer() {
+	public int getManufacturer() {
 		return manufacturer;
 	}
-	public void setManufacturer(String manufacturer) {
+	public void setManufacturer(int manufacturer) {
 		this.manufacturer = manufacturer;
 	}
 	public String getModel() {

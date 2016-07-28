@@ -51,7 +51,7 @@ public class ActionCars extends Action {
     }
 
     public void getCarsByManufacturer(HttpServletRequest request) {
-        String manuId = request.getParameter("mid");
+        int manuId = Integer.parseInt(request.getParameter("mid"));
         /*try {
 			Thread.sleep(2500);
 			}
