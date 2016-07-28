@@ -52,8 +52,28 @@ public class CarDataLoader {
             Logger.log(e);
         }
     }
+    
+    public void saveCar(Car car) {
+        try (Connection connection = Constants.getDBConnection()) {
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO CARS(NAME, MODEL, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, SUMMARY, PHOTO) SELECT ?, ?, ?, ?, ?, ?, ?, ?, 0");
+            pstmt.setString(1, car.getName());
+            pstmt.setString(2, car.getModel());
+            pstmt.setString(3, car.getDescription());
+            pstmt.setInt(4, Integer.parseInt(car.getManufacturer()));
+            pstmt.setString(5, car.getColour());
+            pstmt.setInt(6, car.getYear());
+            pstmt.setFloat(7, car.getPrice());
+            pstmt.setString(8, car.getSummary());
+            pstmt.execute();
+            pstmt.close();
+            connection.close();
+            throw new XMLException("XML Example Exception Thrown");
+        } catch (SQLException | XMLException e) {
+            Logger.log(e);
+        }
+    }
 
-    public Car getCar(int carId) throws SQLException {
+    public Car getCar(int carId) {
 
         Car car = new Car();
         Engine engine = new Engine();
@@ -86,34 +106,6 @@ public class CarDataLoader {
         return car;
     }
 
-    public Collection getCarsSummary() {
-
-        List cars = new ArrayList();
-        Car car = null;
-        try (Connection connection = Constants.getDBConnection()) {
-            String sql = "SELECT NAME, MODEL, SUMMARY, DESCRIPTION, PHOTO FROM CARS";
-            
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
-            System.out.println(sql);
-            while (resultSet.next()) {
-                car = new Car();
-                car.setName(resultSet.getString("NAME"));
-                car.setModel(resultSet.getString("MODEL"));
-                car.setSummary(resultSet.getString("SUMMARY"));
-                car.setDescription(resultSet.getString("DESCRIPTION"));
-                car.setPhoto(resultSet.getString("PHOTO"));
-                cars.add(car);
-            }
-            resultSet.close();
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            Logger.log(e);
-        }
-        return cars;
-    }
-
     public Collection getCarsByManufacturer(String manufacturerId) {
 
         List cars = new ArrayList();
@@ -143,7 +135,7 @@ public class CarDataLoader {
         return cars;
     }
 
-    public Collection getCarsBySearch(String query) {
+    public List<Car> getCarsBySearch(String query) {
 
         List cars = new ArrayList();
         Car car = null;
