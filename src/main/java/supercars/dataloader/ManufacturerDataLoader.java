@@ -27,7 +27,7 @@ public class ManufacturerDataLoader {
     Statement statement = null;
     ResultSet resultSet = null;
     
-    public Collection getManufacturers() {
+    public List<Manufacturer> getManufacturers() {
         
         Manufacturer manufacturer = null;
         List manufacturers = new ArrayList();

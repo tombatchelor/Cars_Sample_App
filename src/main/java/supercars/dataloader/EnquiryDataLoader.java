@@ -11,74 +11,74 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
+import supercars.Enquiry;
 
-import supercars.form.EnquireForm;
 import supercars.logging.Logger;
 
 /**
  * @author v023094
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * TODO To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Style - Code Templates
  */
 public class EnquiryDataLoader {
-    
+
     Statement statement = null;
     ResultSet resultSet = null;
-    
-    public EnquireForm getEnquiry(int enquiryId) {
-        
-        EnquireForm enquireForm = new EnquireForm();
+
+    public Enquiry getEnquiry(int enquiryId) {
+
+        Enquiry enquiry = new Enquiry();
         try (Connection connection = Constants.getDBConnection()) {
-            String sql = "SELECT ENQUIRY_ID, NAME, EMAIL, COMMENT, CAR_ID FROM ENQUIRIES WHERE ENQUIRY_ID = "+enquiryId;
+            String sql = "SELECT ENQUIRY_ID, NAME, EMAIL, COMMENT, CAR_ID FROM ENQUIRIES WHERE ENQUIRY_ID = " + enquiryId;
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
             resultSet.next();
-            enquireForm.setEnquireFormId(resultSet.getLong("ENQUIRY_ID"));
-            enquireForm.setName(resultSet.getString("NAME"));
-            enquireForm.setEmail(resultSet.getString("EMAIL"));
-            enquireForm.setComment(resultSet.getString("COMMENT"));
-            enquireForm.setCarId(resultSet.getInt("carId"));
+            enquiry.setEnquiryId(resultSet.getInt("ENQUIRY_ID"));
+            enquiry.setName(resultSet.getString("NAME"));
+            enquiry.setEmail(resultSet.getString("EMAIL"));
+            enquiry.setComment(resultSet.getString("COMMENT"));
+            enquiry.setCarId(resultSet.getInt("carId"));
             resultSet.close();
             statement.close();
             connection.close();
-        } catch(Exception e){
+        } catch (Exception e) {
             Logger.log(e);
         }
-        return enquireForm;
+        return enquiry;
     }
-    
-    public Collection getEnquirysForCar(int carId) {
-        
-        Collection enquiries = new ArrayList();
+
+    public List<Enquiry> getEnquirysForCar(int carId) {
+
+        List<Enquiry> enquiries = new ArrayList<Enquiry>();
         try (Connection connection = Constants.getDBConnection()) {
-            String sql = "SELECT NAME, EMAIL, COMMENT FROM ENQUIRIES WHERE CAR_ID = "+carId;
+            String sql = "SELECT NAME, EMAIL, COMMENT FROM ENQUIRIES WHERE CAR_ID = " + carId;
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
-            while(resultSet.next()) {
-                EnquireForm enquireForm = new EnquireForm();
-                enquireForm.setName(resultSet.getString("NAME"));
-                enquireForm.setEmail(resultSet.getString("EMAIL"));
-                enquireForm.setComment(resultSet.getString("COMMENT"));
-                enquiries.add(enquireForm);
+            while (resultSet.next()) {
+                Enquiry enquiry = new Enquiry();
+                enquiry.setName(resultSet.getString("NAME"));
+                enquiry.setEmail(resultSet.getString("EMAIL"));
+                enquiry.setComment(resultSet.getString("COMMENT"));
+                enquiries.add(enquiry);
             }
             resultSet.close();
             statement.close();
             connection.close();
-        } catch(Exception e){
+        } catch (Exception e) {
             Logger.log(e);
         }
         return enquiries;
     }
-    
-    public void saveEnquireForm(EnquireForm enquireForm){
+
+    public void saveEnquiry(Enquiry enquiry) {
         try (Connection connection = Constants.getDBConnection()) {
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO ENQUIRIES (NAME, EMAIL, COMMENT, CAR_ID, DUMMY) SELECT ?,?,?,?, SLEEP(1)");
-            pstmt.setString(1, enquireForm.getName());
-            pstmt.setString(2, enquireForm.getEmail());
-            pstmt.setString(3, enquireForm.getComment());
-            pstmt.setInt(4, enquireForm.getCarId());
+            pstmt.setString(1, enquiry.getName());
+            pstmt.setString(2, enquiry.getEmail());
+            pstmt.setString(3, enquiry.getComment());
+            pstmt.setInt(4, enquiry.getCarId());
             pstmt.execute();
             pstmt.close();
             connection.close();
