@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
+    <script src="angular/angular.js"></script>
     <body>
-        <h1>Hello World!</h1>
+
+        <div ng-app="superCars" ng-controller="superCarsController">
+            <p>Name: <input type="text" ng-model="name"></p>
+            <p>Name is {{name}}</p>
+        </div>
+
+        <script src="angular/superCars.js"></script>
+        <script src="angular/superCarsController.js"></script>
     </body>
 </html>
