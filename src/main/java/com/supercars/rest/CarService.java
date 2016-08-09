@@ -17,9 +17,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.json.JSONObject;
-import supercars.Car;
-import supercars.dataloader.CarDataLoader;
-import supercars.logging.Logger;
+import com.supercars.Car;
+import com.supercars.dataloader.CarDataLoader;
+import com.supercars.logging.Logger;
 
 /**
  *

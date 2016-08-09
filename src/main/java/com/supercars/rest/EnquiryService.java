@@ -14,8 +14,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import supercars.Enquiry;
-import supercars.dataloader.EnquiryDataLoader;
+import com.supercars.Enquiry;
+import com.supercars.dataloader.EnquiryDataLoader;
 
 /**
  *
