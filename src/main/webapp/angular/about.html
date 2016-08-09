@@ -23,5 +23,16 @@ and open the template in the editor.
     Leak Generation
 </h2>
 <p>
-    To generate a memory leak, visit the <a href="leak.do">Leak Page</a>
+    Memory leaks! Under the covers this is a LinkedList of Byte arrays. the form below sets how many arrays and their size to add.
 </p>
+<p>
+    Current list size is: <b>{{leakSize}}</b>
+</p>
+<div>
+<form>
+    Number: <input type="text" ng-model="number" /><br />
+    Size: <input type="text" ng-model="size" /><br />
+    <button ng-click="resetLeak()">Reset Leak</button>
+    <button ng-click="addToLeak()">Add To Leak!</button>
+</form>
+</div>

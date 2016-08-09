@@ -11,7 +11,7 @@ app.config(function ($routeProvider) {
     })
             .when("/home", {
                 templateUrl: "home.html",
-                controller: "mainController"
+                controller: "homeController"
             })
             .when("/manufacturers", {
                 templateUrl: "manufacturers.html",
@@ -41,6 +41,7 @@ app.config(function ($routeProvider) {
                 templateUrl: "insurance.html"
             })
             .when("/about", {
-                templateUrl: "about.html"
+                templateUrl: "about.html",
+                controller: "leakController"
             })
 });

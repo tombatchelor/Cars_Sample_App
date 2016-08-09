@@ -4,62 +4,70 @@
  * and open the template in the editor.
  */
 
-app.controller('mainController', function($scope) {
-    
+app.controller('mainController', function ($scope) {
+
 })
+
+app.controller('homeController', function ($scope, $http) {
+    $http.get("../public/fuel")
+            .then(function (response) {
+                $scope.fuelPrices = response.data;
+            });
+});
 
 app.controller('manufacturerController', function ($scope, $http) {
     $http.get("../public/manufacturer")
-            .then(function(response) {
+            .then(function (response) {
                 $scope.manufacturers = response.data;
-    });
+            });
 });
 
-app.controller('carsController', function($scope, $http, $routeParams) {
+app.controller('carsController', function ($scope, $http, $routeParams) {
     $scope.manufacturerId = $routeParams.manufacturerId;
     $http.get("../public/car/manufacturer/" + $scope.manufacturerId)
-            .then(function(response) {
+            .then(function (response) {
                 $scope.cars = response.data;
-    })
+            })
     $http.get("../public/manufacturer/" + $scope.manufacturerId)
-            .then(function(response) {
+            .then(function (response) {
                 $scope.manufacturer = response.data;
-    });
+            });
 });
 
-app.controller('carController', function($scope, $http, $routeParams) {
+app.controller('carController', function ($scope, $http, $routeParams) {
     $scope.carId = $routeParams.carId;
     $http.get("../public/car/" + $scope.carId)
-            .then(function(response) {
+            .then(function (response) {
                 $scope.car = response.data;
-    });
+            });
     $http.post("../public/enquiry/" + $scope.carId)
-            .then(function(response) {
+            .then(function (response) {
                 $scope.enquiries = response.data;
-    });
+            });
 });
 
-app.controller('searchController', function($scope, $http) {
+app.controller('searchController', function ($scope, $http) {
     if ($scope.searchTerm !== null) {
         $http.post("../public/car/" + $scope.searchTerm)
-                .then(function(response) {
+                .then(function (response) {
                     $scope.cars = response.data;
-        });
-    };
-    $scope.search = function() {
+                });
+    }
+    ;
+    $scope.search = function () {
         $http.post("../public/car/" + $scope.searchTerm)
-                .then(function(response) {
+                .then(function (response) {
                     $scope.cars = response.data;
-        });
+                });
     };
 });
 
-app.controller('sellController', function($scope, $http) {
+app.controller('sellController', function ($scope, $http) {
     $http.get("../public/manufacturer")
-            .then(function(response) {
+            .then(function (response) {
                 $scope.manufacturers = response.data;
-    });
-    $scope.saveCar = function() {
+            });
+    $scope.saveCar = function () {
         var carJSON = {};
         carJSON["name"] = $scope.name;
         carJSON["model"] = $scope.model;
@@ -77,18 +85,39 @@ app.controller('sellController', function($scope, $http) {
     };
 });
 
-app.controller('enquireController', function($scope, $http, $routeParams) {
-    $scope.carId = $routeParams.carId
-   $http.get("../public/car/" + $scope.carId)
-           .then(function(response) {
-               $scope.car = response.data;
-   });
-   $scope.saveEnquiry = function() {
-       enquiryJSON = {};
-       enquiryJSON["name"] = $scope.name;
-       enquiryJSON["email"] = $scope.email;
-       enquiryJSON["comment"] = $scope.comment;
-       enquiryJSON["carId"] = $scope.car.carId;
-       $http.put("../public/enquiry", enquiryJSON);
-   };
+app.controller('enquireController', function ($scope, $http, $routeParams) {
+    $scope.carId = $routeParams.carId;
+    $http.get("../public/car/" + $scope.carId)
+            .then(function (response) {
+                $scope.car = response.data;
+            });
+    $scope.saveEnquiry = function () {
+        enquiryJSON = {};
+        enquiryJSON["name"] = $scope.name;
+        enquiryJSON["email"] = $scope.email;
+        enquiryJSON["comment"] = $scope.comment;
+        enquiryJSON["carId"] = $scope.car.carId;
+        $http.put("../public/enquiry", enquiryJSON);
+    };
+});
+
+app.controller('leakController', function ($scope, $http) {
+    $http.get("../public/leak")
+            .then(function (response) {
+                $scope.leakSize = response.data;
+            });
+    $scope.addToLeak = function () {
+        $http.get("../public/leak/" + $scope.number + "/" + $scope.size);
+        $http.get('../public/leak')
+                .then(function (response) {
+                    $scope.leakSize = response.data;
+                });
+    };
+    $scope.resetLeak = function () {
+        $http.delete("../public/leak");
+        $http.get('../public/leak')
+                .then(function (response) {
+                    $scope.leakSize = response.data;
+                });
+    };
 });
