@@ -106,7 +106,7 @@ public class CarDataLoader {
         return car;
     }
 
-    public Collection getCarsByManufacturer(int manufacturerId) {
+    public List<Car> getCarsByManufacturer(int manufacturerId) {
 
         List cars = new ArrayList();
         Car car;

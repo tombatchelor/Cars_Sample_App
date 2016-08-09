@@ -36,6 +36,15 @@ public class CarService {
 
         return car;
     }
+    
+    @Path("/manufacturer/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Car> getCarsForManufacturer(@PathParam("id") int id) {
+        List<Car> cars = new CarDataLoader().getCarsByManufacturer(id);
+        
+        return cars;
+    }
 
     @Path("{query}")
     @POST

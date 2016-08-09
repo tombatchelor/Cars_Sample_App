@@ -1,0 +1,72 @@
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<p class="normal">Sell<br><img src="images/line.gif"></p>
+<p class="normal">Please enter details of your supercar:</p>
+<form>
+    <table width="80%" border="0">
+        <tr>
+            <td>Manufacturer:<br />
+                &nbsp;<select name="manufacturer" ng-model="manufacturer">
+                    <option ng-repeat="manufacturer in manufacturers" value="{{manufacturer.manufacturerId}}">
+                        {{manufacturer.name}}
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr> 
+            <td>
+                Model:<br />&nbsp;
+                <input type="text" ng-model="model" />
+            </td> 
+        </tr>
+        <tr> 
+            <td>
+                Version:<br />&nbsp;
+                <input type="text" ng-model="name" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Colour:<br />&nbsp;
+                <input type="text" ng-model="colour" />
+            </td> 
+        </tr>
+        <tr>
+            <td>
+                Year:<br />&nbsp;
+                <input type="text" ng-model="year" />
+            </td> 
+        </tr>
+        <tr>
+            <td>
+                Price:<br />&nbsp;
+                <input type="text" ng-model="price" />
+            </td> 
+        </tr>
+        <tr>
+            <td>
+                Summary:<br />
+                <img src="images/line.gif" />
+                <br />
+                <br />
+                <textarea rows="6" cols="45" ng-model="summary"></textarea>
+            </td> 
+        </tr>
+        <tr>
+            <td>Detailed Description:<br />
+                <img src="images/line.gif" />
+                <br />
+                <br />
+                &nbsp;<textarea rows="6" cols="45" ng-model="description"></textarea>
+            </td> 
+        </tr>  
+        <tr> 
+            <td>
+                <button ng-click="saveCar()">Submit</button>
+            </td> 
+        </tr> 
+    </table> 
+</form>

@@ -1,0 +1,39 @@
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<p class="normal">Enquire<br />
+    <img src="images/line.gif">
+</p>
+  <form> 
+    <table width="80%" border="0"> 
+      <tr> 
+        <td>Name:<br />
+            &nbsp;<input type="text" ng-model="name" />
+        </td>
+      </tr>
+      <tr> 
+       <td>Email:<br />
+           &nbsp;<input type="text" ng-model="email" />
+       </td> 
+      </tr>
+      <tr>
+      	<td>Car:<br />
+            &nbsp;{{car.model}} {{car.version}}
+      </tr>
+      <tr>
+          <td>Description:<br />
+              <img src="images/line.gif"><br />
+              <br />
+              &nbsp;<textarea rows="12" cols="45" ng-model="comment"></textarea>
+       </td> 
+      </tr> 
+      <tr> 
+        <td>
+            <button type="image" ng-click="saveEnquiry()">Submit</button>
+        </td> 
+      </tr> 
+    </table>     
+  </form> 
+
