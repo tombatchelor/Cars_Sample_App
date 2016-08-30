@@ -7,7 +7,8 @@
 var app = angular.module('superCars', ["ngRoute"]);
 app.config(function ($routeProvider) {
     $routeProvider.when("/", {
-        templateUrl: "home.html"
+        templateUrl: "home.html",
+        controller: "homeController"
     })
             .when("/home", {
                 templateUrl: "home.html",
@@ -44,4 +45,22 @@ app.config(function ($routeProvider) {
                 templateUrl: "about.html",
                 controller: "leakController"
             })
+            .when("/thankyou", {
+                templateUrl: "thankyou.html"
+            })
+            .when('/alpina', {
+                templateUrl: "alpina.html"
+            })
+            .when("/amg", {
+                templateUrl: "amg.html"
+            })
+            .when("/gembella", {
+                templateUrl: "gembella.html"
+            })
+            .when("/mazdaspeed", {
+                templateUrl: "mazdaspeed.html"
+            })
+            .when("/ruf", {
+                templateUrl: "ruf.html"
+            });
 });

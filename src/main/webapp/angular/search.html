@@ -10,7 +10,7 @@ and open the template in the editor.
 <p class="normal">
     Please enter your search criteria, for example 'Lamborghini', or '911'<br />
     <br />
-    <input type="text" name="criteria" ng-model="searchTerm" ng-keydown="search()" ng-keypress="search()">&nbsp;
+    <input type="text" name="criteria" ng-model="searchTerm" ng-keyup="search()" ng-keypress="search()">&nbsp;
     <input type="image" src="images/search_button.gif" align="absmiddle" ng-click="search()">
     <br />
 </p>

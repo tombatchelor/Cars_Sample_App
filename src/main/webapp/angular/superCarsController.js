@@ -6,7 +6,7 @@
 
 app.controller('mainController', function ($scope) {
 
-})
+});
 
 app.controller('homeController', function ($scope, $http) {
     $http.get("../public/fuel")
@@ -62,7 +62,7 @@ app.controller('searchController', function ($scope, $http) {
     };
 });
 
-app.controller('sellController', function ($scope, $http) {
+app.controller('sellController', function ($scope, $http, $location) {
     $http.get("../public/manufacturer")
             .then(function (response) {
                 $scope.manufacturers = response.data;
@@ -82,10 +82,11 @@ app.controller('sellController', function ($scope, $http) {
         carJSON["photo"] = "0";
         carJSON["manual"] = false;
         $http.put("../public/car", carJSON);
+        $location.path("/thankyou");
     };
 });
 
-app.controller('enquireController', function ($scope, $http, $routeParams) {
+app.controller('enquireController', function ($scope, $http, $routeParams, $location) {
     $scope.carId = $routeParams.carId;
     $http.get("../public/car/" + $scope.carId)
             .then(function (response) {
@@ -98,6 +99,7 @@ app.controller('enquireController', function ($scope, $http, $routeParams) {
         enquiryJSON["comment"] = $scope.comment;
         enquiryJSON["carId"] = $scope.car.carId;
         $http.put("../public/enquiry", enquiryJSON);
+        $location.path("/thankyou");
     };
 });
 
