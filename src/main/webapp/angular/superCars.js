@@ -64,3 +64,26 @@ app.config(function ($routeProvider) {
                 templateUrl: "ruf.html"
             });
 });
+
+app.factory('carsUtils', function() {
+    var manufacturerId;
+    var carId;
+    var carsUtilsService = {};
+    
+    carsUtilsService.setCarId = function(id) {
+        carId = id;
+    }
+    
+    carsUtilsService.getCarId = function() {
+        return carId;
+    }
+    
+    carsUtilsService.setManufacturerId = function(id) {
+        manufacturerId = id;
+    }
+    
+    carsUtilsService.getManufacturerId = function() {
+        return manufacturerId;
+    }
+    return carsUtilsService;
+})

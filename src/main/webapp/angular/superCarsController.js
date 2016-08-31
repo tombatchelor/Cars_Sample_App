@@ -15,15 +15,19 @@ app.controller('homeController', function ($scope, $http) {
             });
 });
 
-app.controller('manufacturerController', function ($scope, $http) {
+app.controller('manufacturerController', function ($scope, $http, $location, carsUtils) {
     $http.get("../public/manufacturer")
             .then(function (response) {
                 $scope.manufacturers = response.data;
             });
+            $scope.manufacturerLink = function(manufacturerId) {
+                carsUtils.setManufacturerId(manufacturerId);
+                $location.path("/cars");
+            }
 });
 
-app.controller('carsController', function ($scope, $http, $routeParams) {
-    $scope.manufacturerId = $routeParams.manufacturerId;
+app.controller('carsController', function ($scope, $http, $location, carsUtils) {
+    $scope.manufacturerId = carsUtils.getManufacturerId();
     $http.get("../public/car/manufacturer/" + $scope.manufacturerId)
             .then(function (response) {
                 $scope.cars = response.data;
@@ -32,10 +36,14 @@ app.controller('carsController', function ($scope, $http, $routeParams) {
             .then(function (response) {
                 $scope.manufacturer = response.data;
             });
+    $scope.carLink = function (carId) {
+        carsUtils.setCarId(carId);
+        $location.path("/car");
+    };
 });
 
-app.controller('carController', function ($scope, $http, $routeParams) {
-    $scope.carId = $routeParams.carId;
+app.controller('carController', function ($scope, $http, $location, carsUtils) {
+    $scope.carId = carsUtils.getCarId();
     $http.get("../public/car/" + $scope.carId)
             .then(function (response) {
                 $scope.car = response.data;
@@ -44,6 +52,10 @@ app.controller('carController', function ($scope, $http, $routeParams) {
             .then(function (response) {
                 $scope.enquiries = response.data;
             });
+            $scope.enquireLink = function(carId) {
+                carsUtils.setCarId(carId);
+                $location.path("/enquire");
+            }
 });
 
 app.controller('searchController', function ($scope, $http) {
@@ -86,8 +98,8 @@ app.controller('sellController', function ($scope, $http, $location) {
     };
 });
 
-app.controller('enquireController', function ($scope, $http, $routeParams, $location) {
-    $scope.carId = $routeParams.carId;
+app.controller('enquireController', function ($scope, $http, $location, carsUtils) {
+    $scope.carId = carsUtils.getCarId();
     $http.get("../public/car/" + $scope.carId)
             .then(function (response) {
                 $scope.car = response.data;

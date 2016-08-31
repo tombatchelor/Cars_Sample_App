@@ -10,7 +10,7 @@ and open the template in the editor.
             <p><img src="images/manufacturers/{{manufacturer.logo}} "></p>
         </td>
         <td>
-            <p class="summary"><a href="#car?carId={{car.carId}}"/>{{car.model}}&nbsp;{{car.name}}</a>&nbsp;{{car.summary}}</p>
+            <p class="summary" ng-click="carLink(car.carId)"/>{{car.model}}&nbsp;{{car.name}}&nbsp;{{car.summary}}</p>
         </td>
     </tr>
 </table>

@@ -9,10 +9,8 @@ and open the template in the editor.
             <p>
                 <img width="150" height="100" src="images/cars/{{car.photo}}.jpg" align="absmiddle" />
                 <img src="images/manufacturers/{{manufacturer.logo}}" />
-                <a href="#enquire?carId={{car.carId}}">
                     &nbsp;{{car.model}}
-                    <img src="images/enquire_button.gif" />
-                </a>
+                    <img src="images/enquire_button.gif" ng-click="enquireLink(car.carId)" />
             </p> 
             <p class="car">
                 <b>Performance Summary:</b>
