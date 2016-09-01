@@ -36,7 +36,7 @@ public class CarDataLoader {
             pstmt.setString(1, car.getName());
             pstmt.setString(2, car.getModel());
             pstmt.setString(3, car.getDescription());
-            pstmt.setInt(4, car.getManufacturer());
+            pstmt.setInt(4, car.getManufacturerId());
             pstmt.setString(5, car.getColour());
             pstmt.setInt(6, car.getYear());
             pstmt.setFloat(7, car.getPrice());
@@ -68,12 +68,13 @@ public class CarDataLoader {
             car.setModel(resultSet.getString("MODEL"));
             car.setSummary(resultSet.getString("SUMMARY"));
             car.setDescription(resultSet.getString("DESCRIPTION"));
-            car.setManufacturer(Integer.parseInt(resultSet.getString("MANUFACTURER_ID")));
+            car.setManufacturerId(Integer.parseInt(resultSet.getString("MANUFACTURER_ID")));
             car.setColour(resultSet.getString("COLOUR"));
             car.setYear(resultSet.getInt("YEAR"));
             car.setPrice(resultSet.getInt("PRICE"));
             car.setPhoto(resultSet.getString("PHOTO"));
-
+            car.setManufacturer(new ManufacturerDataLoader().getManufacturer(car.getManufacturerId()));
+            
             resultSet.close();
             statement.close();
         } catch (Exception e) {
@@ -130,7 +131,8 @@ public class CarDataLoader {
                 car.setDescription(resultSet.getString("DESCRIPTION"));
                 car.setPrice(resultSet.getInt("PRICE"));
                 car.setPhoto(resultSet.getString("PHOTO"));
-                car.setManufacturer(Integer.parseInt(resultSet.getString("MANUFACTURER_ID")));
+                car.setManufacturerId(Integer.parseInt(resultSet.getString("MANUFACTURER_ID")));
+                car.setManufacturer(new ManufacturerDataLoader().getManufacturer(car.getManufacturerId()));
                 cars.add(car);
             }
             resultSet.close();

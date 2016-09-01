@@ -17,7 +17,7 @@ public class Car {
 	private int carId;
 	private String name;
 	private String model;
-	private int manufacturer;
+	private int manufacturerId;
 	private String colour;
 	private int year;
 	private int price;
@@ -27,6 +27,7 @@ public class Car {
 	private int tyreSize;
 	private boolean isManual;
 	private String photo;
+        private Manufacturer manufacturer;
 
 	
 	public String getPhoto() {
@@ -60,11 +61,11 @@ public class Car {
 	public void setManual(boolean isManual) {
 		this.isManual = isManual;
 	}
-	public int getManufacturer() {
-		return manufacturer;
+	public int getManufacturerId() {
+		return manufacturerId;
 	}
-	public void setManufacturer(int manufacturer) {
-		this.manufacturer = manufacturer;
+	public void setManufacturerId(int manufacturerId) {
+		this.manufacturerId = manufacturerId;
 	}
 	public String getModel() {
 		return model;
@@ -108,4 +109,18 @@ public class Car {
 	public void setCarId(int carId) {
 		this.carId = carId;
 	}
+
+    /**
+     * @return the manufacturer
+     */
+    public Manufacturer getManufacturer() {
+        return manufacturer;
+    }
+
+    /**
+     * @param manufacturer the manufacturer to set
+     */
+    public void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
+    }
 }

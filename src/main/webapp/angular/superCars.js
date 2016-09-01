@@ -72,18 +72,18 @@ app.factory('carsUtils', function() {
     
     carsUtilsService.setCarId = function(id) {
         carId = id;
-    }
+    };
     
     carsUtilsService.getCarId = function() {
         return carId;
-    }
+    };
     
     carsUtilsService.setManufacturerId = function(id) {
         manufacturerId = id;
-    }
+    };
     
     carsUtilsService.getManufacturerId = function() {
         return manufacturerId;
-    }
+    };
     return carsUtilsService;
-})
+});

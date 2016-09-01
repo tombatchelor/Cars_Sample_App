@@ -8,9 +8,9 @@ and open the template in the editor.
         <td>
             <p>
                 <img width="150" height="100" src="images/cars/{{car.photo}}.jpg" align="absmiddle" />
-                <img src="images/manufacturers/{{manufacturer.logo}}" />
-                    &nbsp;{{car.model}}
-                    <img src="images/enquire_button.gif" ng-click="enquireLink(car.carId)" />
+                <img src="images/manufacturers/{{car.manufacturer.logo}}" />
+                &nbsp;{{car.manufacturer.name}} - {{car.model}}
+                <img src="images/enquire_button.gif" ng-click="enquireLink(car.carId)" />
             </p> 
             <p class="car">
                 <b>Performance Summary:</b>
@@ -28,9 +28,7 @@ and open the template in the editor.
     </tr>
     <tr>
         <td>
-            <a href="#car.do?query=carEnquiries&cid={{car.carId}}">
-                <img src="images/view_enquiries_button.gif"/>
-            </a>
+            <img src="images/view_enquiries_button.gif"/>
         </td>
     </tr>
 

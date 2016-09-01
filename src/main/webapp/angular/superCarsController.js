@@ -20,10 +20,10 @@ app.controller('manufacturerController', function ($scope, $http, $location, car
             .then(function (response) {
                 $scope.manufacturers = response.data;
             });
-            $scope.manufacturerLink = function(manufacturerId) {
-                carsUtils.setManufacturerId(manufacturerId);
-                $location.path("/cars");
-            }
+    $scope.manufacturerLink = function (manufacturerId) {
+        carsUtils.setManufacturerId(manufacturerId);
+        $location.path("/cars");
+    }
 });
 
 app.controller('carsController', function ($scope, $http, $location, carsUtils) {
@@ -52,10 +52,10 @@ app.controller('carController', function ($scope, $http, $location, carsUtils) {
             .then(function (response) {
                 $scope.enquiries = response.data;
             });
-            $scope.enquireLink = function(carId) {
-                carsUtils.setCarId(carId);
-                $location.path("/enquire");
-            }
+    $scope.enquireLink = function (carId) {
+        carsUtils.setCarId(carId);
+        $location.path("/enquire");
+    }
 });
 
 app.controller('searchController', function ($scope, $http) {
@@ -65,12 +65,15 @@ app.controller('searchController', function ($scope, $http) {
                     $scope.cars = response.data;
                 });
     }
-    ;
     $scope.search = function () {
         $http.post("../public/car/" + $scope.searchTerm)
                 .then(function (response) {
                     $scope.cars = response.data;
                 });
+    };
+    $scope.carLink = function (carId) {
+        carsUtils.setCarId(carId);
+        $location.path("/car");
     };
 });
 
