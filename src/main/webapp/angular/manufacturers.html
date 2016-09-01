@@ -6,7 +6,7 @@ and open the template in the editor.
 <table>
     <tr ng-repeat="manufacturer in manufacturers"> 
         <td>
-            <p ng-click="manufacturerLink(manufacturer.manufacturerId)">
+            <p class="manulink" ng-click="manufacturerLink(manufacturer.manufacturerId)">
                 <img src="images/manufacturers/{{manufacturer.logo}}" />{{manufacturer.name}}
             </p>
         </td>

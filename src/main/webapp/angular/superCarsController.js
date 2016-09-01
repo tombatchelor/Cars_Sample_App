@@ -58,7 +58,7 @@ app.controller('carController', function ($scope, $http, $location, carsUtils) {
     }
 });
 
-app.controller('searchController', function ($scope, $http) {
+app.controller('searchController', function ($scope, $http, $location, carsUtils) {
     if ($scope.searchTerm !== null) {
         $http.post("../public/car/" + $scope.searchTerm)
                 .then(function (response) {
