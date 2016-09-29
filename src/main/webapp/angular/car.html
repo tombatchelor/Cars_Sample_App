@@ -1,0 +1,47 @@
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<table>
+    <tr> 
+        <td>
+            <p>
+                <img width="150" height="100" src="images/cars/{{car.photo}}.jpg" align="absmiddle" />
+                <img src="images/manufacturers/{{car.manufacturer.logo}}" />
+                &nbsp;{{car.manufacturer.name}} - {{car.model}}
+                <img src="images/enquire_button.gif" ng-click="enquireLink(car.carId)" />
+            </p> 
+            <p class="car">
+                <b>Performance Summary:</b>
+                <br/>
+            </p>
+            <p class="car">Name:&nbsp;{{car.name}}<br />
+                Model:&nbsp;{{car.model}}<br />
+                Summary:&nbsp;{{car.summary}}<br />
+                Description:&nbsp;{{car.description}}<br />
+                Price:&nbsp;£{{car.price}}<br />
+                Colour:&nbsp;{{car.colour}}<br />
+                Year:&nbsp;{{car.year}}
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="images/view_enquiries_button.gif"/>
+        </td>
+    </tr>
+
+    <tr class="grey" ng-repeat="enquiry in enquiries"> 
+        <td> 
+            <p>
+                From:{{enquiry.name}},&nbsp;{{enquiry.email}}<br />
+                {{enquiry.comment}}<br />
+                <img src="images/line.gif">
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+</table>

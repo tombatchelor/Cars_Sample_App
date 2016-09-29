@@ -1,0 +1,147 @@
+table
+{ text-align: center;
+  font-family: Verdana;
+  font-weight: normal;
+  font-size: 11px;
+  color: #404040;
+  border: 0px #d79900 solid;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+
+td.home
+{ text-align: center;
+  font-family: Verdana;
+  font-weight: normal;
+  font-size: 11px;
+  color: #404040;
+  width: 203px;
+  border: 0px #d79900 solid;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+
+td.ad
+{ text-align: center;
+  font-family: Verdana;
+  font-weight: normal;
+  font-size: 11px;
+  background-color: #E6F1F5;
+  border: 0px #d79900 solid;
+  border-collapse: collapse;
+  border-spacing: 10px;
+}
+
+
+img
+{ text-align: left;
+  background-color: #fafafa;
+  border: 0px #d79900 solid;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+
+tr.grey
+{;
+ background-color: #F9F7F7;
+ font-family: Verdana;
+ font-weight: normal;
+ font-size: 11px;
+ border: 0px #d79900 solid;
+ border-collapse: collapse;
+ border-spacing: 0px;
+}
+
+td
+{
+    text-align: left;
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 11px;
+    border: 0px #d79900 solid;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+table.car
+{
+    background-color: #F9F7F7;
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 11px;
+    width: 550px;
+    border: 0px #d79900 solid;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+p.car
+{
+    background-color: #F9F7F7;
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 11px;
+    width: 550px;
+    border: 0px #d79900 solid;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+p
+{
+    background-color: #FFFFFF;
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 11px;
+    border: 0px #d79900 solid;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+p.normal
+{
+    background-color: #FFFFFF;
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 11px;
+    width:550;
+    border: 0px #d79900 solid;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+p.summary
+{
+    text-align: left;
+    background-color: #F9F7F7;
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 11px;
+    width: 430px;
+    border: 0px #d79900 solid;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+p.link
+{
+    text-align: left;
+    background-color: #F9F7F7;
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 11px;
+    width: 430px;
+    border: 0px #d79900 solid;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
+p.manulink
+{
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
