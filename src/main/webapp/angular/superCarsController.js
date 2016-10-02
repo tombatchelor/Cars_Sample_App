@@ -90,7 +90,7 @@ app.controller('sellController', function ($scope, $http, $location) {
         var carJSON = {};
         carJSON["name"] = $scope.name;
         carJSON["model"] = $scope.model;
-        carJSON["manufacturer"] = $scope.manufacturer;
+        carJSON["manufacturerId"] = parseInt($scope.manufacturer);
         carJSON["colour"] = $scope.colour;
         carJSON["year"] = $scope.year;
         carJSON["price"] = $scope.price;
