@@ -62,27 +62,35 @@ app.config(function ($routeProvider) {
             })
             .when("/ruf", {
                 templateUrl: "ruf.html"
+            })
+            .when("/login", {
+                templateUrl: "login.html",
+                controller: "loginController"
+            })
+            .when("/logout", {
+                templateUrl: "logout.html",
+                controller: "logoutController"
             });
 });
 
-app.factory('carsUtils', function() {
+app.factory('carsUtils', function () {
     var manufacturerId;
     var carId;
     var carsUtilsService = {};
-    
-    carsUtilsService.setCarId = function(id) {
+
+    carsUtilsService.setCarId = function (id) {
         carId = id;
     };
-    
-    carsUtilsService.getCarId = function() {
+
+    carsUtilsService.getCarId = function () {
         return carId;
     };
-    
-    carsUtilsService.setManufacturerId = function(id) {
+
+    carsUtilsService.setManufacturerId = function (id) {
         manufacturerId = id;
     };
-    
-    carsUtilsService.getManufacturerId = function() {
+
+    carsUtilsService.getManufacturerId = function () {
         return manufacturerId;
     };
     return carsUtilsService;
