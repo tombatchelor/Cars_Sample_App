@@ -55,6 +55,7 @@
     </dependencies>
 
     <build>
+        <finalName>Cars_Sample_App</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
