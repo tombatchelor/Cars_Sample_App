@@ -12,20 +12,34 @@ import javax.servlet.http.HttpSession;
  * @author tom.batchelor
  */
 public class UserManager {
-    
+
     private static User bob = new User("bob@test.com", "password");
-    
+    private static User geoff = new User("geoff@cars.com", "password");
+    private static User bill = new User("bill@yahoo.co.uk", "password");
+    private static User dave = new User("dave@internet.org", "password");
+
+    private static User[] users = {bob, geoff, bill, dave};
+
     private static final String USER_ATTRIBUTE = "user";
-    
+
     public static boolean login(User user, HttpSession session) {
-        if (user.getUsername().equals(bob.getUsername()) && user.getPassword().equals(bob.getPassword())) {
-            session.setAttribute(USER_ATTRIBUTE, bob);
-            return true;
-        } else {
+        if (user == null || user.getUsername() == null || user.getPassword() == null) {
             return false;
         }
+
+        String username = user.getUsername();
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
+                if (u.getPassword().equals(user.getPassword())) {
+                    session.setAttribute(USER_ATTRIBUTE, u);
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
-    
+
     public static boolean logout(HttpSession session) {
         session.setAttribute(USER_ATTRIBUTE, null);
         return true;
@@ -38,7 +52,7 @@ public class UserManager {
         } else {
             user.setPassword(null);
         }
-        
+
         return user;
     }
 }
