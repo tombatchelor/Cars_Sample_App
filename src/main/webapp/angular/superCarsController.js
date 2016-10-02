@@ -13,6 +13,10 @@ app.controller('homeController', function ($scope, $http) {
             .then(function (response) {
                 $scope.fuelPrices = response.data;
             });
+    $http.get("../public/user")
+            .then(function (response) {
+                $scope.currentUser = response.data;
+            });
 });
 
 app.controller('manufacturerController', function ($scope, $http, $location, carsUtils) {
@@ -137,4 +141,22 @@ app.controller('leakController', function ($scope, $http) {
                     $scope.leakSize = response.data;
                 });
     };
+});
+
+app.controller('loginController', function ($scope, $http, $location) {
+    $scope.login = function () {
+        var loginJSON = {};
+        loginJSON["username"] = $scope.username;
+        loginJSON["password"] = $scope.password;
+        $http.post("../public/user/login", loginJSON);
+        $location.path("/home");
+    };
+});
+
+app.controller('logoutController', function ($scope, $http) {
+    $http.get("../public/user")
+            .then(function (response) {
+                $scope.currentUser = response.data;
+            });
+            $http.get("../public/user/logout");
 });
