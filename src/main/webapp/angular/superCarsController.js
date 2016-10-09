@@ -60,6 +60,9 @@ app.controller('carController', function ($scope, $http, $location, carsUtils) {
         carsUtils.setCarId(carId);
         $location.path("/enquire");
     }
+    $scope.doError = function() {
+        adddlert("This will error!");
+    }
 });
 
 app.controller('searchController', function ($scope, $http, $location, carsUtils) {
@@ -158,5 +161,5 @@ app.controller('logoutController', function ($scope, $http) {
             .then(function (response) {
                 $scope.currentUser = response.data;
             });
-            $http.get("../public/user/logout");
+    $http.get("../public/user/logout");
 });
