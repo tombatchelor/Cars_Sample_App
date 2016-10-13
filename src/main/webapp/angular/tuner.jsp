@@ -18,7 +18,7 @@
 
         <script>
             tunerName = "<%=tunerName%>";
-            document.querySelector('.tuner').innerHTML = tunerName;
+            // document.querySelector('.tuner').innerHTML = tunerName;
         </script>
         <link rel="stylesheet" type="text/css" href="trader.css" />
         <table>
