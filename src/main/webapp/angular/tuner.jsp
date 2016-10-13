@@ -5,23 +5,27 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+ <%
+            String tunerName = request.getParameter("tunerName");
+        %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title><%=tunerName%></title>
     </head>
     <body>
-        <%
-            String tunerName = request.getParameter("tunerName");
-        %>
 
+        <script>
+            tunerName = "<%=tunerName%>";
+            document.querySelector('.tuner').innerHTML = tunerName;
+        </script>
         <link rel="stylesheet" type="text/css" href="trader.css" />
         <table>
             <tr>
                 <td colspan="5" align="left">
-                    <a href="angular/index.jsp">
-                        <IMG SRC="angular/images/logo.gif">
+                    <a href="index.jsp">
+                        <IMG SRC="images/logo.gif">
                     </a>
                 </td>
             </tr>
@@ -30,14 +34,14 @@
 
         <% if (tunerName.equals("AMG")) { %>
         <p class="normal">
-            AMG<br />
-            <img src="angular/images/line.gif" />
+        <div class="tuner"></div><br />
+            <img src="images/line.gif" />
         </p>
         <p class="normal" align="left">
-            <img src="angular/images/performance/amg.gif"/>
+            <img src="images/performance/amg.gif"/>
         </p>
         <p class="normal" align="left">
-            <img src="angular/images/performance/slk.gif"/>
+            <img src="images/performance/slk.gif"/>
         </p>
         <p class="car" >
             Inspired by the core values of Mercedes-Benz - like quality, safety, comfort and environmental
@@ -51,14 +55,14 @@
 
         <% if (tunerName.equals("Alpina")) { %>
         <p class="normal">
-            Alpina<br />
-            <img src="angular/images/line.gif" />
+            <div class="tuner"></div><br />
+            <img src="images/line.gif" />
         </p>
         <p class="normal" align="left">
-            <img src="angular/images/performance/alpina.gif" />
+            <img src="images/performance/alpina.gif" />
         </p>
         <p class="normal" align="left">
-            <img src="angular/images/performance/b10.gif" />
+            <img src="images/performance/b10.gif" />
         </p>
         <p class="car" >
             Throughout ALPINA's 40-year history, its automobiles have been known for their notion of exclusivity.
@@ -72,14 +76,14 @@
 
         <% if (tunerName.equals("Gembella")) { %>
         <p class="normal">
-            Gembella<br />
-            <img src="angular/images/line.gif" />
+            <div class="tuner"></div><br />
+            <img src="images/line.gif" />
         </p>
         <p class="normal" align="left">
-            <img src="angular/images/performance/gembella.gif" />
+            <img src="images/performance/gembella.gif" />
         </p>
         <p class="normal" align="left">
-            <img src="angular/images/performance/gcar.gif" />
+            <img src="images/performance/gcar.gif" />
         </p>
         <p class="car" >
             Porsche customizer Gemballa from Leonberg thrills the hearts of the drivers of the
@@ -91,14 +95,14 @@
 
         <% if (tunerName.equals("Mazdaspeed")) { %>
         <p class="normal">
-            MazdaSpeed<br />
-            <img src="angular/images/line.gif">
+            <div class="tuner"></div><br />
+            <img src="images/line.gif">
         </p>
         <p class="normal" align="left">
-            <img src="angular/images/performance/mazda.gif" />
+            <img src="images/performance/mazda.gif" />
         </p>
         <p class="normal" align="left">
-            <img src="angular/images/performance/rx8.gif" />
+            <img src="images/performance/rx8.gif" />
         </p>
         <p class="car">
             Mazda Motor Corporation announces the release of a limited edition RX-8 Mazdaspeed
@@ -120,14 +124,14 @@
 
         <% if (tunerName.equals("RUF")) { %>
         <p class="normal">
-            Ruf<br />
-            <img src="angular/images/line.gif">
+            <div class="tuner"></div><br />
+            <img src="images/line.gif">
         </p>
         <p class="normal" align="left">
-            <img src="angular/images/performance/ruf.gif" />
+            <img src="images/performance/ruf.gif" />
         </p>
         <p class="normal" align="left">
-            <img src="angular/images/performance/rgt.gif" />
+            <img src="images/performance/rgt.gif" />
         </p>
         <p class="car" >
             The latest year 2003 release from RUF Automobiles. A RUF manufactured sports
@@ -142,6 +146,7 @@
             filter and a re-mapped engine management system.
             </[>
             <% }%>
-            <IMG SRC="angular/images/pipe.gif">
+            <IMG SRC="images/pipe.gif">
+                    <script>document.querySelector('.tuner').innerHTML = tunerName;</script>
     </body>
 </html>
