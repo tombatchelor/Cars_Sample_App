@@ -1,33 +1,34 @@
 //
-//  ManufacturerTableViewController.swift
+//  CarTableViewController.swift
 //  Cars Mobile Sample
 //
-//  Created by Tom Batchelor on 11/7/16.
+//  Created by Tom Batchelor on 11/13/16.
 //  Copyright © 2016 Tom Batchelor. All rights reserved.
 //
 
 import UIKit
 
-class ManufacturerTableViewController: UITableViewController {
+class CarTableViewController: UITableViewController {
 
-    // MARK: Properties
-    
-    var manufacturers = [Manufacturer]()
-    let carsByManufacturerSegue = "CarsByManufacturerSegue"
+    var cars = [Car]()
+    var manufacturer:Manufacturer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        RestApiManager.sharedInstance.getManufacturers({manufacturers in
-            self.manufacturers = manufacturers
+
+        RestApiManager.sharedInstance.getCarsByManufacturer(manufacturer!, onCompletion: {cars in
+            self.cars = cars
             dispatch_async(dispatch_get_main_queue(), {
                 self.tableView.reloadData()
                 return
             })
         })
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,23 +43,25 @@ class ManufacturerTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return manufacturers.count
+        return cars.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellIdentifier = "ManufacturerTableViewCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! ManufacturerTableViewCell
-        let manufacturer = manufacturers[indexPath.row]
+        let cellIdentifier = "CarTableViewCell"
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! CarTableViewCell
+        let car = cars[indexPath.row]
+        
+        // Configure the cell
+        cell.carShortDescription.text = car.name + " - " + car.model
+        cell.manufacturerLogo.image = car.manufacturer!.logo
+        cell.carPicture.image = car.picture!
 
-        // Configure the cell...
-        cell.manuName.text = manufacturer.name
-        cell.manuLogo.image = manufacturer.logo
         return cell
     }
 
-    // MARK - Actions
+    // Mark - Actions
     
-    @IBAction func unwindToMainMenu(sender: AnyObject) {
+    @IBAction func windBackToManufacturers(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -97,14 +100,14 @@ class ManufacturerTableViewController: UITableViewController {
     }
     */
 
-
+    /*
     // MARK: - Navigation
 
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if  segue.identifier == carsByManufacturerSegue,
-            let destination = segue.destinationViewController as? CarTableViewController,
-            manufacturerIndex = tableView.indexPathForSelectedRow?.row {
-                destination.manufacturer = manufacturers[manufacturerIndex]
-        }
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
     }
+    */
+
 }

@@ -64,32 +64,33 @@
         <scene sceneID="5yS-Hl-gaS">
             <objects>
                 <tableViewController id="6u0-yp-4UM" customClass="ManufacturerTableViewController" customModule="Cars_Mobile_Sample" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" id="2aw-6E-Fjx">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="41" sectionHeaderHeight="28" sectionFooterHeight="28" id="2aw-6E-Fjx">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ManufacturerTableViewCell" rowHeight="75" id="heY-bd-4aP" customClass="ManufacturerTableViewCell" customModule="Cars_Mobile_Sample">
-                                <rect key="frame" x="0.0" y="92" width="600" height="75"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ManufacturerTableViewCell" rowHeight="41" id="heY-bd-4aP" customClass="ManufacturerTableViewCell" customModule="Cars_Mobile_Sample">
+                                <rect key="frame" x="0.0" y="92" width="600" height="41"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="heY-bd-4aP" id="xvp-gz-wJ8">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="74"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="40"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M1f-9W-wjJ">
-                                            <rect key="frame" x="8" y="0.0" width="74" height="74"/>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Manufacturer Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DMo-cB-WBO">
-                                            <rect key="frame" x="90" y="26" width="502" height="21"/>
+                                            <rect key="frame" x="120" y="10" width="472" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M1f-9W-wjJ">
+                                            <rect key="frame" x="8" y="0.0" width="104" height="41"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="manuLogo" destination="M1f-9W-wjJ" id="Eyd-aw-iZ1"/>
                                     <outlet property="manuName" destination="DMo-cB-WBO" id="KG3-hQ-8O9"/>
+                                    <segue destination="Iy6-Ht-Zqc" kind="push" identifier="CarsByManufacturerSegue" id="dU0-Iv-9Wb"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -99,12 +100,83 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="LoB-Mq-WwQ">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="UOZ-rq-cUo"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="UOZ-rq-cUo">
+                            <connections>
+                                <action selector="unwindToMainMenu:" destination="6u0-yp-4UM" id="2Yd-Tu-BoK"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="29H-8m-9Q2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3469" y="48"/>
+        </scene>
+        <!--Car Table View Controller-->
+        <scene sceneID="GXd-p3-uzB">
+            <objects>
+                <tableViewController id="Iy6-Ht-Zqc" customClass="CarTableViewController" customModule="Cars_Mobile_Sample" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="41" sectionHeaderHeight="28" sectionFooterHeight="28" id="Srb-aN-VP2">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CarTableViewCell" rowHeight="41" id="sm6-9Z-HD8" customClass="CarTableViewCell" customModule="Cars_Mobile_Sample">
+                                <rect key="frame" x="0.0" y="92" width="600" height="41"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sm6-9Z-HD8" id="r5G-41-13q">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lYm-Hu-T5L">
+                                            <rect key="frame" x="120" y="9" width="360" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jua-r7-4k9">
+                                            <rect key="frame" x="8" y="-1" width="104" height="41"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="41" id="ERU-JH-OGW"/>
+                                                <constraint firstAttribute="width" constant="104" id="YCU-je-ID1"/>
+                                            </constraints>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x2z-3Z-tRj">
+                                            <rect key="frame" x="488" y="-1" width="104" height="41"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="104" id="jPe-4S-iLP"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="x2z-3Z-tRj" firstAttribute="trailing" secondItem="r5G-41-13q" secondAttribute="trailingMargin" constant="8" id="2lI-12-vp1"/>
+                                        <constraint firstItem="Jua-r7-4k9" firstAttribute="leading" secondItem="r5G-41-13q" secondAttribute="leadingMargin" constant="8" id="G4I-7Y-dYp"/>
+                                        <constraint firstItem="x2z-3Z-tRj" firstAttribute="leading" secondItem="lYm-Hu-T5L" secondAttribute="trailing" constant="8" id="GiE-En-ehu"/>
+                                        <constraint firstItem="lYm-Hu-T5L" firstAttribute="leading" secondItem="Jua-r7-4k9" secondAttribute="trailing" constant="8" id="tW5-01-qAo"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="carPicture" destination="Jua-r7-4k9" id="KF7-ft-ahr"/>
+                                    <outlet property="carShortDescription" destination="lYm-Hu-T5L" id="oI0-WV-88r"/>
+                                    <outlet property="manufacturerLogo" destination="x2z-3Z-tRj" id="mSl-7r-P59"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Iy6-Ht-Zqc" id="d3x-M7-Fcg"/>
+                            <outlet property="delegate" destination="Iy6-Ht-Zqc" id="pK7-Vs-FRI"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Jl9-ej-yEd">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="lCq-LA-ARY">
+                            <connections>
+                                <action selector="windBackToManufacturers:" destination="Iy6-Ht-Zqc" id="pCq-S1-SG7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xdp-ey-WYi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4210" y="48"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="w67-mv-Xzr">

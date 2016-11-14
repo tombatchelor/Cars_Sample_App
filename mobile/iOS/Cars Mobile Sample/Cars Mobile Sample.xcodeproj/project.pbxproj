@@ -17,6 +17,9 @@
 		148C62561DD0F4B80009440E /* ManufacturerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C62551DD0F4B80009440E /* ManufacturerTableViewController.swift */; };
 		148C62581DD0F5920009440E /* ManufacturerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C62571DD0F5920009440E /* ManufacturerTableViewCell.swift */; };
 		148C625B1DD103B30009440E /* Manufacturer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C625A1DD103B30009440E /* Manufacturer.swift */; };
+		14AF704C1DD90C87003DBDD4 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF704B1DD90C87003DBDD4 /* Car.swift */; };
+		14AF704E1DD90CB1003DBDD4 /* CarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF704D1DD90CB1003DBDD4 /* CarTableViewController.swift */; };
+		14AF70501DD90CE3003DBDD4 /* CarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF704F1DD90CE3003DBDD4 /* CarTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		148C62551DD0F4B80009440E /* ManufacturerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManufacturerTableViewController.swift; sourceTree = "<group>"; };
 		148C62571DD0F5920009440E /* ManufacturerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManufacturerTableViewCell.swift; sourceTree = "<group>"; };
 		148C625A1DD103B30009440E /* Manufacturer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manufacturer.swift; sourceTree = "<group>"; };
+		14AF704B1DD90C87003DBDD4 /* Car.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
+		14AF704D1DD90CB1003DBDD4 /* CarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewController.swift; sourceTree = "<group>"; };
+		14AF704F1DD90CE3003DBDD4 /* CarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +110,8 @@
 				148C62381DCFA4E60009440E /* Info.plist */,
 				148C62551DD0F4B80009440E /* ManufacturerTableViewController.swift */,
 				148C62571DD0F5920009440E /* ManufacturerTableViewCell.swift */,
+				14AF704D1DD90CB1003DBDD4 /* CarTableViewController.swift */,
+				14AF704F1DD90CE3003DBDD4 /* CarTableViewCell.swift */,
 			);
 			path = "Cars Mobile Sample";
 			sourceTree = "<group>";
@@ -121,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				148C625A1DD103B30009440E /* Manufacturer.swift */,
+				14AF704B1DD90C87003DBDD4 /* Car.swift */,
 			);
 			name = DataObjects;
 			sourceTree = "<group>";
@@ -237,7 +246,10 @@
 				148C625B1DD103B30009440E /* Manufacturer.swift in Sources */,
 				148C622D1DCFA4E60009440E /* AppDelegate.swift in Sources */,
 				148C62581DD0F5920009440E /* ManufacturerTableViewCell.swift in Sources */,
+				14AF704E1DD90CB1003DBDD4 /* CarTableViewController.swift in Sources */,
+				14AF70501DD90CE3003DBDD4 /* CarTableViewCell.swift in Sources */,
 				140BE8B61DD11A06004DF5E6 /* RestApiManager.swift in Sources */,
+				14AF704C1DD90C87003DBDD4 /* Car.swift in Sources */,
 				148C62561DD0F4B80009440E /* ManufacturerTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

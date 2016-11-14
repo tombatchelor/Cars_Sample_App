@@ -17,15 +17,13 @@ class Manufacturer {
     var web: String?
     var email: String?
     var logo: UIImage?
-    var logoName: String?
     var engineId: Int?
     
-    init?(manufacturerId: Int, name: String, web: String, email: String, logoName: String) {
+    init?(manufacturerId: Int, name: String, web: String, email: String) {
         self.manufacturerId = manufacturerId
         self.name = name
         self.web = web
         self.email = email
-        self.logoName = logoName
         
         if manufacturerId < 0 || name.isEmpty {  // || logo.images?.count < 0 {
             return nil

@@ -12,19 +12,14 @@ import UIKit
 class RestApiManager: NSObject {
     static let sharedInstance = RestApiManager()
     
-    let baseURL = "http://localhost:8080/Cars_Sample_App/public/"
+    let baseURL = "http://localhost:8080/Cars_Sample_App/"
+    let restURL = "http://localhost:8080/Cars_Sample_App/public/"
+    let angularURL = "http://localhost:8080/Cars_Sample_App/angular/"
+    //MARK: Type getters
     
     func getManufacturers(onCompletion: ([Manufacturer]) -> Void) {
-        let route = baseURL + "manufacturer"
-        makeHTTPGetRequest(route, onCompletion: { data in
-            //let manufacturers:Array<Manufacturer> = [Manufacturer(manufacturerId: 1, name: "Test", country: "UK", web: "www.uk.com", email: "email@mail.com", logo: UIImage(named: "sample")!, engineId: 0)!]
-            var json: Array<NSObject> = []
-            do {
-                json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as! Array<NSObject>
-            } catch {
-                print(error)
-            }
-            
+        let route = restURL + "manufacturer"
+        getJSON(route, onCompletion: {json in
             var manufacturers = [Manufacturer]()
             for item in json {
                 if let member = item as? [String: AnyObject] {
@@ -32,8 +27,14 @@ class RestApiManager: NSObject {
                     let id = member["manufacturerId"] as! Int
                     let web = member["web"] as! String
                     let email = member["email"] as! String
+                    let manufacturer = Manufacturer(manufacturerId: id, name: name, web: web, email: email)!
                     let logoName = member["logo"] as! String
-                    manufacturers.append(Manufacturer(manufacturerId: id, name: name, web: web, email: email, logoName: logoName)!)
+                    let imageURL = self.angularURL + "images/manufacturers/" + logoName
+                    self.getImage(imageURL, onCompletion: { image in
+                        manufacturer.logo = image
+                    })
+                    manufacturers.append(manufacturer)
+                    
                 }
             }
 
@@ -41,9 +42,69 @@ class RestApiManager: NSObject {
         })
     }
     
-    func getRandomUser(onCompletion: (NSObject) -> Void) {
-        let route = baseURL
-        makeHTTPGetRequest(route, onCompletion: { data in
+    func getManufacturer(manufacturerId: Int, onCompletion: (Manufacturer) -> Void) {
+        let route = restURL + "manufacturer/" + String(manufacturerId)
+        getJSON(route, onCompletion:  {json in
+            var manufacturer:Manufacturer?
+            if let member = json[0] as? [String: AnyObject] {
+                let name = member["name"] as! String
+                let id = member["manufacturerId"] as! Int
+                let web = member["web"] as! String
+                let email = member["email"] as! String
+                manufacturer = Manufacturer(manufacturerId: id, name: name, web: web, email: email)!
+                let logoName = member["logo"] as! String
+                let imageURL = self.angularURL + "images/manufacturers/" + logoName
+                self.getImage(imageURL, onCompletion: { image in
+                    manufacturer!.logo = image
+                })
+            }
+            onCompletion(manufacturer!)
+        })
+    }
+    
+    func getCarsByManufacturer(manufactureId: Int, onCompletion: ([Car]) -> Void) {
+        let route = restURL + "car/manufacture/" + String(manufactureId)
+        getJSON(route, onCompletion: {json in
+            var cars = [Car]()
+            for item in json {
+                if let member = item as? [String: AnyObject] {
+                    let carId = member["carId"] as! Int
+                    let name = member["name"] as! String
+                    let model = member["model"] as! String
+                    let car = Car(carId: carId, name: name, model: model)!
+                    self.getManufacturer(manufactureId, onCompletion: {manufacturer in
+                        car.manufacturer = manufacturer
+                    })
+                    cars.append(car)
+                }
+            }
+            onCompletion(cars)
+        })
+    }
+    
+    func getCarsByManufacturer(manufacture: Manufacturer, onCompletion: ([Car]) -> Void) {
+        let route = restURL + "car/manufacturer/" + String(manufacture.manufacturerId)
+        getJSON(route, onCompletion: {json in
+            var cars = [Car]()
+            for item in json {
+                if let member = item as? [String: AnyObject] {
+                    let carId = member["carId"] as! Int
+                    let name = member["name"] as! String
+                    let model = member["model"] as! String
+                    let car = Car(carId: carId, name: name, model: model)!
+                    car.manufacturer = manufacture
+                    car.picture = UIImage(named: "sample")
+                    cars.append(car)
+                }
+            }
+            onCompletion(cars)
+        })
+    }
+    
+    // MARK: Type specific helpers
+    
+    func getJSON(path: String, onCompletion: (Array<NSObject>) -> Void) {
+        makeHTTPGetRequest(path, onCompletion: { data in
             var json: Array<NSObject> = []
             do {
                 json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as! Array<NSObject>
@@ -51,6 +112,13 @@ class RestApiManager: NSObject {
                 print(error)
             }
             onCompletion(json)
+        })
+    }
+    
+    func getImage(path: String, onCompletion: (UIImage) -> Void) {
+        makeHTTPGetRequest(path, onCompletion: {data in
+            let image:UIImage = UIImage(data: data)!
+            onCompletion(image)
         })
     }
     
