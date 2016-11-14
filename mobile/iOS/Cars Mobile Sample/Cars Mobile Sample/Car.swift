@@ -17,7 +17,7 @@ class Car {
     var manufacturer: Manufacturer?
     var colour: String?
     var year: Int?
-    var print: Float64?
+    var price: Float64?
     var summary: String?
     var description: String?
     var picture: UIImage?

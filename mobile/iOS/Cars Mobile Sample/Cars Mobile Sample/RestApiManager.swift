@@ -75,6 +75,12 @@ class RestApiManager: NSObject {
                     self.getManufacturer(manufactureId, onCompletion: {manufacturer in
                         car.manufacturer = manufacturer
                     })
+                    car.picture = UIImage(named: "sample")
+                    car.colour = (member["colour"] as? String)
+                    car.price = Float64(member["price"] as! NSNumber)
+                    car.year = Int(member["year"] as! NSNumber)
+                    car.description = (member["description"] as? String)
+                    car.summary = (member["summary"] as? String)
                     cars.append(car)
                 }
             }
@@ -94,6 +100,11 @@ class RestApiManager: NSObject {
                     let car = Car(carId: carId, name: name, model: model)!
                     car.manufacturer = manufacture
                     car.picture = UIImage(named: "sample")
+                    car.colour = (member["colour"] as? String)
+                    car.price = Float64(member["price"] as! NSNumber)
+                    car.year = Int(member["year"] as! NSNumber)
+                    car.description = (member["description"] as? String)
+                    car.summary = (member["summary"] as? String)
                     cars.append(car)
                 }
             }

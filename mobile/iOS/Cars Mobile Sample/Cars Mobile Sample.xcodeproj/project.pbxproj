@@ -20,6 +20,7 @@
 		14AF704C1DD90C87003DBDD4 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF704B1DD90C87003DBDD4 /* Car.swift */; };
 		14AF704E1DD90CB1003DBDD4 /* CarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF704D1DD90CB1003DBDD4 /* CarTableViewController.swift */; };
 		14AF70501DD90CE3003DBDD4 /* CarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF704F1DD90CE3003DBDD4 /* CarTableViewCell.swift */; };
+		14D2FF861DDA14EB0085D0F4 /* CarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D2FF851DDA14EB0085D0F4 /* CarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		14AF704B1DD90C87003DBDD4 /* Car.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
 		14AF704D1DD90CB1003DBDD4 /* CarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewController.swift; sourceTree = "<group>"; };
 		14AF704F1DD90CE3003DBDD4 /* CarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewCell.swift; sourceTree = "<group>"; };
+		14D2FF851DDA14EB0085D0F4 /* CarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				148C62571DD0F5920009440E /* ManufacturerTableViewCell.swift */,
 				14AF704D1DD90CB1003DBDD4 /* CarTableViewController.swift */,
 				14AF704F1DD90CE3003DBDD4 /* CarTableViewCell.swift */,
+				14D2FF851DDA14EB0085D0F4 /* CarViewController.swift */,
 			);
 			path = "Cars Mobile Sample";
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				148C622D1DCFA4E60009440E /* AppDelegate.swift in Sources */,
 				148C62581DD0F5920009440E /* ManufacturerTableViewCell.swift in Sources */,
 				14AF704E1DD90CB1003DBDD4 /* CarTableViewController.swift in Sources */,
+				14D2FF861DDA14EB0085D0F4 /* CarViewController.swift in Sources */,
 				14AF70501DD90CE3003DBDD4 /* CarTableViewCell.swift in Sources */,
 				140BE8B61DD11A06004DF5E6 /* RestApiManager.swift in Sources */,
 				14AF704C1DD90C87003DBDD4 /* Car.swift in Sources */,
