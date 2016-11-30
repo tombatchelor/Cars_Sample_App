@@ -81,7 +81,6 @@
                 <version>2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <outputDirectory>/opt/tomcat/apache-tomcat-8.5.5/webapps</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
