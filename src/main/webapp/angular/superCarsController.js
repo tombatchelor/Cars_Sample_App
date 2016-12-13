@@ -8,7 +8,7 @@ app.controller('mainController', function ($scope) {
 
 });
 
-app.controller('homeController', function ($scope, $http) {
+app.controller('homeController', function ($scope, $http, $location, carsUtils) {
     $http.get("../public/fuel")
             .then(function (response) {
                 $scope.fuelPrices = response.data;
@@ -17,6 +17,10 @@ app.controller('homeController', function ($scope, $http) {
             .then(function (response) {
                 $scope.currentUser = response.data;
             });
+    $scope.search = function () {
+        carsUtils.setSearchTerm($scope.searchTerm)
+        $location.path("/search");
+    };
 });
 
 app.controller('manufacturerController', function ($scope, $http, $location, carsUtils) {
@@ -27,7 +31,7 @@ app.controller('manufacturerController', function ($scope, $http, $location, car
     $scope.manufacturerLink = function (manufacturerId) {
         carsUtils.setManufacturerId(manufacturerId);
         $location.path("/cars");
-    }
+    };
 });
 
 app.controller('carsController', function ($scope, $http, $location, carsUtils) {
@@ -35,7 +39,7 @@ app.controller('carsController', function ($scope, $http, $location, carsUtils) 
     $http.get("../public/car/manufacturer/" + $scope.manufacturerId)
             .then(function (response) {
                 $scope.cars = response.data;
-            })
+            });
     $http.get("../public/manufacturer/" + $scope.manufacturerId)
             .then(function (response) {
                 $scope.manufacturer = response.data;
@@ -59,13 +63,16 @@ app.controller('carController', function ($scope, $http, $location, carsUtils) {
     $scope.enquireLink = function (carId) {
         carsUtils.setCarId(carId);
         $location.path("/enquire");
-    }
-    $scope.doError = function() {
+    };
+    $scope.doError = function () {
         adddlert("This will error!");
-    }
+    };
 });
 
 app.controller('searchController', function ($scope, $http, $location, carsUtils) {
+    if (carsUtils.getSearchTerm() !== null) {
+        $scope.searchTerm = carsUtils.getSearchTerm();
+    }
     if ($scope.searchTerm !== null) {
         $http.post("../public/car/" + $scope.searchTerm)
                 .then(function (response) {

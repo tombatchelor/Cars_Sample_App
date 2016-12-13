@@ -18,9 +18,9 @@
                 </tr>
                 <tr>
                     <td><br />
-                        <form name="searchForm" action="search.do?query=search" method="POST">
-                            <b>Quick Search</b><br /><input type="text" name="criteria" />&nbsp;<br />
-                            <input type="image" src="images/small_search_but.gif"/ align="absmiddle"><br />
+                        <form>
+                            <b>Quick Search</b><br /><input type="text" ng-model="searchTerm" />&nbsp;<br />
+                            <input type="image" src="images/small_search_but.gif" align="absmiddle" ng-click="search()"><br />
                         </form>
                     </td>
                 </tr>

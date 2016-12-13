@@ -76,6 +76,7 @@ app.config(function ($routeProvider) {
 app.factory('carsUtils', function () {
     var manufacturerId;
     var carId;
+    var searchTerm;
     var carsUtilsService = {};
 
     carsUtilsService.setCarId = function (id) {
@@ -93,5 +94,14 @@ app.factory('carsUtils', function () {
     carsUtilsService.getManufacturerId = function () {
         return manufacturerId;
     };
+    
+    carsUtilsService.setSearchTerm = function(term) {
+        searchTerm = term;
+    };
+    
+    carsUtilsService.getSearchTerm = function() {
+        return searchTerm;
+    };
+    
     return carsUtilsService;
 });
