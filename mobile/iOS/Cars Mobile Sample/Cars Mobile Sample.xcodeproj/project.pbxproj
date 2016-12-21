@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1409F3E81E00B7DC0049648A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1409F3E71E00B7DC0049648A /* SearchViewController.swift */; };
 		140BE8B61DD11A06004DF5E6 /* RestApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140BE8B51DD11A06004DF5E6 /* RestApiManager.swift */; };
 		148C622D1DCFA4E60009440E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C622C1DCFA4E60009440E /* AppDelegate.swift */; };
 		148C622F1DCFA4E60009440E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C622E1DCFA4E60009440E /* HomeViewController.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1409F3E71E00B7DC0049648A /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		140BE8B51DD11A06004DF5E6 /* RestApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestApiManager.swift; sourceTree = "<group>"; };
 		148C62291DCFA4E60009440E /* Cars Mobile Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cars Mobile Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		148C622C1DCFA4E60009440E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				14AF704D1DD90CB1003DBDD4 /* CarTableViewController.swift */,
 				14AF704F1DD90CE3003DBDD4 /* CarTableViewCell.swift */,
 				14D2FF851DDA14EB0085D0F4 /* CarViewController.swift */,
+				1409F3E71E00B7DC0049648A /* SearchViewController.swift */,
 			);
 			path = "Cars Mobile Sample";
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				148C622F1DCFA4E60009440E /* HomeViewController.swift in Sources */,
+				1409F3E81E00B7DC0049648A /* SearchViewController.swift in Sources */,
 				148C625B1DD103B30009440E /* Manufacturer.swift in Sources */,
 				148C622D1DCFA4E60009440E /* AppDelegate.swift in Sources */,
 				148C62581DD0F5920009440E /* ManufacturerTableViewCell.swift in Sources */,

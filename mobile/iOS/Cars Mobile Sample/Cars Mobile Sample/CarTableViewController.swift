@@ -14,6 +14,8 @@ class CarTableViewController: UITableViewController {
     var manufacturer:Manufacturer?
     let carDetailSegue  = "CarDetailSegue"
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -107,8 +109,8 @@ class CarTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if  segue.identifier == carDetailSegue,
             let destination = segue.destinationViewController as? CarViewController,
-            manufacturerIndex = tableView.indexPathForSelectedRow?.row {
-                destination.car = cars[manufacturerIndex]
+            carIndex = tableView.indexPathForSelectedRow?.row {
+                destination.car = cars[carIndex]
         }
     }
 }

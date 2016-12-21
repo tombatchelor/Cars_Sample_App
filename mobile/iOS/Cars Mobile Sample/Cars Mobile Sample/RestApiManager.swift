@@ -63,7 +63,7 @@ class RestApiManager: NSObject {
     }
     
     func getCarsByManufacturer(manufactureId: Int, onCompletion: ([Car]) -> Void) {
-        let route = restURL + "car/manufacture/" + String(manufactureId)
+        let route = restURL + "car/manufacturer/" + String(manufactureId)
         getJSON(route, onCompletion: {json in
             var cars = [Car]()
             for item in json {
@@ -112,10 +112,65 @@ class RestApiManager: NSObject {
         })
     }
     
+    func getCarsBySearch(searchTerm: String, onCompletion: ([Car]) -> Void) {
+        let route = restURL + "car/" + searchTerm
+        postJSON(route, body: ["":""], onCompletion: {json in
+            var cars = [Car]()
+            print(json)
+            for item in json {
+                if let member = item as? [String: AnyObject] {
+                    let carId = member["carId"] as! Int
+                    let name = member["name"] as! String
+                    let model = member["model"] as! String
+                    let car = Car(carId: carId, name: name, model: model)!
+                    // TODO: Change to create manu from embeded manu object
+                    car.manufacturer = self.getManufacturerFromDict(member["manufacturer"] as! [String: AnyObject])
+                    car.picture = UIImage(named: "sample")
+                    car.colour = (member["colour"] as? String)
+                    car.price = Float64(member["price"] as! NSNumber)
+                    car.year = Int(member["year"] as! NSNumber)
+                    car.description = (member["description"] as? String)
+                    car.summary = (member["summary"] as? String)
+                    cars.append(car)
+                }
+            }
+            onCompletion(cars)
+        })
+    }
+    
+    // MARK: Parsing utilities
+    
+    func getManufacturerFromDict(member: [String: AnyObject]) -> Manufacturer {
+        var manufacturer:Manufacturer?
+            let name = member["name"] as! String
+            let id = member["manufacturerId"] as! Int
+            let web = member["web"] as! String
+            let email = member["email"] as! String
+            manufacturer = Manufacturer(manufacturerId: id, name: name, web: web, email: email)!
+            let logoName = member["logo"] as! String
+            let imageURL = self.angularURL + "images/manufacturers/" + logoName
+            self.getImage(imageURL, onCompletion: { image in
+                manufacturer!.logo = image
+            })
+        return manufacturer!
+    }
+    
     // MARK: Type specific helpers
     
     func getJSON(path: String, onCompletion: (Array<NSObject>) -> Void) {
         makeHTTPGetRequest(path, onCompletion: { data in
+            var json: Array<NSObject> = []
+            do {
+                json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as! Array<NSObject>
+            } catch {
+                print(error)
+            }
+            onCompletion(json)
+        })
+    }
+    
+    func postJSON(path: String, body: [String: AnyObject], onCompletion: (Array<NSObject>) -> Void) {
+        makeHTTPPostRequest(path, body: body, onCompletion: { data in
             var json: Array<NSObject> = []
             do {
                 json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as! Array<NSObject>
