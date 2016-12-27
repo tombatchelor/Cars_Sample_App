@@ -31,4 +31,21 @@ class Car {
             return nil
         }
     }
+    
+    func getCarAsDict() -> [String: AnyObject] {
+        var dict = [String: AnyObject]()
+        dict["name"] = self.name;
+        dict["model"] = self.model;
+        dict["manufacturerId"] = self.manufacturer!.manufacturerId;
+        dict["colour"] = self.colour;
+        dict["year"] = self.year;
+        dict["price"] = self.price;
+        dict["summary"] = self.summary;
+        dict["description"] = self.description;
+        dict["wheelSize"] = 0;
+        dict["tyreSize"] = 0;
+        dict["photo"] = "0";
+        dict["manual"] = false;
+        return dict
+    }
 }

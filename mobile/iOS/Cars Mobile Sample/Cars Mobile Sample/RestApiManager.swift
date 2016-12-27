@@ -138,6 +138,12 @@ class RestApiManager: NSObject {
         })
     }
     
+    func saveCar(car: Car, onCompletion: (Car) -> Void) {
+        let route = restURL + "car"
+        putJSON(route, body: car.getCarAsDict())
+        onCompletion(car)
+    }
+    
     // MARK: Parsing utilities
     
     func getManufacturerFromDict(member: [String: AnyObject]) -> Manufacturer {
@@ -181,6 +187,11 @@ class RestApiManager: NSObject {
         })
     }
     
+    func putJSON(path: String, body: [String: AnyObject]) {
+        makeHTTPPutRequest(path, body: body, onCompletion: { data in
+        })
+    }
+    
     func getImage(path: String, onCompletion: (UIImage) -> Void) {
         makeHTTPGetRequest(path, onCompletion: {data in
             let image:UIImage = UIImage(data: data)!
@@ -190,7 +201,8 @@ class RestApiManager: NSObject {
     
     // MARK: Perform a GET Request
     private func makeHTTPGetRequest(path: String, onCompletion: (NSData) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: path)!)
+        let url = path.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         
         let session = NSURLSession.sharedSession()
         
@@ -204,10 +216,39 @@ class RestApiManager: NSObject {
     
     // MARK: Perform a POST Request
     private func makeHTTPPostRequest(path: String, body: [String: AnyObject], onCompletion: (NSData) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: path)!)
-        
+        let url = path.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+    
         // Set the method to POST
         request.HTTPMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            // Set the POST body for the request
+            let jsonBody = try NSJSONSerialization.dataWithJSONObject(body, options: .PrettyPrinted)
+            request.HTTPBody = jsonBody
+            let session = NSURLSession.sharedSession()
+            
+            let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+                if let jsonData = data {
+                    onCompletion(jsonData)
+                }
+            })
+            task.resume()
+        } catch {
+            // Create your personal error
+            onCompletion(NSData())
+        }
+    }
+    
+    // MARK: Perform a PUT Request
+    private func makeHTTPPutRequest(path: String, body: [String: AnyObject], onCompletion: (NSData) -> Void) {
+        let url = path.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        
+        // Set the method to POST
+        request.HTTPMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         do {
             // Set the POST body for the request

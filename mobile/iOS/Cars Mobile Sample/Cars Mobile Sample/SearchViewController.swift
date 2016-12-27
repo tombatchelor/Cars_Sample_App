@@ -48,7 +48,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {X
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cars.count
     }
     
