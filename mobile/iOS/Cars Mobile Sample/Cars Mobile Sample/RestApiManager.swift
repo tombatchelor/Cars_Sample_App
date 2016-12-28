@@ -123,7 +123,6 @@ class RestApiManager: NSObject {
                     let name = member["name"] as! String
                     let model = member["model"] as! String
                     let car = Car(carId: carId, name: name, model: model)!
-                    // TODO: Change to create manu from embeded manu object
                     car.manufacturer = self.getManufacturerFromDict(member["manufacturer"] as! [String: AnyObject])
                     car.picture = UIImage(named: "sample")
                     car.colour = (member["colour"] as? String)
@@ -142,6 +141,34 @@ class RestApiManager: NSObject {
         let route = restURL + "car"
         putJSON(route, body: car.getCarAsDict())
         onCompletion(car)
+    }
+    
+    func loginUser(user: User, onCompletion: (User) -> Void) {
+        let route = restURL + "user/login"
+        makeHTTPPostRequest(route, body: user.getUserAsDict(), onCompletion: {data in
+            
+        })
+    }
+    
+    func getUser(onCompletion: (User?) -> Void) {
+        let route = restURL + "user"
+        getJSON(route, onCompletion: {json in
+            var user:User?
+            if let member = json[0] as? [String: AnyObject] {
+                var username = member["username"] as? String
+                if (username != nil) {
+                    user = User(username: username!)
+                }
+            }
+            onCompletion(user)
+        })
+        
+    }
+    
+    func logoutUser() {
+        let route = restURL + "user/logout"
+        makeHTTPGetRequest(route, onCompletion: {data in
+        })
     }
     
     // MARK: Parsing utilities
@@ -166,8 +193,19 @@ class RestApiManager: NSObject {
     func getJSON(path: String, onCompletion: (Array<NSObject>) -> Void) {
         makeHTTPGetRequest(path, onCompletion: { data in
             var json: Array<NSObject> = []
+            
+            var cleanedData = NSData()
+            var dataString = NSString(data: data, encoding: NSUTF8StringEncoding)!
+            if dataString.characterAtIndex(0) != ("[" as NSString).characterAtIndex(0)  {
+                dataString = "[" + (dataString as String) + "]"
+                print(dataString)
+                cleanedData = dataString.dataUsingEncoding(NSUTF8StringEncoding)!
+            } else {
+                cleanedData = data
+            }
+            
             do {
-                json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as! Array<NSObject>
+                json = try NSJSONSerialization.JSONObjectWithData(cleanedData, options: NSJSONReadingOptions()) as! Array<NSObject>
             } catch {
                 print(error)
             }
