@@ -52,5 +52,7 @@ public class User {
         this.password = password;
     }
     
-    
+    public User clone() {
+        return new User(this.username, this.password);
+    }
 }

@@ -28,10 +28,11 @@ public class UserManager {
         }
 
         String username = user.getUsername();
+        String password = user.getPassword();
         for (User u : users) {
             if (u.getUsername().equals(username)) {
-                if (u.getPassword().equals(user.getPassword())) {
-                    session.setAttribute(USER_ATTRIBUTE, u);
+                if (u.getPassword().equals(password)) {
+                    session.setAttribute(USER_ATTRIBUTE, u.clone());
                     return true;
                 }
             }
@@ -50,6 +51,7 @@ public class UserManager {
         if (user == null) {
             user = new User();
         } else {
+            user = user.clone();
             user.setPassword(null);
         }
 
