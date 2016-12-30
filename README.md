@@ -70,8 +70,8 @@ It is also possible to have Maven auto deploy right into Tomcat.
 	<pre><code>
 	&lt;server&gt;
       &lt;id>Tomcat&lt;/id&gt;
-      &lt;username>user</username&gt;
-      &lt;password>pass</password&gt;
+      &lt;username&gt;user&lt;/username&gt;
+      &lt;password&gt;pass&lt;/password&gt;
     &lt;/server&gt;
     </code></pre>
     1. Note that the user/pass must match what you set in the Tomcat config
