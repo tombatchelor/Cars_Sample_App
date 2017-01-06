@@ -77,7 +77,7 @@ It is also possible to have Maven auto deploy right into Tomcat.
     1. Note that the user/pass must match what you set in the Tomcat config
 1. Now go back to the Cars_Sample_App source. Instead of "mvn install", the following will build and deploy:
 	<pre><code>
-	mvn tomcat7:install
+	mvn tomcat7:deploy
 	</code></pre>
 1. If the app is already deployed into the Tomcat the following will build and re-deploy
 	<pre><code>
