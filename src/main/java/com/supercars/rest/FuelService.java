@@ -10,6 +10,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.externaldata.FuelPrices;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  *
@@ -20,7 +22,8 @@ public class FuelService {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public FuelPrices getFuelPrices() {
-        return FuelPrices.getFuelPrices();
+    public FuelPrices getFuelPrices() throws InterruptedException, ExecutionException {
+        Future<FuelPrices> future = FuelPrices.getFuelPricesAsync();
+        return future.get();
     }
 }

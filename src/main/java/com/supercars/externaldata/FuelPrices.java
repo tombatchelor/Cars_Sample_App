@@ -5,6 +5,7 @@
  */
 package com.supercars.externaldata;
 
+import java.util.concurrent.Future;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -34,6 +35,12 @@ public class FuelPrices {
                 .get(FuelPrices.class);
     }
 
+    public static Future<FuelPrices> getFuelPricesAsync() {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://www.fueleconomy.gov/ws/rest/fuelprices");
+        Future<FuelPrices> response = target.request(MediaType.APPLICATION_XML).async().get(FuelPrices.class);
+        return response;
+    }
     /**
      * @return the cng
      */
