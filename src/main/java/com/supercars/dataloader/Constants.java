@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.sql.DataSource;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 /**
  *
@@ -33,7 +33,7 @@ public class Constants {
         try {
             Context initContext = new InitialContext();
             Context webContext = (Context)initContext.lookup("java:/comp/env");
-            DataSource ds = (DataSource) webContext.lookup("jdbc/supercars");
+            ComboPooledDataSource ds = (ComboPooledDataSource) webContext.lookup("jdbc/supercars");
             Connection dbCon = ds.getConnection();
             return dbCon;
         } catch (NamingException ex) {
