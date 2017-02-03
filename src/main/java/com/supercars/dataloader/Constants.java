@@ -66,35 +66,35 @@ public class Constants {
     }
     
     private static boolean checkPropertiesTableExist() throws SQLException {
-        Connection connection = getDBConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'supercars' AND table_name = 'PREFERENCES'");
-        return resultSet.next();
+        boolean exists = false;
+        try (Connection connection = getDBConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'supercars' AND table_name = 'PREFERENCES'")) {
+            exists = resultSet.next();
+        }
+        return exists;
     }
     
     private static int getSchemaVersion() throws SQLException {
+        int version = 1;
         if (checkPropertiesTableExist()) {
-            Connection connection = getDBConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT VALUE FROM PREFERENCES WHERE NAME=\"SCHEMA_VERSION\"");
-            resultSet.next();
-            return resultSet.getInt(1);
-        } else {
-            return 1;
+            try (Connection connection = getDBConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery("SELECT VALUE FROM PREFERENCES WHERE NAME=\"SCHEMA_VERSION\"")) {
+                resultSet.next();
+                version = resultSet.getInt(1);
+            }
         }
+        return version;
     }
     
     private static void updateSchemaVersion(int version) throws SQLException {
-        Connection connection = getDBConnection();
-        Statement statement = connection.createStatement();
-        statement.executeUpdate("INSERT INTO PREFERENCES(NAME, VALUE) SELECT \"SCHEMA_VERSION\", \"" + version + "\"");
+        try (Connection connection = getDBConnection(); Statement statement = connection.createStatement()) {
+            statement.executeUpdate("INSERT INTO PREFERENCES(NAME, VALUE) SELECT \"SCHEMA_VERSION\", \"" + version + "\"");
+        }
     }
     
     private static boolean upgradeToSchema_2() throws SQLException {
-        Connection connection = getDBConnection();
-        Statement statement = connection.createStatement();
-        statement.execute(PREFERENCES_TABLE);
-        updateSchemaVersion(2);
+        try (Connection connection = getDBConnection(); Statement statement = connection.createStatement()) {
+            statement.execute(PREFERENCES_TABLE);
+            updateSchemaVersion(2);
+        }
         return true;
     }
 }
