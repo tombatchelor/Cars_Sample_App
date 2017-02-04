@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<p class="normal">Preferences<br><img src="images/line.gif"></p>
+<p class="normal">Available preferences:</p>
+<table>
+    <tr>
+        <td>
+            Name
+        </td>
+        <td>
+            Value
+        </td>
+        <td>
+            Description
+        </td>
+    </tr>
+    <tr ng-repeat="preference in preferences"> 
+        <td> 
+            {{preference.name}}
+        </td>
+        <td>
+            <input type="text" ng-model="preference.value" />
+        </td>
+        <td>
+            {{preference.description}}
+        </td>
+    </tr>
+</table>
+<button type="image" ng-click="savePreferences()">Submit</button>

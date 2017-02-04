@@ -9,6 +9,8 @@
 
 package com.supercars.dataloader;
 
+import com.supercars.preferences.PreferenceException;
+import com.supercars.preferences.PreferenceManager;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,6 +32,8 @@ public class Constants {
             " PREFERENCE_ID MEDIUMINT NOT NULL AUTO_INCREMENT,\n" +
             " NAME VARCHAR(30)," +
             " VALUE VARCHAR(50)," +
+            " DESCRIPTION VARCHAR(100), " +
+            " HIDDEN INT(1), " +
             " PRIMARY KEY (PREFERENCE_ID) " +
             ");";
     
@@ -42,7 +46,7 @@ public class Constants {
                     upgradeToSchema_2();
                 default:
             }
-        } catch (SQLException ex) {
+        } catch (SQLException | PreferenceException ex) {
             Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -73,20 +77,19 @@ public class Constants {
         return exists;
     }
     
-    private static int getSchemaVersion() throws SQLException {
+    private static int getSchemaVersion() throws SQLException, PreferenceException {
         int version = 1;
         if (checkPropertiesTableExist()) {
-            try (Connection connection = getDBConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery("SELECT VALUE FROM PREFERENCES WHERE NAME=\"SCHEMA_VERSION\"")) {
-                resultSet.next();
-                version = resultSet.getInt(1);
-            }
+            return Integer.parseInt(PreferenceManager.getPreference("SCHEMA_VERSION").getValue());
         }
         return version;
     }
     
     private static void updateSchemaVersion(int version) throws SQLException {
-        try (Connection connection = getDBConnection(); Statement statement = connection.createStatement()) {
-            statement.executeUpdate("INSERT INTO PREFERENCES(NAME, VALUE) SELECT \"SCHEMA_VERSION\", \"" + version + "\"");
+        try {
+            PreferenceManager.updatePreference("SCHEMA_VERSION", String.valueOf(version), "Schema Version", true);
+        } catch (PreferenceException ex) {
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

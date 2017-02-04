@@ -170,3 +170,14 @@ app.controller('logoutController', function ($scope, $http) {
             });
     $http.get("../public/user/logout");
 });
+
+app.controller('preferencesController', function ($scope, $http) {
+    $http.get("../public/preferences/all")
+            .then(function (response) {
+                $scope.preferences = response.data;
+            });
+            $scope.savePreferences = function() {
+                $http.post("../public/preferences/all", $scope.preferences);
+                $location.path("/preferences");
+            }
+});
