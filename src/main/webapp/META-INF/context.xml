@@ -10,7 +10,13 @@
               maxIdleTime="3000" 
               user="root" 
               password="AppDynamics"
+<<<<<<< HEAD
               driverClass="com.mysql.jdbc.Driver"
               jdbcUrl="jdbc:mysql://localhost:3306/supercars"
               />
+=======
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/supercars"
+              maxIdle="4" />
+>>>>>>> master
 </Context>

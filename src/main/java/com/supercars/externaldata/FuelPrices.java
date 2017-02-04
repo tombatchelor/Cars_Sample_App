@@ -5,6 +5,12 @@
  */
 package com.supercars.externaldata;
 
+import com.supercars.logging.Logger;
+import com.supercars.preferences.Preference;
+import com.supercars.preferences.PreferenceException;
+import com.supercars.preferences.PreferenceManager;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -15,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author tom.batchelor
  */
-@XmlRootElement 
+@XmlRootElement
 public class FuelPrices {
 
     private double cng;
@@ -26,12 +32,35 @@ public class FuelPrices {
     private double midgrade;
     private double premium;
     private double regular;
-    
+
     public static FuelPrices getFuelPrices() {
+        try {
+            Preference preference = PreferenceManager.getPreference("REST_CLIENT");
+            switch (preference.getValue()) {
+                case "Jersey_Sync":
+                    return getFuelPricesJerseySync();
+                case "Jersey_Async":
+                    return getFuelPriceJerseysAsync().get();
+            }
+        } catch (PreferenceException | InterruptedException | ExecutionException ex) {
+            Logger.log(ex);
+        }
+        
+        return null;
+    }
+
+    private static FuelPrices getFuelPricesJerseySync() {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://www.fueleconomy.gov/ws/rest/fuelprices");
         return target.request(MediaType.APPLICATION_XML)
                 .get(FuelPrices.class);
+    }
+
+    private static Future<FuelPrices> getFuelPriceJerseysAsync() {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://www.fueleconomy.gov/ws/rest/fuelprices");
+        Future<FuelPrices> response = target.request(MediaType.APPLICATION_XML).async().get(FuelPrices.class);
+        return response;
     }
 
     /**

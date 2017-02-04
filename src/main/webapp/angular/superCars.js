@@ -70,6 +70,10 @@ app.config(function ($routeProvider) {
             .when("/logout", {
                 templateUrl: "logout.html",
                 controller: "logoutController"
+            })
+            .when("/preferences", {
+                templateUrl: "preferences.html",
+                controller: "preferencesController"
             });
 });
 
@@ -94,14 +98,14 @@ app.factory('carsUtils', function () {
     carsUtilsService.getManufacturerId = function () {
         return manufacturerId;
     };
-    
-    carsUtilsService.setSearchTerm = function(term) {
+
+    carsUtilsService.setSearchTerm = function (term) {
         searchTerm = term;
     };
-    
-    carsUtilsService.getSearchTerm = function() {
+
+    carsUtilsService.getSearchTerm = function () {
         return searchTerm;
     };
-    
+
     return carsUtilsService;
 });
