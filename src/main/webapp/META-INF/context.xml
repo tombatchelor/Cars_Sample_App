@@ -8,6 +8,5 @@
               password="AppDynamics"
               driverClassName="com.mysql.jdbc.Driver"
               url="jdbc:mysql://localhost:3306/supercars"
-              maxActive="10" 
               maxIdle="4" />
 </Context>
