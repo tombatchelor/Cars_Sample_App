@@ -23,7 +23,6 @@ public class FuelService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public FuelPrices getFuelPrices() throws InterruptedException, ExecutionException {
-        Future<FuelPrices> future = FuelPrices.getFuelPricesAsync();
-        return future.get();
+        return FuelPrices.getFuelPrices();
     }
 }
