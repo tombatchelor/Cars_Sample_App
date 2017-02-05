@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/Cars_Sample_App">
     <!-- Specify a JDBC datasource for oracle -->
-    <Resource name="jdbc/supercars" 
+    <Resource name="jdbc/standard" 
+              auth="Container"
+              type="javax.sql.DataSource" 
+              username="root" 
+              password="AppDynamics"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/supercars"
+              maxIdle="4" />
+    <Resource name="jdbc/c3p0" 
               auth="Container"
               type="com.mchange.v2.c3p0.ComboPooledDataSource"
               factory="org.apache.naming.factory.BeanFactory"
@@ -10,13 +18,7 @@
               maxIdleTime="3000" 
               user="root" 
               password="AppDynamics"
-<<<<<<< HEAD
               driverClass="com.mysql.jdbc.Driver"
               jdbcUrl="jdbc:mysql://localhost:3306/supercars"
               />
-=======
-              driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/supercars"
-              maxIdle="4" />
->>>>>>> master
 </Context>

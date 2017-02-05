@@ -5,7 +5,7 @@
  */
 package com.supercars.preferences;
 
-import static com.supercars.dataloader.Constants.getDBConnection;
+import static com.supercars.dataloader.Constants.getDBConnectionStandardPool;
 import com.supercars.logging.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,8 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.logging.Level;
 
 /**
  *
@@ -25,7 +23,7 @@ public class PreferenceManager {
     public static Preference getPreference(String name) throws PreferenceException {
         Preference preference = new Preference(name);
         try {
-            try (Connection connection = getDBConnection(); PreparedStatement statement = connection.prepareStatement("SELECT VALUE, DESCRIPTION, HIDDEN FROM PREFERENCES WHERE NAME=?")) {
+            try (Connection connection = getDBConnectionStandardPool(); PreparedStatement statement = connection.prepareStatement("SELECT VALUE, DESCRIPTION, HIDDEN FROM PREFERENCES WHERE NAME=?")) {
                 statement.setString(1, name);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
@@ -49,7 +47,7 @@ public class PreferenceManager {
 
     public static boolean doesPreferenceExist(String name) throws PreferenceException {
         try {
-            try (Connection connection = getDBConnection()) {
+            try (Connection connection = getDBConnectionStandardPool()) {
                 boolean exists;
                 try (PreparedStatement statement = connection.prepareStatement("SELECT VALUE FROM PREFERENCES WHERE NAME=?")) {
                     statement.setString(1, name);
@@ -85,7 +83,7 @@ public class PreferenceManager {
             hidden = 1;
         }
         try {
-            try (Connection connection = getDBConnection()) {
+            try (Connection connection = getDBConnectionStandardPool()) {
                 if (doesPreferenceExist(preference.getName())) {
                     try (PreparedStatement statement = connection.prepareStatement("UPDATE PREFERENCES SET VALUE = ?, DESCRIPTION = ?, HIDDEN = ? WHERE NAME = ?")) {
                         statement.setString(1, preference.getValue());
@@ -111,18 +109,20 @@ public class PreferenceManager {
             throw pe;
         }
     }
-    
-    public static List<Preference> getAllPreferences() throws PreferenceException {
+
+    public static List<Preference> getAllPreferences(boolean includeHidden) throws PreferenceException {
         List<Preference> preferences = new LinkedList<>();
-        try (Connection connection = getDBConnection(); PreparedStatement statement = connection.prepareStatement("SELECT NAME, VALUE, DESCRIPTION, HIDDEN FROM PREFERENCES")) {
+        try (Connection connection = getDBConnectionStandardPool(); PreparedStatement statement = connection.prepareStatement("SELECT NAME, VALUE, DESCRIPTION, HIDDEN FROM PREFERENCES")) {
             ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 Preference preference = new Preference();
                 preference.setName(resultSet.getString(1));
                 preference.setValue(resultSet.getString(2));
                 preference.setDescription(resultSet.getString(3));
-                preference.setHidden((resultSet.getInt(4)>0));
-                preferences.add(preference);
+                preference.setHidden((resultSet.getInt(4) > 0));
+                if (includeHidden || !preference.isHidden()) {
+                    preferences.add(preference);
+                }
             }
         } catch (SQLException ex) {
             Logger.log(ex);
@@ -130,10 +130,10 @@ public class PreferenceManager {
             pe.addSuppressed(ex);
             throw pe;
         }
-        
+
         return preferences;
     }
-    
+
     public static void setPreferences(List<Preference> preferences) throws PreferenceException {
         for (Preference preference : preferences) {
             updatePreference(preference);

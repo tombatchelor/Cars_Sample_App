@@ -31,17 +31,12 @@ public class PreferenceService {
     public List<Preference> getAllPreferences() {
         List<Preference> preferences = null;
         try {
-            preferences = PreferenceManager.getAllPreferences();
+            preferences = PreferenceManager.getAllPreferences(false);
             System.out.println(preferences.size());
         } catch (PreferenceException ex) {
             Logger.log(ex);
         }
         
-        for (Preference preference : preferences) {
-            if (preference.isHidden()) {
-                preferences.remove(preference);
-            }
-        }
         return preferences;
     }
     

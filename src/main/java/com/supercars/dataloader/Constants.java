@@ -21,6 +21,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import javax.sql.DataSource;
 
 /**
  *
@@ -45,6 +46,8 @@ public class Constants {
                     upgradeToSchema_2();
                 case 2:
                     upgradeToSchema_3();
+                case 3:
+                    upgradeToSchema_4();
                 default:
             }
         } catch (SQLException | PreferenceException ex) {
@@ -58,23 +61,29 @@ public class Constants {
     public Constants() {
     }
 
-    public static Connection getDBConnection() {
+    public static Connection getDBConnectionStandardPool() {
         try {
             Context initContext = new InitialContext();
-            Context webContext = (Context)initContext.lookup("java:/comp/env");
-            ComboPooledDataSource ds = (ComboPooledDataSource) webContext.lookup("jdbc/supercars");
-            Connection dbCon = ds.getConnection();
-            return dbCon;
-        } catch (NamingException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-=======
             Context webContext = (Context) initContext.lookup("java:/comp/env");
-            DataSource ds = (DataSource) webContext.lookup("jdbc/supercars");
+            DataSource ds = (DataSource) webContext.lookup("jdbc/standard");
             Connection connection = ds.getConnection();
             return connection;
         } catch (NamingException | SQLException ex) {
->>>>>>> master
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
+    public static Connection getDBConnection() {
+        try {
+            String jndiName = PreferenceManager.getPreference("CONNECTION_POOL").getValue();
+            Context initContext = new InitialContext();
+            Context webContext = (Context) initContext.lookup("java:/comp/env");
+            DataSource ds = (DataSource) webContext.lookup(jndiName);
+            Connection dbCon = ds.getConnection();
+            return dbCon;
+        } catch (NamingException | SQLException | PreferenceException ex) {
             Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -83,7 +92,7 @@ public class Constants {
 
     private static boolean checkPropertiesTableExist() throws SQLException {
         boolean exists = false;
-        try (Connection connection = getDBConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'supercars' AND table_name = 'PREFERENCES'")) {
+        try (Connection connection = getDBConnectionStandardPool(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'supercars' AND table_name = 'PREFERENCES'")) {
             exists = resultSet.next();
         }
         return exists;
@@ -106,7 +115,7 @@ public class Constants {
     }
 
     private static boolean upgradeToSchema_2() throws SQLException {
-        try (Connection connection = getDBConnection(); Statement statement = connection.createStatement()) {
+        try (Connection connection = getDBConnectionStandardPool(); Statement statement = connection.createStatement()) {
             statement.execute(PREFERENCES_TABLE);
             updateSchemaVersion(2);
         }
@@ -116,5 +125,10 @@ public class Constants {
     private static void upgradeToSchema_3() throws PreferenceException, SQLException {
         PreferenceManager.updatePreference(new Preference("REST_CLIENT", "Jersey_Sync", "Client to call fueleconomy.gov, either 'Jersey_Sync' or 'Jersey_Async'", false));
         updateSchemaVersion(3);
+    }
+
+    private static void upgradeToSchema_4() throws PreferenceException, SQLException {
+        PreferenceManager.updatePreference(new Preference("CONNECTION_POOL", "jdbc/standard", "Connection pool to use, either 'jdbc/standard' or 'jdbc/c3p0'", false));
+        updateSchemaVersion(4);
     }
 }
