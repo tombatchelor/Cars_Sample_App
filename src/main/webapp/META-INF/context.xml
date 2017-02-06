@@ -7,7 +7,7 @@
               username="root" 
               password="AppDynamics"
               driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/supercars"
+              url="jdbc:mysql://localhost:3306/supercars?useSSL=false"
               maxIdle="4" />
     <Resource name="jdbc/c3p0" 
               auth="Container"
@@ -19,6 +19,6 @@
               user="root" 
               password="AppDynamics"
               driverClass="com.mysql.jdbc.Driver"
-              jdbcUrl="jdbc:mysql://localhost:3306/supercars"
+              jdbcUrl="jdbc:mysql://localhost:3306/supercars?useSSL=false"
               />
 </Context>

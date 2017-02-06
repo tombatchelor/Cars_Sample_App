@@ -32,7 +32,6 @@ public class PreferenceService {
         List<Preference> preferences = null;
         try {
             preferences = PreferenceManager.getAllPreferences(false);
-            System.out.println(preferences.size());
         } catch (PreferenceException ex) {
             Logger.log(ex);
         }
