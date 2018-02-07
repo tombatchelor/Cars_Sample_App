@@ -29,7 +29,7 @@ public class FuelPrices {
     
     public static FuelPrices getFuelPrices() {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://www.fueleconomy.gov/ws/rest/fuelprices");
+        WebTarget target = client.target("https://www.fueleconomy.gov/ws/rest/fuelprices");
         return target.request(MediaType.APPLICATION_XML)
                 .get(FuelPrices.class);
     }
