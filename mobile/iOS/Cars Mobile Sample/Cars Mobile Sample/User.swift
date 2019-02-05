@@ -19,8 +19,8 @@ class User {
     
     func getUserAsDict() -> [String: AnyObject] {
         var dict = [String: AnyObject]()
-        dict["username"] = self.username
-        dict["password"] = self.password
+        dict["username"] = self.username as AnyObject
+        dict["password"] = self.password as AnyObject
         
         return dict
     }

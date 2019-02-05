@@ -21,7 +21,7 @@ class CarTableViewController: UITableViewController {
 
         RestApiManager.sharedInstance.getCarsByManufacturer(manufacturer!, onCompletion: {cars in
             self.cars = cars
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.tableView.reloadData()
                 return
             })
@@ -41,17 +41,17 @@ class CarTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cars.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "CarTableViewCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! CarTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CarTableViewCell
         let car = cars[indexPath.row]
         
         // Configure the cell
@@ -64,8 +64,8 @@ class CarTableViewController: UITableViewController {
 
     // Mark - Actions
     
-    @IBAction func windBackToManufacturers(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func windBackToManufacturers(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
     }
     
     /*
@@ -106,10 +106,10 @@ class CarTableViewController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if  segue.identifier == carDetailSegue,
-            let destination = segue.destinationViewController as? CarViewController,
-            carIndex = tableView.indexPathForSelectedRow?.row {
+            let destination = segue.destination as? CarViewController,
+            let carIndex = tableView.indexPathForSelectedRow?.row {
                 destination.car = cars[carIndex]
         }
     }

@@ -17,7 +17,7 @@ class HomeViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         RestApiManager.sharedInstance.getUser({user in
             if (user != nil) {
                 self.userLabel.text = user!.username
@@ -33,7 +33,7 @@ class HomeViewController: UIViewController {
 
     // MARK: Actions
     
-    @IBAction func logout(sender: AnyObject) {
+    @IBAction func logout(_ sender: AnyObject) {
         RestApiManager.sharedInstance.logoutUser()
     }
 

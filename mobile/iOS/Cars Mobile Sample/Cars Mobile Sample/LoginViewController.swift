@@ -27,13 +27,13 @@ class LoginViewController: UIViewController {
     
     // MARK: Actions
     
-    @IBAction func login(sender: AnyObject) {
+    @IBAction func login(_ sender: AnyObject) {
         let user = User(username: username.text!)
         user.password = password.text!
         
         RestApiManager.sharedInstance.loginUser(user, onCompletion: {user in
         })
-        self.dismissViewControllerAnimated(false, completion: nil)
+        self.dismiss(animated: false, completion: nil)
     }
     
     /*

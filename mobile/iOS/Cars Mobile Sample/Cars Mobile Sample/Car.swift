@@ -34,18 +34,18 @@ class Car {
     
     func getCarAsDict() -> [String: AnyObject] {
         var dict = [String: AnyObject]()
-        dict["name"] = self.name;
-        dict["model"] = self.model;
-        dict["manufacturerId"] = self.manufacturer!.manufacturerId;
-        dict["colour"] = self.colour;
-        dict["year"] = self.year;
-        dict["price"] = self.price;
-        dict["summary"] = self.summary;
-        dict["description"] = self.description;
-        dict["wheelSize"] = 0;
-        dict["tyreSize"] = 0;
-        dict["photo"] = "0";
-        dict["manual"] = false;
+        dict["name"] = self.name as AnyObject;
+        dict["model"] = self.model as AnyObject;
+        dict["manufacturerId"] = self.manufacturer!.manufacturerId as AnyObject;
+        dict["colour"] = self.colour as AnyObject;
+        dict["year"] = self.year as AnyObject;
+        dict["price"] = self.price as AnyObject;
+        dict["summary"] = self.summary as AnyObject;
+        dict["description"] = self.description as AnyObject;
+        dict["wheelSize"] = 0 as AnyObject;
+        dict["tyreSize"] = 0 as AnyObject;
+        dict["photo"] = "0" as AnyObject;
+        dict["manual"] = false as AnyObject;
         return dict
     }
 }

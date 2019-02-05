@@ -20,7 +20,7 @@ class ManufacturerTableViewController: UITableViewController {
         
         RestApiManager.sharedInstance.getManufacturers({manufacturers in
             self.manufacturers = manufacturers
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.tableView.reloadData()
                 return
             })
@@ -37,17 +37,17 @@ class ManufacturerTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return manufacturers.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "ManufacturerTableViewCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! ManufacturerTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ManufacturerTableViewCell
         let manufacturer = manufacturers[indexPath.row]
 
         // Configure the cell...
@@ -58,8 +58,8 @@ class ManufacturerTableViewController: UITableViewController {
 
     // MARK - Actions
     
-    @IBAction func unwindToMainMenu(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func unwindToMainMenu(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
     }
     
     /*
@@ -100,10 +100,10 @@ class ManufacturerTableViewController: UITableViewController {
 
     // MARK: - Navigation
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if  segue.identifier == carsByManufacturerSegue,
-            let destination = segue.destinationViewController as? CarTableViewController,
-            manufacturerIndex = tableView.indexPathForSelectedRow?.row {
+            let destination = segue.destination as? CarTableViewController,
+            let manufacturerIndex = tableView.indexPathForSelectedRow?.row {
                 destination.manufacturer = manufacturers[manufacturerIndex]
         }
     }

@@ -17,7 +17,7 @@ class RestApiManager: NSObject {
     let angularURL = "http://localhost:8080/Cars_Sample_App/angular/"
     //MARK: Type getters
     
-    func getManufacturers(onCompletion: ([Manufacturer]) -> Void) {
+    func getManufacturers(_ onCompletion: @escaping ([Manufacturer]) -> Void) {
         let route = restURL + "manufacturer"
         getJSON(route, onCompletion: {json in
             var manufacturers = [Manufacturer]()
@@ -42,7 +42,7 @@ class RestApiManager: NSObject {
         })
     }
     
-    func getManufacturer(manufacturerId: Int, onCompletion: (Manufacturer) -> Void) {
+    func getManufacturer(_ manufacturerId: Int, onCompletion: @escaping (Manufacturer) -> Void) {
         let route = restURL + "manufacturer/" + String(manufacturerId)
         getJSON(route, onCompletion:  {json in
             var manufacturer:Manufacturer?
@@ -62,7 +62,7 @@ class RestApiManager: NSObject {
         })
     }
     
-    func getCarsByManufacturer(manufactureId: Int, onCompletion: ([Car]) -> Void) {
+    func getCarsByManufacturer(_ manufactureId: Int, onCompletion: @escaping ([Car]) -> Void) {
         let route = restURL + "car/manufacturer/" + String(manufactureId)
         getJSON(route, onCompletion: {json in
             var cars = [Car]()
@@ -88,7 +88,7 @@ class RestApiManager: NSObject {
         })
     }
     
-    func getCarsByManufacturer(manufacture: Manufacturer, onCompletion: ([Car]) -> Void) {
+    func getCarsByManufacturer(_ manufacture: Manufacturer, onCompletion: @escaping ([Car]) -> Void) {
         let route = restURL + "car/manufacturer/" + String(manufacture.manufacturerId)
         getJSON(route, onCompletion: {json in
             var cars = [Car]()
@@ -112,9 +112,9 @@ class RestApiManager: NSObject {
         })
     }
     
-    func getCarsBySearch(searchTerm: String, onCompletion: ([Car]) -> Void) {
+    func getCarsBySearch(_ searchTerm: String, onCompletion: @escaping ([Car]) -> Void) {
         let route = restURL + "car/" + searchTerm
-        postJSON(route, body: ["":""], onCompletion: {json in
+        postJSON(route, body: ["":"" as AnyObject], onCompletion: {json in
             var cars = [Car]()
             print(json)
             for item in json {
@@ -137,25 +137,25 @@ class RestApiManager: NSObject {
         })
     }
     
-    func saveCar(car: Car, onCompletion: (Car) -> Void) {
+    func saveCar(_ car: Car, onCompletion: (Car) -> Void) {
         let route = restURL + "car"
         putJSON(route, body: car.getCarAsDict())
         onCompletion(car)
     }
     
-    func loginUser(user: User, onCompletion: (User) -> Void) {
+    func loginUser(_ user: User, onCompletion: (User) -> Void) {
         let route = restURL + "user/login"
         makeHTTPPostRequest(route, body: user.getUserAsDict(), onCompletion: {data in
             
         })
     }
     
-    func getUser(onCompletion: (User?) -> Void) {
+    func getUser(_ onCompletion: @escaping (User?) -> Void) {
         let route = restURL + "user"
         getJSON(route, onCompletion: {json in
             var user:User?
             if let member = json[0] as? [String: AnyObject] {
-                var username = member["username"] as? String
+                let username = member["username"] as? String
                 if (username != nil) {
                     user = User(username: username!)
                 }
@@ -173,7 +173,7 @@ class RestApiManager: NSObject {
     
     // MARK: Parsing utilities
     
-    func getManufacturerFromDict(member: [String: AnyObject]) -> Manufacturer {
+    func getManufacturerFromDict(_ member: [String: AnyObject]) -> Manufacturer {
         var manufacturer:Manufacturer?
             let name = member["name"] as! String
             let id = member["manufacturerId"] as! Int
@@ -190,22 +190,22 @@ class RestApiManager: NSObject {
     
     // MARK: Type specific helpers
     
-    func getJSON(path: String, onCompletion: (Array<NSObject>) -> Void) {
+    func getJSON(_ path: String, onCompletion: @escaping (Array<NSObject>) -> Void) {
         makeHTTPGetRequest(path, onCompletion: { data in
             var json: Array<NSObject> = []
             
-            var cleanedData = NSData()
-            var dataString = NSString(data: data, encoding: NSUTF8StringEncoding)!
-            if dataString.characterAtIndex(0) != ("[" as NSString).characterAtIndex(0)  {
-                dataString = "[" + (dataString as String) + "]"
+            var cleanedData = Data()
+            var dataString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
+            if dataString.character(at: 0) != ("[" as NSString).character(at: 0)  {
+                dataString = "[" + (dataString as String) + "]" as NSString
                 print(dataString)
-                cleanedData = dataString.dataUsingEncoding(NSUTF8StringEncoding)!
+                cleanedData = dataString.data(using: String.Encoding.utf8.rawValue)!
             } else {
                 cleanedData = data
             }
             
             do {
-                json = try NSJSONSerialization.JSONObjectWithData(cleanedData, options: NSJSONReadingOptions()) as! Array<NSObject>
+                json = try JSONSerialization.jsonObject(with: cleanedData, options: JSONSerialization.ReadingOptions()) as! Array<NSObject>
             } catch {
                 print(error)
             }
@@ -213,11 +213,11 @@ class RestApiManager: NSObject {
         })
     }
     
-    func postJSON(path: String, body: [String: AnyObject], onCompletion: (Array<NSObject>) -> Void) {
+    func postJSON(_ path: String, body: [String: AnyObject], onCompletion: @escaping (Array<NSObject>) -> Void) {
         makeHTTPPostRequest(path, body: body, onCompletion: { data in
             var json: Array<NSObject> = []
             do {
-                json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as! Array<NSObject>
+                json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! Array<NSObject>
             } catch {
                 print(error)
             }
@@ -225,12 +225,12 @@ class RestApiManager: NSObject {
         })
     }
     
-    func putJSON(path: String, body: [String: AnyObject]) {
+    func putJSON(_ path: String, body: [String: AnyObject]) {
         makeHTTPPutRequest(path, body: body, onCompletion: { data in
         })
     }
     
-    func getImage(path: String, onCompletion: (UIImage) -> Void) {
+    func getImage(_ path: String, onCompletion: @escaping (UIImage) -> Void) {
         makeHTTPGetRequest(path, onCompletion: {data in
             let image:UIImage = UIImage(data: data)!
             onCompletion(image)
@@ -238,13 +238,13 @@ class RestApiManager: NSObject {
     }
     
     // MARK: Perform a GET Request
-    private func makeHTTPGetRequest(path: String, onCompletion: (NSData) -> Void) {
-        let url = path.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+    fileprivate func makeHTTPGetRequest(_ path: String, onCompletion: @escaping (Data) -> Void) {
+        let url = path.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        let request = NSMutableURLRequest(url: URL(string: url)!)
         
-        let session = NSURLSession.sharedSession()
+        let session = URLSession.shared
         
-        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             if let jsonData = data {
                 onCompletion(jsonData)
             }
@@ -253,21 +253,21 @@ class RestApiManager: NSObject {
     }
     
     // MARK: Perform a POST Request
-    private func makeHTTPPostRequest(path: String, body: [String: AnyObject], onCompletion: (NSData) -> Void) {
-        let url = path.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+    fileprivate func makeHTTPPostRequest(_ path: String, body: [String: AnyObject], onCompletion: @escaping (Data) -> Void) {
+        let url = path.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        let request = NSMutableURLRequest(url: URL(string: url)!)
     
         // Set the method to POST
-        request.HTTPMethod = "POST"
+        request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         do {
             // Set the POST body for the request
-            let jsonBody = try NSJSONSerialization.dataWithJSONObject(body, options: .PrettyPrinted)
-            request.HTTPBody = jsonBody
-            let session = NSURLSession.sharedSession()
+            let jsonBody = try JSONSerialization.data(withJSONObject: body, options: .prettyPrinted)
+            request.httpBody = jsonBody
+            let session = URLSession.shared
             
-            let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
                 if let jsonData = data {
                     onCompletion(jsonData)
                 }
@@ -275,26 +275,26 @@ class RestApiManager: NSObject {
             task.resume()
         } catch {
             // Create your personal error
-            onCompletion(NSData())
+            onCompletion(Data())
         }
     }
     
     // MARK: Perform a PUT Request
-    private func makeHTTPPutRequest(path: String, body: [String: AnyObject], onCompletion: (NSData) -> Void) {
-        let url = path.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+    fileprivate func makeHTTPPutRequest(_ path: String, body: [String: AnyObject], onCompletion: @escaping (Data) -> Void) {
+        let url = path.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        let request = NSMutableURLRequest(url: URL(string: url)!)
         
         // Set the method to POST
-        request.HTTPMethod = "PUT"
+        request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         do {
             // Set the POST body for the request
-            let jsonBody = try NSJSONSerialization.dataWithJSONObject(body, options: .PrettyPrinted)
-            request.HTTPBody = jsonBody
-            let session = NSURLSession.sharedSession()
+            let jsonBody = try JSONSerialization.data(withJSONObject: body, options: .prettyPrinted)
+            request.httpBody = jsonBody
+            let session = URLSession.shared
             
-            let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
                 if let jsonData = data {
                     onCompletion(jsonData)
                 }
@@ -302,7 +302,7 @@ class RestApiManager: NSObject {
             task.resume()
         } catch {
             // Create your personal error
-            onCompletion(NSData())
+            onCompletion(Data())
         }
     }
 }

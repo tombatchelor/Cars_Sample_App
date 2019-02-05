@@ -30,7 +30,7 @@ class SellViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         
         RestApiManager.sharedInstance.getManufacturers({manufacturers in
             self.manufacturers = manufacturers
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.manufacturerPicker.reloadAllComponents()
                 return
             })
@@ -43,23 +43,23 @@ class SellViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     // Mark: Picker
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return manufacturers.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return manufacturers[row].name
     }
     
     // ACTIONS
     
-    @IBAction func sellCar(sender: UIButton) {
+    @IBAction func sellCar(_ sender: UIButton) {
         let car = Car(carId: 0, name: carName.text!, model: carModel.text!)
-        car?.manufacturer = manufacturers[manufacturerPicker.selectedRowInComponent(0)]
+        car?.manufacturer = manufacturers[manufacturerPicker.selectedRow(inComponent: 0)]
         car?.colour = carColour.text!
         car?.year = Int(carYear.text!)
         car?.price = Float64(carPrice.text!)

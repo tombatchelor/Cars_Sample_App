@@ -32,11 +32,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     // MARK: Actions
     
-    @IBAction func searchField(sender: UITextField) {
+    @IBAction func searchField(_ sender: UITextField) {
         print(sender.text!)
         RestApiManager.sharedInstance.getCarsBySearch(sender.text!, onCompletion: {cars in
             self.cars = cars
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.tableView.reloadData()
                 return
             })
@@ -44,18 +44,18 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     // MARK - TableView Stuff
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cars.count
     }
     
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "CarTableViewCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! CarTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CarTableViewCell
         print(indexPath.row)
         let car = cars[indexPath.row]
         
@@ -71,10 +71,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     */
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if  segue.identifier == carDetailSegue,
-            let destination = segue.destinationViewController as? CarViewController,
-            carIndex = tableView.indexPathForSelectedRow?.row {
+            let destination = segue.destination as? CarViewController,
+            let carIndex = tableView.indexPathForSelectedRow?.row {
                 destination.car = cars[carIndex]
         }
     }
