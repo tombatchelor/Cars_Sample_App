@@ -1,6 +1,6 @@
 # Cars Sample App iOS
 
-This is a simple iOS client which has been built to access the REST services the web app provides. This is built using Swift 2.1.1, iOS SDK 9.2 and XCode 7.2.1
+This is a simple iOS client which has been built to access the REST services the web app provides. This is built using Swift 4.0, iOS SDK 12.1 and XCode 10.1
 
 ## Security Settings
 
