@@ -1,6 +1,26 @@
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
+  name: cars-deployment-web
+spec:
+  selector:
+    matchLabels:
+      app: cars_web
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: cars_web
+    spec:
+      containers:
+      - name: app-server
+        image: tombatchelor/cars_web:1.0
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
   name: cars-deployment
 spec:
   selector:
@@ -16,7 +36,8 @@ spec:
       - name: app-server
         image: tombatchelor/cars:1.4
         ports:
-        - containerPort: 8080
+        - name: cars_app
+          containerPort: 8080
 ---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
@@ -50,3 +71,15 @@ spec:
   - protocol: TCP
     port: 3306
     targetPort: mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cars_app
+spec:
+  selector:
+    app:cars_app
+  ports:
+  - protocol TCP
+    port: 8080
+    targetPort: cars_app
