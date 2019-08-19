@@ -13,8 +13,8 @@ spec:
         app: cars_web
     spec:
       containers:
-      - name: app-server
-        image: tombatchelor/cars_web:1.0
+      - name: web-server
+        image: tombatchelor/cars_web:1.3
         ports:
         - containerPort: 80
 ---
@@ -36,7 +36,7 @@ spec:
       - name: app-server
         image: tombatchelor/cars:1.4
         ports:
-        - name: cars_app
+        - name: cars-app-port
           containerPort: 8080
 ---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
@@ -75,11 +75,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cars_app
+  name: cars-app
 spec:
   selector:
-    app:cars_app
+    app: cars_app
   ports:
-  - protocol TCP
+  - protocol: TCP
     port: 8080
-    targetPort: cars_app
+    targetPort: cars-app-port
