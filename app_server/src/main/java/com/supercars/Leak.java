@@ -32,5 +32,6 @@ public class Leak {
     
     public static void drainCollection() {
         leakyCollection = new LinkedList<>();
+        System.gc();
     }
 }
