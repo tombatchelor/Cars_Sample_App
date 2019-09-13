@@ -14,10 +14,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import zipkin2.Span;
-import zipkin2.reporter.AsyncReporter;
-import zipkin2.reporter.Sender;
-import zipkin2.reporter.urlconnection.URLConnectionSender;
 
 /**
  *
@@ -25,11 +21,7 @@ import zipkin2.reporter.urlconnection.URLConnectionSender;
  */
 public class DelegatingTracingFilter implements Filter {
 
-    Sender sender = URLConnectionSender.create("http://127.0.0.1:9411/api/v2/spans");
-    AsyncReporter<Span> spanReporter = AsyncReporter.create(sender);
-    Tracing tracing = Tracing.newBuilder()
-            .localServiceName("cars-app")
-            .spanReporter(spanReporter).build();
+    Tracing tracing = TracingBuilder.getInstance().getTracing("cars-app");
     Filter delegate = TracingFilter.create(tracing);
 
     @Override
@@ -40,13 +32,7 @@ public class DelegatingTracingFilter implements Filter {
 
     @Override
     public void destroy() {
-        try {
-            tracing.close(); // disables Tracing.current()
-            spanReporter.close(); // stops reporting thread and flushes data
-            sender.close(); // closes any transport resources
-        } catch (IOException e) {
-            // do something real
-        }
+        tracing.close(); // disables Tracing.current()
     }
 
     @Override

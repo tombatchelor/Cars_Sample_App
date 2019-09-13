@@ -6,13 +6,12 @@
 package com.supercars.externaldata;
 
 import brave.Tracing;
-import brave.http.HttpTracing;
 import brave.jaxrs2.TracingClientFilter;
 import com.supercars.logging.Logger;
 import com.supercars.preferences.Preference;
 import com.supercars.preferences.PreferenceException;
 import com.supercars.preferences.PreferenceManager;
-import com.supercars.tracing.DelegatingTracingFilter;
+import com.supercars.tracing.TracingBuilder;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import javax.ws.rs.client.Client;
@@ -20,10 +19,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.annotation.XmlRootElement;
-import zipkin2.Span;
-import zipkin2.reporter.AsyncReporter;
-import zipkin2.reporter.Sender;
-import zipkin2.reporter.urlconnection.URLConnectionSender;
 
 /**
  *
@@ -41,11 +36,7 @@ public class FuelPrices {
     private double premium;
     private double regular;
 
-    static Sender sender = URLConnectionSender.create("http://127.0.0.1:9411/api/v2/spans");
-    static AsyncReporter<Span> spanReporter = AsyncReporter.create(sender);
-    static Tracing tracing = Tracing.newBuilder()
-            .localServiceName("fuel-prices")
-            .spanReporter(spanReporter).build();
+    static Tracing tracing = TracingBuilder.getInstance().getTracing("fuel-prices");
     
     public static FuelPrices getFuelPrices() {
         try {

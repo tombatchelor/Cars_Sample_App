@@ -20,5 +20,6 @@
               password="AppDynamics"
               driverClass="com.mysql.jdbc.Driver"
               jdbcUrl="jdbc:mysql://mysql:3306/supercars?useSSL=false&amp;serverTimezone=America/Los_Angeles&amp;queryInterceptors=brave.mysql8.TracingQueryInterceptor"
-              />
+    />
+    <Environment name="zipkinSink" value="http://127.0.0.1:9411/api/v2/spans" type="java.lang.String" override="false" />
 </Context>
