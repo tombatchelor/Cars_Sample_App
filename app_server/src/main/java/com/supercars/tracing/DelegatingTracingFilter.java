@@ -24,31 +24,37 @@ import zipkin2.reporter.urlconnection.URLConnectionSender;
  * @author tombatchelor
  */
 public class DelegatingTracingFilter implements Filter {
-  Sender sender = URLConnectionSender.create("http://127.0.0.1:9411/api/v2/spans");
-  AsyncReporter<Span> spanReporter = AsyncReporter.create(sender);
-  Tracing tracing = Tracing.newBuilder()
-        .localServiceName("cars-app")
-        .spanReporter(spanReporter).build();
-  Filter delegate = TracingFilter.create(tracing);
 
-  @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-      throws IOException, ServletException {
-    delegate.doFilter(request, response, chain);
-  }
+    Sender sender = URLConnectionSender.create("http://127.0.0.1:9411/api/v2/spans");
+    AsyncReporter<Span> spanReporter = AsyncReporter.create(sender);
+    Tracing tracing = Tracing.newBuilder()
+            .localServiceName("cars-app")
+            .spanReporter(spanReporter).build();
+    Filter delegate = TracingFilter.create(tracing);
 
-  @Override public void destroy() {
-    try {
-      tracing.close(); // disables Tracing.current()
-      spanReporter.close(); // stops reporting thread and flushes data
-      sender.close(); // closes any transport resources
-    } catch (IOException e) {
-      // do something real
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        delegate.doFilter(request, response, chain);
     }
-  }
+
+    @Override
+    public void destroy() {
+        try {
+            tracing.close(); // disables Tracing.current()
+            spanReporter.close(); // stops reporting thread and flushes data
+            sender.close(); // closes any transport resources
+        } catch (IOException e) {
+            // do something real
+        }
+    }
 
     @Override
     public void init(FilterConfig fc) throws ServletException {
         return;
+    }
+    
+    public Tracing getTracing() {
+        return tracing;
     }
 }
