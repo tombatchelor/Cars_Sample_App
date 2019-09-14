@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/Cars_Sample_App">
-    <!-- Specify a JDBC datasource for oracle -->
+    <!-- Specify a JDBC datasource for MySQL -->
     <Resource name="jdbc/standard" 
               auth="Container"
               type="javax.sql.DataSource" 
