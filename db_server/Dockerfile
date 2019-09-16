@@ -1,4 +1,4 @@
-FROM mysql:5.7.15
+FROM mysql:8.0.17
 
 MAINTAINER me
 

@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image: tombatchelor/cars:1.5
+        image: tombatchelor/cars:1.8
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -55,7 +55,7 @@ spec:
     spec:
       containers:
       - name: db-server
-        image: tombatchelor/carsdb:1.1
+        image: tombatchelor/carsdb:1.2
         ports:
         - name: mysql
           containerPort: 3306
