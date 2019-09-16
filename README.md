@@ -1,10 +1,10 @@
 # Cars Sample App Readme
 
-This is a simple web app which provides for a Super car store which has a couple of performance/code issues. The app can be build with Maven.
+This is a simple web app which provides for a Super car store which has a couple of performance/code issues. The app can be built with Maven.
 
 ## Architecture
 
-The app is based on a Angular 1 front end, calling back to RESTful services, base on [Jersey](https://jersey.java.net), with a [MySQL](https://www.mysql.com) back end.
+The app is based on an AngularJs front end, calling back to RESTful services, base on [Jersey](https://jersey.java.net), with a [MySQL](https://www.mysql.com) back end.
 
 ![image](docImages/highlevelarc.png)
 
