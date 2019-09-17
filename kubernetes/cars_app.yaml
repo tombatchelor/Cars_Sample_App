@@ -73,7 +73,7 @@ spec:
   template:
     metadata:
       labels:
-        app: cars_loadget
+        app: cars_loadgen
     spec:
       containers:
       - name: jmeter
