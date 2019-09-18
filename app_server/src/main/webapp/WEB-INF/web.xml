@@ -48,4 +48,36 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
         <filter-name>tracingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    
+    <!-- Prometheus Servlet Metrics Filter -->
+    <filter>
+        <filter-name>prometheusFilter</filter-name>
+        <filter-class>io.prometheus.client.filter.MetricsFilter</filter-class>
+        <init-param>
+            <param-name>metric-name</param-name>
+            <param-value>webapp_metrics_filter</param-value>
+        </init-param>
+        <init-param>
+            <param-name>help</param-name>
+            <param-value>This is the help for your metrics filter</param-value>
+        </init-param>
+        <init-param>
+            <param-name>buckets</param-name>
+            <param-value>0.005,0.01,0.025,0.05,0.075,0.1,0.25,0.5,0.75,1,2.5,5,7.5,10</param-value>
+        </init-param>
+        <!-- Optionally override path components; anything less than 1 (1 is the default)
+        means full granularity -->
+        <init-param>
+            <param-name>path-components</param-name>
+            <param-value>1</param-value>
+        </init-param>
+    </filter>
+
+    <!-- You will most likely want this to be the first filter in the chain
+    (therefore the first <filter-mapping> in the web.xml file), so that you can get
+    the most accurate measurement of latency. -->
+    <filter-mapping>
+        <filter-name>prometheusFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>
