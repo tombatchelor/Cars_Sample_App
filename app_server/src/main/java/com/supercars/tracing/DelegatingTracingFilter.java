@@ -32,7 +32,7 @@ public class DelegatingTracingFilter implements Filter {
 
     @Override
     public void destroy() {
-        tracing.close(); // disables Tracing.current()
+
     }
 
     @Override

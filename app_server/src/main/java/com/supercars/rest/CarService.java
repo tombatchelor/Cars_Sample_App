@@ -5,6 +5,8 @@
  */
 package com.supercars.rest;
 
+import brave.SpanCustomizer;
+import brave.Tracing;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -16,6 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.Car;
 import com.supercars.dataloader.CarDataLoader;
+import com.supercars.tracing.TracingBuilder;
 
 /**
  *
@@ -39,6 +42,9 @@ public class CarService {
     public List<Car> getCarsForManufacturer(@PathParam("id") int id) {
         List<Car> cars = new CarDataLoader().getCarsByManufacturer(id);
         
+        // Add number of cars to span
+        Tracing tracing = TracingBuilder.getInstance().getTracing("cars-app");
+        tracing.tracer().currentSpanCustomizer().tag("supercars.CarCount", String.valueOf(cars.size()));
         return cars;
     }
 

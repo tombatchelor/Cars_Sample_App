@@ -7,6 +7,8 @@ package com.supercars.tracing;
 
 import brave.Tracing;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -27,10 +29,12 @@ public class TracingBuilder {
 
     private final Sender sender;
     private final AsyncReporter<Span> spanReporter;
+    private final Map<String, Tracing> tracings;
 
     private TracingBuilder() {
-            sender = URLConnectionSender.create(getZipkinSink());
-            spanReporter = AsyncReporter.create(sender);
+        sender = URLConnectionSender.create(getZipkinSink());
+        spanReporter = AsyncReporter.create(sender);
+        tracings = new HashMap();
     }
 
     private static String getZipkinSink() {
@@ -42,23 +46,32 @@ public class TracingBuilder {
         } catch (NamingException ex) {
             Logger.getLogger(TracingBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return zipkinSink;
     }
-    
+
     public static TracingBuilder getInstance() {
         return traceBuilder;
     }
 
     public Tracing getTracing(String serviceName) {
-        Tracing tracing = Tracing.newBuilder()
-                .localServiceName(serviceName)
-                .spanReporter(spanReporter).build();
-        return tracing;
+        if (tracings.containsKey(serviceName)) {
+            return tracings.get(serviceName);
+        } else {
+            Tracing tracing = Tracing.newBuilder()
+                    .localServiceName(serviceName)
+                    .spanReporter(spanReporter).build();
+            tracings.put(serviceName, tracing);
+            return tracing;
+        }
     }
 
+    @Override
     protected void finalize() {
         try {
+            for (Tracing tracing : tracings.values()) {
+                tracing.close();
+            }
             spanReporter.close();
             sender.close();
         } catch (IOException ex) {
