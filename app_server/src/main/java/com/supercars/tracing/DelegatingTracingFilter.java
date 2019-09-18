@@ -21,7 +21,7 @@ import javax.servlet.ServletResponse;
  */
 public class DelegatingTracingFilter implements Filter {
 
-    Tracing tracing = TracingBuilder.getInstance().getTracing("cars-app");
+    Tracing tracing = TracingHelper.getTracing(TracingHelper.CARS_APP_NAME);
     Filter delegate = TracingFilter.create(tracing);
 
     @Override

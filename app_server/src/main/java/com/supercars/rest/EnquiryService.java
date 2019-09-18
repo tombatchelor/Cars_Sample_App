@@ -5,7 +5,6 @@
  */
 package com.supercars.rest;
 
-import brave.Tracing;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,7 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.Enquiry;
 import com.supercars.dataloader.EnquiryDataLoader;
-import com.supercars.tracing.TracingBuilder;
+import com.supercars.tracing.TracingHelper;
 
 /**
  *
@@ -43,8 +42,7 @@ public class EnquiryService {
         
                 
         // Add number of cars to span
-        Tracing tracing = TracingBuilder.getInstance().getTracing("cars-app");
-        tracing.tracer().currentSpanCustomizer().tag("supercars.EnquiryCount", String.valueOf(enquiries.size()));
+        TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.EnquiryCount", enquiries.size());
         return enquiries;
     }
     

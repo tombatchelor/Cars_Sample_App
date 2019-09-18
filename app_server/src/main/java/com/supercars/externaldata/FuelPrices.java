@@ -12,6 +12,7 @@ import com.supercars.preferences.Preference;
 import com.supercars.preferences.PreferenceException;
 import com.supercars.preferences.PreferenceManager;
 import com.supercars.tracing.TracingBuilder;
+import com.supercars.tracing.TracingHelper;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import javax.ws.rs.client.Client;
@@ -36,7 +37,7 @@ public class FuelPrices {
     private double premium;
     private double regular;
 
-    static Tracing tracing = TracingBuilder.getInstance().getTracing("fuel-prices");
+    static Tracing tracing = TracingHelper.getTracing(TracingHelper.FUEL_PRICES_NAME);
     
     public static FuelPrices getFuelPrices() {
         try {
