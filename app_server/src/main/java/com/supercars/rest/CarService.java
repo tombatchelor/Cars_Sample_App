@@ -33,7 +33,8 @@ public class CarService {
 
         if (car != null) {
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Manufacturer", car.getManufacturer().getName());
-            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Name", car.getModel());
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Name", car.getName());
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Model", car.getModel());
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Price", car.getPrice());
         }
         
@@ -69,6 +70,7 @@ public class CarService {
     public void addCar(Car car) {
         if (car != null) {
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Name", car.getName());
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Model", car.getModel());
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Price", car.getPrice());
         }
         
