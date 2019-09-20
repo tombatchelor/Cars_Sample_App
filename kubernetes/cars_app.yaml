@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image: tombatchelor/cars:1.12
+        image: tombatchelor/cars:1.14
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -110,7 +110,7 @@ spec:
     spec:
       containers:
       - name: jmeter
-        image: tombatchelor/carsloadgen:1.0
+        image: tombatchelor/carsloadgen:1.2
 ---
 apiVersion: v1
 kind: Service
