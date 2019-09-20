@@ -5,10 +5,14 @@
  */
 package com.supercars.externaldata;
 
+import brave.Tracing;
+import brave.jaxrs2.TracingClientFilter;
 import com.supercars.logging.Logger;
 import com.supercars.preferences.Preference;
 import com.supercars.preferences.PreferenceException;
 import com.supercars.preferences.PreferenceManager;
+import com.supercars.tracing.TracingBuilder;
+import com.supercars.tracing.TracingHelper;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import javax.ws.rs.client.Client;
@@ -33,6 +37,8 @@ public class FuelPrices {
     private double premium;
     private double regular;
 
+    static Tracing tracing = TracingHelper.getTracing(TracingHelper.FUEL_PRICES_NAME);
+    
     public static FuelPrices getFuelPrices() {
         try {
             Preference preference = PreferenceManager.getPreference("REST_CLIENT");
@@ -51,14 +57,15 @@ public class FuelPrices {
 
     private static FuelPrices getFuelPricesJerseySync() {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://www.fueleconomy.gov/ws/rest/fuelprices");
+        WebTarget target = client.target("https://www.fueleconomy.gov/ws/rest/fuelprices");
+        target.register(TracingClientFilter.create(tracing));
         return target.request(MediaType.APPLICATION_XML)
                 .get(FuelPrices.class);
     }
 
     private static Future<FuelPrices> getFuelPriceJerseysAsync() {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://www.fueleconomy.gov/ws/rest/fuelprices");
+        WebTarget target = client.target("https://www.fueleconomy.gov/ws/rest/fuelprices");
         Future<FuelPrices> response = target.request(MediaType.APPLICATION_XML).async().get(FuelPrices.class);
         return response;
     }

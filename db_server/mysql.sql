@@ -1,5 +1,3 @@
-CREATE DATABASE supercars;
-
 connect supercars;
 
 CREATE TABLE MANUFACTURER (

@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.Enquiry;
 import com.supercars.dataloader.EnquiryDataLoader;
+import com.supercars.tracing.TracingHelper;
 
 /**
  *
@@ -39,6 +40,9 @@ public class EnquiryService {
     public List<Enquiry> getEnquiryForCar(@PathParam("carId") int carId) {
         List<Enquiry> enquiries = new EnquiryDataLoader().getEnquirysForCar(carId);
         
+                
+        // Add number of cars to span
+        TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.EnquiryCount", enquiries.size());
         return enquiries;
     }
     

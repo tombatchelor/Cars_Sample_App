@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.Car;
 import com.supercars.dataloader.CarDataLoader;
+import com.supercars.tracing.TracingHelper;
 
 /**
  *
@@ -30,6 +31,13 @@ public class CarService {
     public Car getCar(@PathParam("id") int id) {
         Car car = new CarDataLoader().getCar(id);
 
+        if (car != null) {
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Manufacturer", car.getManufacturer().getName());
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Name", car.getName());
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Model", car.getModel());
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Price", car.getPrice());
+        }
+        
         return car;
     }
     
@@ -39,6 +47,9 @@ public class CarService {
     public List<Car> getCarsForManufacturer(@PathParam("id") int id) {
         List<Car> cars = new CarDataLoader().getCarsByManufacturer(id);
         
+        // Add number of cars to span
+        TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
+        
         return cars;
     }
 
@@ -46,14 +57,23 @@ public class CarService {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public List<Car> searchCars(@PathParam("query") String query) {
-
         List<Car> cars = new CarDataLoader().getCarsBySearch(query);
+        
+        TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.SearchQuery", query);
+        TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
+        
         return cars;
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void addCar(Car car) {
+        if (car != null) {
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Name", car.getName());
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Model", car.getModel());
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Price", car.getPrice());
+        }
+        
         new CarDataLoader().saveCar(car);
     }
 }
