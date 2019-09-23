@@ -33,7 +33,7 @@ public class TracingBuilder {
 
     private TracingBuilder() {
         
-        sender = URLConnectionSender.newBuilder().compressionEnabled(false).endpoint(getZipkinSink()).build();
+        sender = URLConnectionSender.newBuilder().endpoint(getZipkinSink()).build();
         //sender = URLConnectionSender.create(getZipkinSink());
         spanReporter = AsyncReporter.create(sender);
         tracings = new HashMap();

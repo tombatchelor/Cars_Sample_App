@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: cars_web
-  replicas: 2 # tells deployment to run 2 pods matching the template
+  replicas: 1 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
@@ -27,7 +27,7 @@ spec:
   selector:
     matchLabels:
       app: cars_app
-  replicas: 2 # tells deployment to run 2 pods matching the template
+  replicas: 1 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
@@ -35,10 +35,17 @@ spec:
     spec:
       containers:
       - name: app-server
-        image: tombatchelor/cars:1.15
+        image: tombatchelor/cars:1.16
         ports:
         - name: cars-app-port
           containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /Cars_Sample_App/public/leak
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 30
+          timeoutSeconds: 10
 ---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
@@ -110,7 +117,22 @@ spec:
     spec:
       containers:
       - name: jmeter
-        image: tombatchelor/carsloadgen:1.3
+        image: tombatchelor/carsloadgen:1.7
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cleanup
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cleanup
+            image: tombatchelor/carscleanup:1.0
+          restartPolicy: OnFailure
 ---
 apiVersion: v1
 kind: Service
