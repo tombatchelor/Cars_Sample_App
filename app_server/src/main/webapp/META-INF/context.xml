@@ -7,7 +7,7 @@
               username="root" 
               password="AppDynamics"
               driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://mysql:3306/supercars?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=America/Los_Angeles&amp;queryInterceptors=brave.mysql8.TracingQueryInterceptor"
+              url="jdbc:mysql://mysql:3306/supercars?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=America/Los_Angeles"
               maxIdle="4" />
     <Resource name="jdbc/c3p0" 
               auth="Container"
@@ -19,7 +19,7 @@
               user="root" 
               password="AppDynamics"
               driverClass="com.mysql.jdbc.Driver"
-              jdbcUrl="jdbc:mysql://mysql:3306/supercars?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=America/Los_Angeles&amp;queryInterceptors=brave.mysql8.TracingQueryInterceptor"
+              jdbcUrl="jdbc:mysql://mysql:3306/supercars?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=America/Los_Angeles"
     />
     <Environment name="zipkinSink" value="http://proxy.observe-eng.svc.cluster.local:9411/api/v2/spans" type="java.lang.String" override="false" />
 </Context>

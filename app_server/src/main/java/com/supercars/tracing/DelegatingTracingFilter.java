@@ -39,8 +39,4 @@ public class DelegatingTracingFilter implements Filter {
     public void init(FilterConfig fc) throws ServletException {
         return;
     }
-    
-    public Tracing getTracing() {
-        return tracing;
-    }
 }

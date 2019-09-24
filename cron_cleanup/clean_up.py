@@ -38,8 +38,8 @@ carsDelete = 'DELETE FROM CARS WHERE CAR_ID = %s'
 enquiryQuery = 'SELECT ENQUIRY_ID FROM ENQUIRIES'
 enquiryDelete = 'DELETE FROM ENQUIRIES WHERE ENQUIRY_ID = %s'
 
-maxCars = 100
-maxQueries = 100
+maxCars = 3000
+maxQueries = 3000
 
 print('Start Cleanup')
 cnx = mysql.connector.connect(**config)

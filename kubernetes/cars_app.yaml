@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image: tombatchelor/cars:1.16
+        image: tombatchelor/cars:1.17
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -46,6 +46,11 @@ spec:
           initialDelaySeconds: 20
           periodSeconds: 30
           timeoutSeconds: 10
+        resources:
+          requests:
+            memory: "256M"
+          limits:
+            memory: "768M"
 ---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
@@ -117,7 +122,7 @@ spec:
     spec:
       containers:
       - name: jmeter
-        image: tombatchelor/carsloadgen:1.7
+        image: tombatchelor/carsloadgen:1.8
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
@@ -131,7 +136,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:1.0
+            image: tombatchelor/carscleanup:1.1
           restartPolicy: OnFailure
 ---
 apiVersion: v1
