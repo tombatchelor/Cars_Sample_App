@@ -73,6 +73,27 @@ spec:
         - name: mysql
           containerPort: 3306
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: car-insurance-go
+spec:
+  selector:
+    matchLabels:
+      app: car_insurance
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: car_insurance
+    spec:
+      containers:
+      - name: insurance-quoter
+        image: tombatchelor/car-insurance:1.0
+        ports:
+        - name: http
+          containerPort: 8000
+---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
@@ -174,6 +195,18 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: cars-web-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: insurance
+spec:
+  selector:
+    app: car_insurance
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: http
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole

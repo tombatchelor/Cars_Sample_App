@@ -11,7 +11,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.externaldata.FuelPrices;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 /**
  *
