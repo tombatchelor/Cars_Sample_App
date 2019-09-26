@@ -136,7 +136,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:1.2
+            image: tombatchelor/carscleanup:1.3
           restartPolicy: OnFailure
 ---
 apiVersion: v1

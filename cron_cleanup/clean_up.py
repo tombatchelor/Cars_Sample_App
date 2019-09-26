@@ -4,7 +4,10 @@ import random
 def get_array_of_randoms(length, limit):
     randoms = []
     for x in range(length):
-        randoms.append(random.randrange(limit))
+        candidate = random.randrange(limit)
+        while candidate in randoms:
+            candidate = random.randrange(limit)
+        randoms.append(candidate)
     randoms = list(dict.fromkeys(randoms))
     return randoms
 
