@@ -48,6 +48,8 @@ public class Constants {
                     upgradeToSchema_3();
                 case 3:
                     upgradeToSchema_4();
+                case 4:
+                    upgradeToSchema_5();
                 default:
             }
         } catch (SQLException | PreferenceException ex) {
@@ -130,5 +132,10 @@ public class Constants {
     private static void upgradeToSchema_4() throws PreferenceException, SQLException {
         PreferenceManager.updatePreference(new Preference("CONNECTION_POOL", "jdbc/standard", "Connection pool to use, either 'jdbc/standard' or 'jdbc/c3p0'", false));
         updateSchemaVersion(4);
+    }
+    
+    private static void upgradeToSchema_5() throws PreferenceException, SQLException {
+        PreferenceManager.updatePreference(new Preference("FUEL_CACHE_TIMEOUT", "30", "Cache timeout for external fuel prices in minutes", false));
+        updateSchemaVersion(5);
     }
 }
