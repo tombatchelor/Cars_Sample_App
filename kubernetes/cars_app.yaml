@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image: tombatchelor/cars:1.17
+        image: tombatchelor/cars:1.18
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -136,7 +136,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:1.1
+            image: tombatchelor/carscleanup:1.2
           restartPolicy: OnFailure
 ---
 apiVersion: v1
