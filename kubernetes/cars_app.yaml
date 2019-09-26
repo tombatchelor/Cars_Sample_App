@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image: tombatchelor/cars:1.18
+        image:  tombatchelor/cars:1.19
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -89,7 +89,7 @@ spec:
     spec:
       containers:
       - name: insurance-quoter
-        image: tombatchelor/car-insurance:1.0
+        image: tombatchelor/car-insurance:1.1
         ports:
         - name: http
           containerPort: 8000
@@ -143,7 +143,7 @@ spec:
     spec:
       containers:
       - name: jmeter
-        image: tombatchelor/carsloadgen:1.8
+        image: tombatchelor/carsloadgen:1.9
 ---
 apiVersion: batch/v1beta1
 kind: CronJob

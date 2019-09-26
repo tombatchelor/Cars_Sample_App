@@ -7,6 +7,7 @@ package com.supercars.rest;
 
 import com.supercars.Quote;
 import com.supercars.externaldata.InsuranceQuotes;
+import com.supercars.tracing.TracingHelper;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -24,6 +25,11 @@ public class InsuranceService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Quote getQuote(@PathParam("id") int id) {
-        return InsuranceQuotes.getQuote(id);
+        Quote quote = InsuranceQuotes.getQuote(id);
+        
+        TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.insurance.Company", quote.getCompany());
+        TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.insurance.Price", (long) quote.getPrice());
+        
+        return quote;
     }
 }

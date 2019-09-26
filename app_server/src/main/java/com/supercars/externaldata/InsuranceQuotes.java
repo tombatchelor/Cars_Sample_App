@@ -55,7 +55,7 @@ public class InsuranceQuotes {
 
     private static Quote getQuoteJerseySync(QuoteRequest quoteRequest) {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8000/insurance/simpleQuote");
+        WebTarget target = client.target("http://insurance:8000/insurance/simpleQuote");
         target.register(TracingClientFilter.create(tracing));
         return target.request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(quoteRequest, MediaType.APPLICATION_JSON), Quote.class);
@@ -63,7 +63,7 @@ public class InsuranceQuotes {
 
     private static Future<Quote> getQuoteJerseysAsync(QuoteRequest quoteRequest) {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8000/insurance/simpleQuote");
+        WebTarget target = client.target("http://insurance:8000/insurance/simpleQuote");
         Future<Quote> response = target.request(MediaType.APPLICATION_JSON).async()
                 .post(Entity.entity(quoteRequest, MediaType.APPLICATION_JSON), Quote.class);
         return response;
