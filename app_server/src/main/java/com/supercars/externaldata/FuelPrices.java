@@ -11,7 +11,6 @@ import com.supercars.logging.Logger;
 import com.supercars.preferences.Preference;
 import com.supercars.preferences.PreferenceException;
 import com.supercars.preferences.PreferenceManager;
-import com.supercars.tracing.TracingBuilder;
 import com.supercars.tracing.TracingHelper;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -37,22 +36,32 @@ public class FuelPrices {
     private double premium;
     private double regular;
 
+    static FuelPrices prices = null;
+    static long lastUpdate = 0l;
+    static int timeout = 0;
+
     static Tracing tracing = TracingHelper.getTracing(TracingHelper.FUEL_PRICES_NAME);
-    
+
     public static FuelPrices getFuelPrices() {
         try {
-            Preference preference = PreferenceManager.getPreference("REST_CLIENT");
-            switch (preference.getValue()) {
-                case "Jersey_Sync":
-                    return getFuelPricesJerseySync();
-                case "Jersey_Async":
-                    return getFuelPriceJerseysAsync().get();
+            if (timeout == 0) {
+                timeout = Integer.parseInt(PreferenceManager.getPreference("FUEL_CACHE_TIMEOUT").getValue());
+                timeout = timeout * 60 * 1000;
+            }
+            if (prices == null || lastUpdate + timeout > System.currentTimeMillis()) {
+                Preference preference = PreferenceManager.getPreference("REST_CLIENT");
+                switch (preference.getValue()) {
+                    case "Jersey_Sync":
+                        prices = getFuelPricesJerseySync();
+                    case "Jersey_Async":
+                        prices = getFuelPriceJerseysAsync().get();
+                }
             }
         } catch (PreferenceException | InterruptedException | ExecutionException ex) {
             Logger.log(ex);
         }
-        
-        return null;
+
+        return prices;
     }
 
     private static FuelPrices getFuelPricesJerseySync() {

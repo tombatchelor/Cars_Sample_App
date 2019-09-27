@@ -104,7 +104,7 @@ public class PreferenceManager {
             }
         } catch (SQLException ex) {
             Logger.log(ex);
-            PreferenceException pe = new PreferenceException("DB error getting preference: " + ex.getMessage());
+            PreferenceException pe = new PreferenceException("DB error setting preference: " + ex.getMessage());
             pe.addSuppressed(ex);
             throw pe;
         }

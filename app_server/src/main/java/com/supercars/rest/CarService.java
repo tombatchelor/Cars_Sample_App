@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.Car;
 import com.supercars.dataloader.CarDataLoader;
+import com.supercars.logging.Logger;
 import com.supercars.tracing.TracingHelper;
 
 /**
@@ -47,6 +48,13 @@ public class CarService {
     public List<Car> getCarsForManufacturer(@PathParam("id") int id) {
         List<Car> cars = new CarDataLoader().getCarsByManufacturer(id);
         
+        for (Car car : cars) {
+            try {
+                Thread.sleep(2);
+            } catch (InterruptedException ex) {
+                Logger.log(ex);
+            }
+        }
         // Add number of cars to span
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
         

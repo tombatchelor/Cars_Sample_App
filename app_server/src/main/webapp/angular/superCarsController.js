@@ -64,6 +64,10 @@ app.controller('carController', function ($scope, $http, $location, carsUtils) {
         carsUtils.setCarId(carId);
         $location.path("/enquire");
     };
+    $scope.insuranceLink = function (carId) {
+        // Right now just do the REST call until we find we need a UI
+        $http.get("../public/insurance/quote/" + carId);
+    };
     $scope.doError = function () {
         adddlert("This will error!");
     };
