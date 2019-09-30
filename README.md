@@ -24,12 +24,12 @@ Most of the code for the app is in this repo, the exception is the Go Insurance 
 
 There are a number of directories in this repo for the other components, each has their own README describing the contents
 
-* [web_server](web_server/README.md) - Contains the web server config
-* [app_server](app_server/README.md) - All the code and config for the Tomcat layer, this is where the bulk of the code sits
-* [db_server](db_server/README.md) - Schema and container definition for MySQL
-* [cron_cleanup](cron_cleanup/README.md) - A CronJob that runs to clean up after the load test
+* [web_server](web_server/) - Contains the web server config
+* [app_server](app_server/) - All the code and config for the Tomcat layer, this is where the bulk of the code sits
+* [db_server](db_server/) - Schema and container definition for MySQL
+* [cron_cleanup](cron_cleanup/) - A CronJob that runs to clean up after the load test
 * [JMeter](JMeter/README.md) - Definition for the load testing
-* [kubernetes](kubernetes/README.md) - Config for standing up the whole app in K8s
-* [prometheus](prometheus/README.md) - Container def for collecting metrics
-* [mobile/iOS](mobile/iOS/README.md) - Mobile app for Cars
+* [kubernetes](kubernetes/) - Config for standing up the whole app in K8s
+* [prometheus](prometheus/) - Container def for collecting metrics
+* [mobile/iOS](mobile/iOS/) - Mobile app for Cars
 * [docimages]() - Just the images for the READMEs
