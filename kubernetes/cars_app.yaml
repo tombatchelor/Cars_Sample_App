@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: tombatchelor/cars_web:1.3
+        image: tombatchelor/cars_web:1.4
         ports:
         - name: cars-web-port
           containerPort: 80
