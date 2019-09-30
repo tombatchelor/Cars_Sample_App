@@ -1,0 +1,4 @@
+{
+  "service_name": "nginx",
+  "collector_host": "proxy.observe-eng.svc.cluster.local"
+}
