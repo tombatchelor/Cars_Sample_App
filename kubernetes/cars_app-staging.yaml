@@ -1,0 +1,437 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: cars-deployment-web
+spec:
+  selector:
+    matchLabels:
+      app: cars_web
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: cars_web
+    spec:
+      containers:
+      - name: web-server
+        image: tombatchelor/cars_web:1.6
+        ports:
+        - name: cars-web-port
+          containerPort: 80
+        volumeMounts:
+        - name: zipkin-config
+          mountPath: /etc/nginx/zipkin
+          readOnly: true
+      volumes:
+      - name: zipkin-config
+        configMap:
+          defaultMode: 420
+          name: zipkin-nginx-config
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: cars-deployment
+spec:
+  selector:
+    matchLabels:
+      app: cars_app
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: cars_app
+    spec:
+      containers:
+      - name: app-server
+        image:  tombatchelor/cars:1.21
+        ports:
+        - name: cars-app-port
+          containerPort: 8080
+        env:
+        - name: ZIPKIN_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: zipkin-config
+              key: zipkin.endpoint
+        livenessProbe:
+          httpGet:
+            path: /Cars_Sample_App/public/leak
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 30
+          timeoutSeconds: 10
+        resources:
+          requests:
+            memory: "256M"
+          limits:
+            memory: "768M"
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: cars-db-deployment
+spec:
+  selector:
+    matchLabels:
+      app: cars_db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cars_db
+    spec:
+      containers:
+      - name: db-server
+        image: tombatchelor/carsdb:1.2
+        ports:
+        - name: mysql
+          containerPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: car-insurance-go
+spec:
+  selector:
+    matchLabels:
+      app: car_insurance
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: car_insurance
+    spec:
+      containers:
+      - name: insurance-quoter
+        image: tombatchelor/car-insurance:1.4
+        ports:
+        - name: http
+          containerPort: 8000
+        env:
+        - name: ZIPKIN_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: zipkin-config
+              key: zipkin.endpoint
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: cars-prometheus-deployment
+spec:
+  selector:
+    matchLabels:
+      app: cars_prometheus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cars_prometheus
+    spec:
+      serviceAccountName: prometheus
+      containers:
+      - name: prometheus
+        image: prom/prometheus:v2.10.0
+        args:
+        - --config.file=/etc/prometheus/config.yaml
+        ports:
+        - containerPort: 9090
+          protocol: TCP
+        volumeMounts:
+        - name: config
+          mountPath: /etc/prometheus
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          defaultMode: 420
+          name: prometheus-config
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: cars-loadgen-deployment
+spec:
+  selector:
+    matchLabels:
+      app: cars_loadgen
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cars_loadgen
+    spec:
+      containers:
+      - name: jmeter
+        image: tombatchelor/carsloadgen:1.9
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cleanup
+spec:
+  schedule: "0 */12 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cleanup
+            image: tombatchelor/carscleanup:1.3
+          restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  selector:
+    app: cars_db
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cars-app
+spec:
+  selector:
+    app: cars_app
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: cars-app-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cars-web
+spec:
+  selector:
+    app: cars_web
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: cars-web-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: insurance
+spec:
+  selector:
+    app: car_insurance
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: http
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: prometheus-cars-app
+rules:
+- apiGroups: [""]
+  resources:
+  - nodes
+  - nodes/proxy
+  - services
+  - endpoints
+  - pods
+  verbs: ["get", "list", "watch"]
+- nonResourceURLs: ["/metrics"]
+  verbs: ["get"]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: prometheus-cars-app
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus-cars-app
+subjects:
+- kind: ServiceAccount
+  name: prometheus
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: web-server
+  name: zipkin-config
+data:
+  zipkin.endpoint: http://proxy.observe-staging.svc.cluster.local:9411/api/v2/spans
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: web-server
+  name: zipkin-nginx-config
+data:
+  zipkin-config.json: |-
+    {
+      "service_name": "nginx",
+      "collector_host": "proxy.observe-staging.svc.cluster.local"
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: prometheus
+  name: prometheus-config
+data:
+  config.yaml: |-
+    global:
+      evaluation_interval: 30s
+      scrape_interval: 30s
+
+    remote_write:
+    - url: http://proxy.observe-staging.svc.cluster.local:2001/prometheus/write
+      remote_timeout: 30s
+
+    scrape_configs:
+    - job_name: tomcat
+      metrics_path: /Cars_Sample_App/metrics/
+      kubernetes_sd_configs:
+      - role: pod
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_namespace]
+        action: replace
+        target_label: k8s_namespace
+      - source_labels: [__meta_kubernetes_pod_name]
+        action: replace
+        target_label: k8s_pod_name
+      - source_labels: [__address__]
+        action: replace
+        regex: ([^:]+)(?::\d+)?
+        replacement: ${1}:8080
+        target_label: __address__
+      - source_labels: [__meta_kubernetes_pod_label_app]
+        action: keep
+        regex: cars_app
+    - job_name: car-insurance
+      metrics_path: /metrics
+      kubernetes_sd_configs:
+      - role: pod
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_namespace]
+        action: replace
+        target_label: k8s_namespace
+      - source_labels: [__meta_kubernetes_pod_name]
+        action: replace
+        target_label: k8s_pod_name
+      - source_labels: [__address__]
+        action: replace
+        regex: ([^:]+)(?::\d+)?
+        replacement: ${1}:8000
+        target_label: __address__
+      - source_labels: [__meta_kubernetes_pod_label_app]
+        action: keep
+        regex: car_insurance
+    - job_name: kubernetes-apiservers
+      kubernetes_sd_configs:
+      - role: endpoints
+      scheme: https
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        # insecure_skip_verify: true
+      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: default;kubernetes;https
+
+    - job_name: kubernetes-service-endpoints
+      kubernetes_sd_configs:
+      - role: endpoints
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+        action: keep
+        regex: true
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+        action: replace
+        target_label: __metrics_path__
+        regex: (.+)
+      - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
+        action: replace
+        regex: ([^:]+)(?::\d+)?;(\d+)
+        replacement: $1:$2
+        target_label: __address__
+      - action: labelmap
+        regex: __meta_kubernetes_service_label_(.+)
+      - source_labels: [__meta_kubernetes_namespace]
+        action: replace
+        target_label: kubernetes_namespace
+      - source_labels: [__meta_kubernetes_service_name]
+        action: replace
+        target_label: kubernetes_name
+
+    - job_name: kubernetes-pods
+      kubernetes_sd_configs:
+      - role: pod
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+        action: keep
+        regex: true
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+        action: replace
+        target_label: __metrics_path__
+        regex: (.+)
+      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+        action: replace
+        regex: ([^:]+)(?::\d+)?;(\d+)
+        replacement: $1:$2
+        target_label: __address__
+      - action: labelmap
+        regex: __meta_kubernetes_pod_label_(.+)
+      - source_labels: [__meta_kubernetes_namespace]
+        action: replace
+        target_label: kubernetes_namespace
+      - source_labels: [__meta_kubernetes_pod_name]
+        action: replace
+        target_label: kubernetes_pod_name
+
+    - job_name: kubernetes-cadvisor
+      kubernetes_sd_configs:
+      - role: node
+      scheme: https
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      relabel_configs:
+      - action: labelmap
+        regex: __meta_kubernetes_node_label_(.+)
+      - target_label: __address__
+        replacement: kubernetes.default.svc:443
+      - source_labels: [__meta_kubernetes_node_name]
+        regex: (.+)
+        target_label: __metrics_path__
+        replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
+
+    - job_name: kubernetes-nodes
+      kubernetes_sd_configs:
+      - role: node
+      scheme: https
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      relabel_configs:
+      - action: labelmap
+        regex: __meta_kubernetes_node_label_(.+)
+      - target_label: __address__
+        replacement: kubernetes.default.svc:443
+      - source_labels: [__meta_kubernetes_node_name]
+        regex: (.+)
+        target_label: __metrics_path__
+        replacement: /api/v1/nodes/${1}/proxy/metrics
