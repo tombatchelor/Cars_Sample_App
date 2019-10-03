@@ -14,10 +14,19 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: tombatchelor/cars_web:1.4
+        image: tombatchelor/cars_web:1.6
         ports:
         - name: cars-web-port
           containerPort: 80
+        volumeMounts:
+        - name: zipkin-config
+          mountPath: /etc/nginx/zipkin
+          readOnly: true
+      volumes:
+      - name: zipkin-config
+        configMap:
+          defaultMode: 420
+          name: zipkin-nginx-config
 ---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
@@ -35,10 +44,16 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:1.19
+        image:  tombatchelor/cars:1.21
         ports:
         - name: cars-app-port
           containerPort: 8080
+        env:
+        - name: ZIPKIN_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: zipkin-config
+              key: zipkin.endpoint
         livenessProbe:
           httpGet:
             path: /Cars_Sample_App/public/leak
@@ -95,7 +110,10 @@ spec:
           containerPort: 8000
         env:
         - name: ZIPKIN_ENDPOINT
-          value: http://proxy.observe-eng.svc.cluster.local:9411/api/v2/spans
+          valueFrom:
+            configMapKeyRef:
+              name: zipkin-config
+              key: zipkin.endpoint
 ---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
@@ -245,6 +263,28 @@ subjects:
 - kind: ServiceAccount
   name: prometheus
   namespace: default
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: web-server
+  name: zipkin-config
+data:
+  zipkin.endpoint: http://proxy.observe-eng.svc.cluster.local:9411/api/v2/spans
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: web-server
+  name: zipkin-nginx-config
+data:
+  zipkin-config.json: |-
+    {
+      "service_name": "nginx",
+      "collector_host": "proxy.observe-eng.svc.cluster.local"
+    }
 ---
 apiVersion: v1
 kind: ConfigMap

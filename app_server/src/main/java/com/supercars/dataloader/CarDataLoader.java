@@ -44,8 +44,7 @@ public class CarDataLoader {
             pstmt.execute();
             pstmt.close();
             connection.close();
-            throw new XMLException("XML Example Exception Thrown");
-        } catch (SQLException | XMLException e) {
+        } catch (SQLException e) {
             Logger.log(e);
         }
     }

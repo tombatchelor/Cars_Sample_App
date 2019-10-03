@@ -33,23 +33,18 @@ public class TracingBuilder {
 
     private TracingBuilder() {
         
-        sender = URLConnectionSender.newBuilder().endpoint(getZipkinSink()).build();
+        sender = URLConnectionSender.newBuilder().endpoint(getZipkinEndpoint()).build();
         //sender = URLConnectionSender.create(getZipkinSink());
         spanReporter = AsyncReporter.create(sender);
         tracings = new HashMap();
     }
 
-    private static String getZipkinSink() {
-        String zipkinSink = "";
-        try {
-            Context initContext = new InitialContext();
-            Context webContext = (Context) initContext.lookup("java:/comp/env");
-            zipkinSink = (String) webContext.lookup("zipkinSink");
-        } catch (NamingException ex) {
-            Logger.getLogger(TracingBuilder.class.getName()).log(Level.SEVERE, null, ex);
+    private static String getZipkinEndpoint() {
+        String zipkinEndpoint = System.getenv("ZIPKIN_ENDPOINT");
+        if (zipkinEndpoint == null) {
+            zipkinEndpoint = "http://localhost:9411/api/v2/spans";
         }
-
-        return zipkinSink;
+        return zipkinEndpoint;
     }
 
     public static TracingBuilder getInstance() {

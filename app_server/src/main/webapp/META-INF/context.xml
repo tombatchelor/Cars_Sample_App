@@ -21,5 +21,4 @@
               driverClass="com.mysql.jdbc.Driver"
               jdbcUrl="jdbc:mysql://mysql:3306/supercars?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=America/Los_Angeles"
     />
-    <Environment name="zipkinSink" value="http://proxy.observe-eng.svc.cluster.local:9411/api/v2/spans" type="java.lang.String" override="false" />
 </Context>
