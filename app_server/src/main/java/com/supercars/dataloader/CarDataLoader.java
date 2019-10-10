@@ -30,9 +30,10 @@ public class CarDataLoader {
     Statement statement = null;
     ResultSet resultSet = null;
     
-    public void saveCar(Car car) {
+    public int saveCar(Car car) {
+        int carId = -1;
         try (Connection connection = Constants.getDBConnection()) {
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO CARS(NAME, MODEL, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, SUMMARY, PHOTO) SELECT ?, ?, ?, ?, ?, ?, ?, ?, 0");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO CARS(NAME, MODEL, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, SUMMARY, PHOTO) SELECT ?, ?, ?, ?, ?, ?, ?, ?, 0", Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, car.getName());
             pstmt.setString(2, car.getModel());
             pstmt.setString(3, car.getDescription());
@@ -41,12 +42,19 @@ public class CarDataLoader {
             pstmt.setInt(6, car.getYear());
             pstmt.setFloat(7, car.getPrice());
             pstmt.setString(8, car.getSummary());
+            
             pstmt.execute();
+            ResultSet generatedKeys = pstmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                carId = generatedKeys.getInt(1);
+            }
             pstmt.close();
             connection.close();
         } catch (SQLException e) {
             Logger.log(e);
         }
+        
+        return carId;
     }
 
     public Car getCar(int carId) {
