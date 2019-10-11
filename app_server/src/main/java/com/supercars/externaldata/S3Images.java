@@ -5,6 +5,7 @@
  */
 package com.supercars.externaldata;
 
+import com.amazonaws.SdkClientException;
 import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.regions.Regions;
@@ -33,7 +34,7 @@ public class S3Images {
             S3Object object = getClient().getObject(BUCKET_NAME, imageName);
             ImageInputStream iin = ImageIO.createImageInputStream(object.getObjectContent());
             image = ImageIO.read(iin);
-        } catch (IOException | AmazonS3Exception ex) {
+        } catch (IOException | SdkClientException ex) {
             Logger.log(ex);
         }
 
