@@ -17,6 +17,7 @@ public class TracingHelper {
     public static final String CARS_APP_NAME = "cars-app";
     public static final String FUEL_PRICES_NAME = "fuel-prices";
     public static final String INSURANCE_NAME = "insurance-service";
+    public static final String RATING_NAME = "car-rating";
     
     public static Tracing getTracing(String serviceName) {
         return TracingBuilder.getInstance().getTracing(serviceName);

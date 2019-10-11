@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:1.23
+        image:  tombatchelor/cars:1.24
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -331,10 +331,10 @@ data:
       relabel_configs:
       - source_labels: [__meta_kubernetes_namespace]
         action: replace
-        target_label: k8s_namespace
+        target_label: kubernetes_namespace
       - source_labels: [__meta_kubernetes_pod_name]
         action: replace
-        target_label: k8s_pod_name
+        target_label: kubernetess_pod_name
       - source_labels: [__address__]
         action: replace
         regex: ([^:]+)(?::\d+)?
