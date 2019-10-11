@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:1.21
+        image:  tombatchelor/cars:1.23
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -54,6 +54,16 @@ spec:
             configMapKeyRef:
               name: zipkin-config
               key: zipkin.endpoint
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: aws-cred
+              key: access-key
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aws-cred
+              key: secret-key
         livenessProbe:
           httpGet:
             path: /Cars_Sample_App/public/leak
@@ -178,7 +188,18 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:1.3
+            image: tombatchelor/carscleanup:1.4
+            env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-cred
+                  key: access-key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-cred
+                  key: secret-key
           restartPolicy: OnFailure
 ---
 apiVersion: v1

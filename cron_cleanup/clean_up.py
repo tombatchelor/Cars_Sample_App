@@ -1,5 +1,6 @@
 import mysql.connector
 import random
+import boto3
 
 def get_array_of_randoms(length, limit):
     randoms = []
@@ -17,6 +18,8 @@ def trim_table(selectQuery, deleteQuery, max, toDelete, cnx):
     IDs = cursor.fetchall()
     cursor.close()
     
+    IDsDeleted = []
+
     if len(IDs) > max:
         randoms = get_array_of_randoms(len(IDs) - max + toDelete, len(IDs))
         print(len(randoms))
@@ -25,8 +28,17 @@ def trim_table(selectQuery, deleteQuery, max, toDelete, cnx):
         for x in randoms:
             if x != 0:
                 cursor.execute(deleteQuery, IDs[x])
+                IDsDeleted.append(IDs[x][0])
         cnx.commit()
         cursor.close()
+
+    return IDsDeleted
+
+def delete_s3_objects(IDsDeleted):
+    s3_client = boto3.client('s3', region_name='us-west-2')
+    for id in IDsDeleted:
+        s3_client.delete_object(Bucket='carimages-observeinc', Key='IMG_' + str(id) + '.jpeg')
+
 
 config = {
   'user': 'root',
@@ -49,8 +61,11 @@ enquiriesToDelete = 2000
 print('Start Cleanup')
 cnx = mysql.connector.connect(**config)
 
-trim_table(carsQuery, carsDelete, maxCars, carsToDelete, cnx)
-print('End CARS cleanup')
+IDsDeleted = trim_table(carsQuery, carsDelete, maxCars, carsToDelete, cnx)
+print('End CARS DB cleanup')
+print('Start CARS S3 cleanup')
+delete_s3_objects(IDsDeleted)
+print('End CARS S3 cleanup')
 print('Start ENQUIRIES cleanup')
 trim_table(enquiryQuery, enquiryDelete, maxEnquiries, enquiriesToDelete, cnx)
 print('End ENQUIRIES cleanup')

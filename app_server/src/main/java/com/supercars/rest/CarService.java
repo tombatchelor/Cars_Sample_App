@@ -5,6 +5,7 @@
  */
 package com.supercars.rest;
 
+import java.util.Base64;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -16,8 +17,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.Car;
 import com.supercars.dataloader.CarDataLoader;
+import com.supercars.externaldata.S3Images;
+import com.supercars.logging.LogLevel;
 import com.supercars.logging.Logger;
 import com.supercars.tracing.TracingHelper;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.logging.Level;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
@@ -38,16 +49,17 @@ public class CarService {
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Model", car.getModel());
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Price", car.getPrice());
         }
-        
+
+        S3Images.getImage("IMG_" + car.getCarId() + ".jpeg");
         return car;
     }
-    
+
     @Path("/manufacturer/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Car> getCarsForManufacturer(@PathParam("id") int id) {
         List<Car> cars = new CarDataLoader().getCarsByManufacturer(id);
-        
+
         for (Car car : cars) {
             try {
                 Thread.sleep(2);
@@ -57,7 +69,7 @@ public class CarService {
         }
         // Add number of cars to span
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
-        
+
         return cars;
     }
 
@@ -66,10 +78,10 @@ public class CarService {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Car> searchCars(@PathParam("query") String query) {
         List<Car> cars = new CarDataLoader().getCarsBySearch(query);
-        
+
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.SearchQuery", query);
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
-        
+
         return cars;
     }
 
@@ -81,7 +93,24 @@ public class CarService {
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Model", car.getModel());
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Price", car.getPrice());
         }
-        
-        new CarDataLoader().saveCar(car);
+
+        int carId = new CarDataLoader().saveCar(car);
+
+        if (carId > 0) {
+            try {
+                Context initContext = new InitialContext();
+                Context webContext = (Context) initContext.lookup("java:/comp/env");
+                String imageBase64 = (String) webContext.lookup("image_base64");
+                byte [] imageBytes = Base64.getDecoder().decode(imageBase64);
+                File file = File.createTempFile("IMG_" + carId, ".jpeg");
+                OutputStream os = new FileOutputStream(file);
+                os.write(imageBytes);
+                Logger.log(file.getAbsolutePath(), LogLevel.DEBUG);
+                os.close();
+                S3Images.saveImage(file, "IMG_" + carId + ".jpeg");
+            } catch (NamingException | IOException ex) {
+                Logger.log(ex);
+            }
+        }
     }
 }
