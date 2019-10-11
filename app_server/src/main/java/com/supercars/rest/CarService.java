@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.Car;
 import com.supercars.dataloader.CarDataLoader;
+import com.supercars.externaldata.CarRating;
 import com.supercars.externaldata.S3Images;
 import com.supercars.logging.LogLevel;
 import com.supercars.logging.Logger;
@@ -51,6 +52,7 @@ public class CarService {
         }
 
         S3Images.getImage("IMG_" + car.getCarId() + ".jpeg");
+        car.setRating(CarRating.getCarRating(car.getCarId()).getRating());
         return car;
     }
 
