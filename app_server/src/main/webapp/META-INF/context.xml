@@ -6,7 +6,7 @@
               type="javax.sql.DataSource" 
               username="root" 
               password="AppDynamics"
-              driverClassName="com.mysql.jdbc.Driver"
+              driverClassName="com.mysql.cj.jdbc.Driver"
               url="jdbc:mysql://mysql:3306/supercars?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=America/Los_Angeles"
               maxIdle="4" />
     <Resource name="jdbc/c3p0" 
@@ -18,7 +18,7 @@
               maxIdleTime="3000" 
               user="root" 
               password="AppDynamics"
-              driverClass="com.mysql.jdbc.Driver"
+              driverClass="com.mysql.cj.jdbc.Driver"
               jdbcUrl="jdbc:mysql://mysql:3306/supercars?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=America/Los_Angeles"
     />
     <Environment name="image_base64" value=
