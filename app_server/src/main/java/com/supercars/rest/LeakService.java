@@ -23,10 +23,12 @@ public class LeakService {
     
     @Path("{number}/{size}")
     @GET
-    public void leak(@PathParam("number") int number, @PathParam("size") int size) {
+    @Produces(MediaType.TEXT_PLAIN)
+    public String leak(@PathParam("number") int number, @PathParam("size") int size) {
         System.out.println(number);
         System.out.println(size);
         Leak.addToCollection(number, size);
+        return Long.toString(Leak.getSize());
     }
     
     @GET
