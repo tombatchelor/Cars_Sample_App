@@ -31,6 +31,14 @@ public class TracingHelper {
         getTracer(serviceName).currentSpanCustomizer().tag(key, value);
     }
     
+    public static void tag(String serviceName, String key, double value) {
+        tag(serviceName, key, String.valueOf(value));
+    }
+    
+    public static void tag(String serviceName, String key, int value) {
+        tag(serviceName, key, String.valueOf(value));
+    }
+    
     public static void tag(String serviceName, String key, long value) {
         tag(serviceName, key, String.valueOf(value));
     }
