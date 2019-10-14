@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  carloan:
+    image: ${DOCKER_REGISTRY-}carloan
+    build:
+      context: .
+      dockerfile: CarLoan/Dockerfile

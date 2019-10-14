@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk" DefaultTargets="Build">
+  <PropertyGroup Label="Globals">
+    <ProjectVersion>2.1</ProjectVersion>
+    <DockerTargetOS>Linux</DockerTargetOS>
+    <ProjectGuid>{C7E4CB47-F77E-4E74-BF3D-922BD0E7CF98}</ProjectGuid>
+    <DockerLaunchBrowser>True</DockerLaunchBrowser>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/carloan</DockerServiceUrl>
+    <DockerServiceName>carloan</DockerServiceName>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="docker-compose.override.yml">
+      <DependentUpon>docker-compose.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose.yml" />
+    <None Include=".dockerignore" />
+  </ItemGroup>
+</Project>
