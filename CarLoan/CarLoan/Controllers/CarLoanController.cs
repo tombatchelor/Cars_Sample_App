@@ -19,13 +19,16 @@ namespace CarLoan.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public LoanQuote Get()
+        [HttpPost]
+        public LoanQuote Post(LoanQuoteRequest quoteRequest)
         {
             var quote = new LoanQuote();
-            quote.payment = 349.34F;
-            quote.rate = 3.99F;
-            quote.term = 60;
+            double rate = 3.99;
+            double calcRate = ((rate / 12) / 100);
+            double factor = calcRate + (calcRate / (Math.Pow(calcRate + 1, quoteRequest.term) - 1));
+            quote.payment = quoteRequest.loanAmount * factor;
+            quote.term = quoteRequest.term;
+            quote.rate = rate;
             return quote;
         }
     }
