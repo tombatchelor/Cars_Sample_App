@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:51887",
+      "applicationUrl": "http://localhost:51887"
     }
   },
   "profiles": {
@@ -21,6 +21,7 @@
       "launchBrowser": true,
       "launchUrl": "carloan",
       "environmentVariables": {
+        "ZIPKIN_ENDPOINT": "http://localhost:9411/zipkin",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:5000"
