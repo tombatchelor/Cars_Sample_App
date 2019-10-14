@@ -1,0 +1,73 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.supercars.externaldata;
+
+import brave.Tracing;
+import brave.jaxrs2.TracingClientFilter;
+import com.supercars.Car;
+import com.supercars.LoanQuote;
+import com.supercars.LoanQuoteRequest;
+import com.supercars.dataloader.CarDataLoader;
+import com.supercars.logging.Logger;
+import com.supercars.preferences.Preference;
+import com.supercars.preferences.PreferenceException;
+import com.supercars.preferences.PreferenceManager;
+import com.supercars.tracing.TracingHelper;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
+/**
+ *
+ * @author tombatchelor
+ */
+public class LoanQuotes {
+
+    static Tracing tracing = TracingHelper.getTracing(TracingHelper.LOAN_NAME);
+
+    public static LoanQuote getQuote(LoanQuoteRequest quoteRequest) {
+        LoanQuote loanQuote = null;
+        try {
+            Preference preference = PreferenceManager.getPreference("REST_CLIENT");
+            switch (preference.getValue()) {
+                case "Jersey_Sync":
+                    loanQuote = getQuoteJerseySync(quoteRequest);
+                case "Jersey_Async":
+                    loanQuote = getQuoteJerseysAsync(quoteRequest).get();
+            }
+        } catch (PreferenceException | InterruptedException | ExecutionException ex) {
+            Logger.log(ex);
+        }
+
+        return loanQuote;
+    }
+    
+    public static LoanQuote getQuote(int carID, int loanAmount, int term) {
+        Car car = new CarDataLoader().getCar(carID);
+        LoanQuoteRequest quoteRequest = new LoanQuoteRequest(car.getPrice(), loanAmount, term);
+        return getQuote(quoteRequest);
+    }
+
+    private static LoanQuote getQuoteJerseySync(LoanQuoteRequest loanQuoteRequest) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://car-loan/carloan");
+        target.register(TracingClientFilter.create(tracing));
+        return target.request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(loanQuoteRequest, MediaType.APPLICATION_JSON), LoanQuote.class);
+    }
+
+    private static Future<LoanQuote> getQuoteJerseysAsync(LoanQuoteRequest loanQuoteRequest) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://car-loan/carloan");
+        Future<LoanQuote> response = target.request(MediaType.APPLICATION_JSON).async()
+                .post(Entity.entity(loanQuoteRequest, MediaType.APPLICATION_JSON), LoanQuote.class);
+        return response;
+    }
+}
