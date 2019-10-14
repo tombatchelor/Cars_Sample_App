@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
 WORKDIR /src
 COPY CarLoan.csproj CarLoan/
 RUN dotnet restore "CarLoan/CarLoan.csproj"
-COPY . .
+COPY . CarLoan/
 WORKDIR "/src/CarLoan"
 RUN dotnet build "CarLoan.csproj" -c Release -o /app/build
 
