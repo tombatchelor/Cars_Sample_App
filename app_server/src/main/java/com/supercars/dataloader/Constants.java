@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 import javax.sql.DataSource;
 
 /**

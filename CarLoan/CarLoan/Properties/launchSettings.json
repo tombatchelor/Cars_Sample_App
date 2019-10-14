@@ -21,7 +21,7 @@
       "launchBrowser": true,
       "launchUrl": "carloan",
       "environmentVariables": {
-        "ZIPKIN_ENDPOINT": "http://localhost:9411/zipkin",
+        "ZIPKIN_ENDPOINT": "http://localhost:9411/",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:5000"

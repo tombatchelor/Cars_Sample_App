@@ -30,7 +30,7 @@ import javax.ws.rs.core.MediaType;
  */
 public class LoanQuotes {
 
-    static Tracing tracing = TracingHelper.getTracing(TracingHelper.INSURANCE_NAME);
+    static Tracing tracing = TracingHelper.getTracing(TracingHelper.LOAN_NAME);
 
     public static LoanQuote getQuote(LoanQuoteRequest quoteRequest) {
         LoanQuote loanQuote = null;

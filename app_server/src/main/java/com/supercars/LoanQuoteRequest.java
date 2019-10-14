@@ -16,6 +16,12 @@ public class LoanQuoteRequest {
     private int loanAmount;
     private int term;
     
+    public LoanQuoteRequest() {
+        this.price = 0;
+        this.loanAmount = 0;
+        this.term = 0;
+    }
+    
     public LoanQuoteRequest(int price, int loanAmount, int term) {
         this.price = price;
         this.loanAmount = loanAmount;

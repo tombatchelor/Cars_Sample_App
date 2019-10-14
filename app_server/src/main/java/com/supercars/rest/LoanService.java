@@ -11,6 +11,7 @@ import com.supercars.externaldata.LoanQuotes;
 import com.supercars.tracing.TracingHelper;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -22,14 +23,14 @@ import javax.ws.rs.core.MediaType;
 public class LoanService {
     
     @Path("/quote")
-    @POST()
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     public LoanQuote getLoanQuote(LoanQuoteRequest quoteRequest) {
         LoanQuote loanQuote = LoanQuotes.getQuote(quoteRequest);
         
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.loan.rate", loanQuote.getRate());
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.loan.payment", loanQuote.getPayment());
-        TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.loan.payment", loanQuote.getTerm());
+        TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.loan.term", loanQuote.getTerm());
         
         return loanQuote;
     }

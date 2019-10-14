@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:1.24
+        image:  tombatchelor/cars:1.26
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -114,10 +114,37 @@ spec:
     spec:
       containers:
       - name: insurance-quoter
-        image: tombatchelor/car-insurance:1.4
+        image: tombatchelor/car-insurance:1.5
         ports:
         - name: http
           containerPort: 8000
+        env:
+        - name: ZIPKIN_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: zipkin-config
+              key: zipkin.endpoint
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: car-loan-dotnet
+spec:
+  selector:
+    matchLabels:
+      app: car_loan
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: car_loan
+    spec:
+      containers:
+      - name: loan-quoter
+        image: tombatchelor/car-loan:0.1
+        ports:
+        - name: http
+          containerPort: 80
         env:
         - name: ZIPKIN_ENDPOINT
           valueFrom:
@@ -250,6 +277,18 @@ spec:
     port: 8000
     targetPort: http
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: car-loan
+spec:
+  selector:
+    app: car_loan
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http
+---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
@@ -290,7 +329,7 @@ metadata:
     app: web-server
   name: zipkin-config
 data:
-  zipkin.endpoint: http://proxy.observe-staging.svc.cluster.local:9411/api/v2/spans
+  zipkin.endpoint: http://proxy.observe-staging.svc.cluster.local:9411/
 ---
 apiVersion: v1
 kind: ConfigMap

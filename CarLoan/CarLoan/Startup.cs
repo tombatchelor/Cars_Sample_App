@@ -44,11 +44,12 @@ namespace CarLoan
             }
 
             var zipkinEndpoint = Environment.GetEnvironmentVariable("ZIPKIN_ENDPOINT");
+
             var lifetime = app.ApplicationServices.GetService<Microsoft.AspNetCore.Hosting.IApplicationLifetime>();
             lifetime.ApplicationStarted.Register(() => {
                 TraceManager.SamplingRate = 1.0f;
                 var logger = new TracingLogger(loggerFactory, "zipkin4net");
-                var httpSender = new HttpZipkinSender("http://localhost:9411", "application/json");
+                var httpSender = new HttpZipkinSender(zipkinEndpoint, "application/json");
                 var tracer = new ZipkinTracer(httpSender, new JSONSpanSerializer());
                 TraceManager.RegisterTracer(tracer);
                 TraceManager.Start(logger);

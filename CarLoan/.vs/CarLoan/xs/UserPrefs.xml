@@ -1,12 +1,12 @@
 ﻿<Properties StartupConfiguration="{8FDFB202-5E77-443C-9330-548AF32B749B}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="CarLoan/Startup.cs">
     <Files>
-      <File FileName="CarLoan/Program.cs" Line="1" Column="1" />
-      <File FileName="CarLoan/Startup.cs" Line="46" Column="85" />
+      <File FileName="CarLoan/Program.cs" Line="13" Column="6" />
+      <File FileName="CarLoan/Startup.cs" Line="52" Column="69" />
       <File FileName="CarLoan/Controllers/WeatherForecastController.cs" Line="31" Column="31" />
       <File FileName="CarLoan/Properties/launchSettings.json" Line="30" Column="2" />
       <File FileName="CarLoan/Models/LoanQuote.cs" Line="14" Column="2" />
-      <File FileName="CarLoan/Dockerfile" Line="8" Column="6" />
+      <File FileName="CarLoan/Dockerfile" Line="10" Column="16" />
       <File FileName="CarLoan/LoanQuoteRequest.cs" Line="8" Column="38" />
     </Files>
     <Pads>

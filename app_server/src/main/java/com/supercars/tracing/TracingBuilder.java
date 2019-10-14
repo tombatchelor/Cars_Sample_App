@@ -42,9 +42,9 @@ public class TracingBuilder {
     private static String getZipkinEndpoint() {
         String zipkinEndpoint = System.getenv("ZIPKIN_ENDPOINT");
         if (zipkinEndpoint == null) {
-            zipkinEndpoint = "http://localhost:9411/api/v2/spans";
+            zipkinEndpoint = "http://localhost:9411/";
         }
-        return zipkinEndpoint;
+        return zipkinEndpoint + "api/v2/spans";
     }
 
     public static TracingBuilder getInstance() {
