@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:1.26
+        image:  tombatchelor/cars:1.27
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -66,7 +66,7 @@ spec:
               key: secret-key
         livenessProbe:
           httpGet:
-            path: /Cars_Sample_App/public/leak
+            path: /Cars_Sample_App/public/health
             port: 8080
           initialDelaySeconds: 20
           periodSeconds: 30

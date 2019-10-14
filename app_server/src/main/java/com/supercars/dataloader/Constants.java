@@ -8,6 +8,7 @@
  */
 package com.supercars.dataloader;
 
+import com.supercars.logging.Logger;
 import com.supercars.preferences.Preference;
 import com.supercars.preferences.PreferenceException;
 import com.supercars.preferences.PreferenceManager;
@@ -15,8 +16,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -52,7 +51,7 @@ public class Constants {
                 default:
             }
         } catch (SQLException | PreferenceException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.log(ex);
         }
     }
 
@@ -70,7 +69,7 @@ public class Constants {
             Connection connection = ds.getConnection();
             return connection;
         } catch (NamingException | SQLException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.log(ex);
         }
 
         return null;
@@ -85,7 +84,7 @@ public class Constants {
             Connection dbCon = ds.getConnection();
             return dbCon;
         } catch (NamingException | SQLException | PreferenceException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.log(ex);
         }
 
         return null;
@@ -95,6 +94,9 @@ public class Constants {
         boolean exists = false;
         try (Connection connection = getDBConnectionStandardPool(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'supercars' AND table_name = 'PREFERENCES'")) {
             exists = resultSet.next();
+        } catch (NullPointerException ex) {
+            Logger.log(ex);
+            throw new SQLException("NullPointerException when getting DB connection");
         }
         return exists;
     }
@@ -111,7 +113,7 @@ public class Constants {
         try {
             PreferenceManager.updatePreference("SCHEMA_VERSION", String.valueOf(version), "Schema Version", true);
         } catch (PreferenceException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.log(ex);
         }
     }
 
