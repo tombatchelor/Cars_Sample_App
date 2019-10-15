@@ -25,10 +25,10 @@ public class HealthService {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getHealth() {
-        try {
-            Connection connection = Constants.getDBConnection();
+        try (Connection connection = Constants.getDBConnectionStandardPool()) {
             if (connection == null) {
                 return Response.serverError().entity("NO_DB_CONNECTION").build();
+            } else {
             }
         } catch (Exception ex) {
             Logger.log(ex);
