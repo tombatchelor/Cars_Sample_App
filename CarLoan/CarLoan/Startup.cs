@@ -44,6 +44,7 @@ namespace CarLoan
             }
 
             var zipkinEndpoint = Environment.GetEnvironmentVariable("ZIPKIN_ENDPOINT");
+            zipkinEndpoint.TrimEnd(new[] { '/' });
 
             var lifetime = app.ApplicationServices.GetService<Microsoft.AspNetCore.Hosting.IApplicationLifetime>();
             lifetime.ApplicationStarted.Register(() => {

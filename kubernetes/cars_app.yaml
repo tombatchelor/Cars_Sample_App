@@ -141,7 +141,7 @@ spec:
     spec:
       containers:
       - name: loan-quoter
-        image: tombatchelor/car-loan:0.1
+        image: tombatchelor/car-loan:1.0
         ports:
         - name: http
           containerPort: 80
@@ -332,6 +332,7 @@ metadata:
   name: zipkin-config
 data:
   zipkin.endpoint:  http://proxy.observe-eng.svc.cluster.local:9411/
+#  zipkin.endpoint: http://192.168.99.1:9411/
 ---
 apiVersion: v1
 kind: ConfigMap

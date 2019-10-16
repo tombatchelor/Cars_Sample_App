@@ -141,7 +141,7 @@ spec:
     spec:
       containers:
       - name: loan-quoter
-        image: tombatchelor/car-loan:0.1
+        image: tombatchelor/car-loan:1.0
         ports:
         - name: http
           containerPort: 80
