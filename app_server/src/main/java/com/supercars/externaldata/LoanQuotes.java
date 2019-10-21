@@ -41,15 +41,20 @@ public class LoanQuotes {
     }
     
     public static LoanQuote getQuote(LoanQuoteRequest quoteRequest) {
+        logger.log(Level.FINE, "Getting loan quote request of ${0} over term of {1}", new Object[]{quoteRequest.getLoanAmount(), quoteRequest.getTerm()});
         LoanQuote loanQuote = null;
         try {
             Preference preference = PreferenceManager.getPreference("REST_CLIENT");
             switch (preference.getValue()) {
                 case "Jersey_Sync":
                     loanQuote = getQuoteJerseySync(quoteRequest);
+                    break;
                 case "Jersey_Async":
                     loanQuote = getQuoteJerseysAsync(quoteRequest).get();
+                    break;
             }
+            logger.fine("Success getting loan quote request");
+            logger.log(Level.FINE, "Loan quote of {0}% APR recieved, monthly payment of {1}", new Object[]{loanQuote.getRate(), loanQuote.getPayment()});
         } catch (PreferenceException | InterruptedException | ExecutionException ex) {
             logger.log(Level.SEVERE, null, ex);
         }
@@ -64,6 +69,7 @@ public class LoanQuotes {
     }
 
     private static LoanQuote getQuoteJerseySync(LoanQuoteRequest loanQuoteRequest) {
+        logger.fine("Using sync HTTP call");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://car-loan/carloan");
         target.register(TracingClientFilter.create(tracing));
@@ -72,6 +78,7 @@ public class LoanQuotes {
     }
 
     private static Future<LoanQuote> getQuoteJerseysAsync(LoanQuoteRequest loanQuoteRequest) {
+        logger.fine("Using async HTTP call");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://car-loan/carloan");
         Future<LoanQuote> response = target.request(MediaType.APPLICATION_JSON).async()

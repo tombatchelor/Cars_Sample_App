@@ -9,7 +9,7 @@ package com.supercars;
  *
  * @author tombatchelor
  */
-public class QuoteRequest {
+public class InsuranceQuoteRequest {
 
     /**
      * @return the price
@@ -87,11 +87,27 @@ public class QuoteRequest {
     private int excess;
     private int liability;
     
-    public QuoteRequest(int price, int year, String manufacturer, int excess, int liability) {
+    public InsuranceQuoteRequest(int price, int year, String manufacturer, int excess, int liability) {
         this.price = price;
         this.year = year;
         this.manufacturer = manufacturer;
         this.excess = excess;
         this.liability = liability;
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Manufacturer ")
+                .append(manufacturer)
+                .append(" Year: ")
+                .append(year)
+                .append(" Price: ")
+                .append(price)
+                .append(" Excess: ")
+                .append(excess)
+                .append(" Liability: ")
+                .append(liability);
+        return sb.toString();
     }
 }

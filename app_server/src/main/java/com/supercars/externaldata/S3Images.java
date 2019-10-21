@@ -36,11 +36,13 @@ public class S3Images {
     }
     
     public static BufferedImage getImage(String imageName) {
+        logger.log(Level.FINE, "Getting image: {0} from S3 bucket: " + BUCKET_NAME, imageName);
         BufferedImage image = null;
         try {
             S3Object object = getClient().getObject(BUCKET_NAME, imageName);
             ImageInputStream iin = ImageIO.createImageInputStream(object.getObjectContent());
             image = ImageIO.read(iin);
+            logger.log(Level.FINE, "Get image {0} successful", imageName);
         } catch (IOException | SdkClientException ex) {
             logger.log(Level.SEVERE, "Error getting image: " + imageName + " From Bucket: " + BUCKET_NAME, ex);
         }
@@ -48,8 +50,10 @@ public class S3Images {
         return image;
     }
 
-    public static void saveImage(File image, String name) {
-        getClient().putObject(BUCKET_NAME, name, image);
+    public static void saveImage(File image, String imageName) {
+        logger.log(Level.FINE,"Saving image: {0} to: " + BUCKET_NAME, imageName);
+        getClient().putObject(BUCKET_NAME, imageName, image);
+        logger.log(Level.FINE,"Save image: {0} successful", imageName);
     }
 
     private static AmazonS3 getClient() {

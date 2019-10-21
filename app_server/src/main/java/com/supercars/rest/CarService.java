@@ -38,17 +38,18 @@ import javax.naming.NamingException;
 @Path("/car")
 public class CarService {
 
-    private final static Logger logger = Logger.getLogger(CarLogger.class.getName());
-    
+    private final static Logger logger = Logger.getLogger(CarService.class.getName());
+
     static {
         CarLogger.setup(CarService.class.getName());
     }
-    
+
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Car getCar(@PathParam("id") int id) {
-        Car car = new CarDataLoader().getCar(id);
+    public Car getCar(@PathParam("id") int carID) {
+        logger.log(Level.FINE, "GET request for carID: {0}", carID);
+        Car car = new CarDataLoader().getCar(carID);
 
         if (car != null) {
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Manufacturer", car.getManufacturer().getName());
@@ -59,6 +60,7 @@ public class CarService {
 
         S3Images.getImage("IMG_" + car.getCarId() + ".jpeg");
         car.setRating(CarRating.getCarRating(car.getCarId()).getRating());
+        logger.log(Level.FINE, "Returing car {0}", car.toString());
         return car;
     }
 
@@ -66,6 +68,7 @@ public class CarService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Car> getCarsForManufacturer(@PathParam("id") int id) {
+        logger.log(Level.FINE, "GET request for cars for manufacturerID: {0}", id);
         List<Car> cars = new CarDataLoader().getCarsByManufacturer(id);
 
         for (Car car : cars) {
@@ -78,6 +81,7 @@ public class CarService {
         // Add number of cars to span
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
 
+        logger.log(Level.FINE, "Reurning {0} cars for manufacturerID: {1}", new Object[]{cars.size(), id});
         return cars;
     }
 
@@ -85,40 +89,46 @@ public class CarService {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public List<Car> searchCars(@PathParam("query") String query) {
+        logger.log(Level.FINE, "POST request search for cars for query: {0}", query);
         List<Car> cars = new CarDataLoader().getCarsBySearch(query);
 
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.SearchQuery", query);
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
 
+        logger.log(Level.FINE, "Reurning {0} cars for manufacturerID: {1}", new Object[]{cars.size(), query});
         return cars;
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void addCar(Car car) {
+        logger.log(Level.FINE, "PUT request for car");
         if (car != null) {
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Name", car.getName());
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Model", car.getModel());
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Price", car.getPrice());
-        }
 
-        int carId = new CarDataLoader().saveCar(car);
+            int carId = new CarDataLoader().saveCar(car);
+            car.setCarId(carId);
 
-        if (carId > 0) {
-            try {
-                Context initContext = new InitialContext();
-                Context webContext = (Context) initContext.lookup("java:/comp/env");
-                String imageBase64 = (String) webContext.lookup("image_base64");
-                byte [] imageBytes = Base64.getDecoder().decode(imageBase64);
-                File file = File.createTempFile("IMG_" + carId, ".jpeg");
-                OutputStream os = new FileOutputStream(file);
-                os.write(imageBytes);
-                Logger.getLogger(CarService.class.getName()).log(Level.FINE, file.getAbsolutePath());
-                os.close();
-                S3Images.saveImage(file, "IMG_" + carId + ".jpeg");
-            } catch (NamingException | IOException ex) {
-                logger.log(Level.SEVERE, null, ex);
+            if (carId > 0) {
+                try {
+                    Context initContext = new InitialContext();
+                    Context webContext = (Context) initContext.lookup("java:/comp/env");
+                    String imageBase64 = (String) webContext.lookup("image_base64");
+                    byte[] imageBytes = Base64.getDecoder().decode(imageBase64);
+                    File file = File.createTempFile("IMG_" + carId, ".jpeg");
+                    OutputStream os = new FileOutputStream(file);
+                    os.write(imageBytes);
+                    Logger.getLogger(CarService.class.getName()).log(Level.FINE, file.getAbsolutePath());
+                    os.close();
+                    S3Images.saveImage(file, "IMG_" + carId + ".jpeg");
+                } catch (NamingException | IOException ex) {
+                    logger.log(Level.SEVERE, null, ex);
+                }
             }
+
+            logger.log(Level.FINE, "Saved car {0}", car.toString());
         }
     }
 }

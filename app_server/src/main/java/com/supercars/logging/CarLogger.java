@@ -20,6 +20,7 @@ public class CarLogger {
         Logger logger = Logger.getLogger(name);
         logger.setLevel(Level.FINEST);
         Handler handler = new StreamHandler(System.err, new CarLogFormatter());
+        handler.setLevel(Level.FINEST);
         logger.addHandler(handler);
     }
 }

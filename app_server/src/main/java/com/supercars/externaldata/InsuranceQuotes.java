@@ -9,8 +9,8 @@ import brave.Tracing;
 import brave.jaxrs2.TracingClientFilter;
 import com.supercars.Car;
 import com.supercars.Manufacturer;
-import com.supercars.Quote;
-import com.supercars.QuoteRequest;
+import com.supercars.InsuranceQuote;
+import com.supercars.InsuranceQuoteRequest;
 import com.supercars.dataloader.CarDataLoader;
 import com.supercars.logging.CarLogger;
 import com.supercars.preferences.Preference;
@@ -41,19 +41,25 @@ public class InsuranceQuotes {
         CarLogger.setup(InsuranceQuotes.class.getName());
     }
     
-    public static Quote getQuote(int carID) {
+    public static InsuranceQuote getQuote(int carID) {
+        logger.log(Level.FINE, "Getting insurance quote for carID: {0}", carID);
         Car car = new CarDataLoader().getCar(carID);
         Manufacturer manufacturer = car.getManufacturer();
-        QuoteRequest quoteRequest = new QuoteRequest(car.getPrice(), car.getYear(), manufacturer.getName(), 500, 100000);
-        Quote quote = null;
+        InsuranceQuoteRequest quoteRequest = new InsuranceQuoteRequest(car.getPrice(), car.getYear(), manufacturer.getName(), 500, 100000);
+        logger.log(Level.FINE, "Sending quote request: {0}", quoteRequest.toString());
+        InsuranceQuote quote = null;
         try {
             Preference preference = PreferenceManager.getPreference("REST_CLIENT");
             switch (preference.getValue()) {
                 case "Jersey_Sync":
                     quote = getQuoteJerseySync(quoteRequest);
+                    break;
                 case "Jersey_Async":
                     quote = getQuoteJerseysAsync(quoteRequest).get();
+                    break;
             }
+            logger.log(Level.FINE, "Success getting insurance quote for carID: {0}", carID);
+            logger.log(Level.FINE, "Quote price of ${0} from: {1}", new Object[]{quote.getPrice(), quote.getCompany()});
         } catch (PreferenceException | InterruptedException | ExecutionException ex) {
             logger.log(Level.SEVERE, null, ex);
         }
@@ -61,19 +67,21 @@ public class InsuranceQuotes {
         return quote;
     }
 
-    private static Quote getQuoteJerseySync(QuoteRequest quoteRequest) {
+    private static InsuranceQuote getQuoteJerseySync(InsuranceQuoteRequest quoteRequest) {
+        logger.fine("Using sync HTTP call");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://insurance:8000/insurance/simpleQuote");
         target.register(TracingClientFilter.create(tracing));
         return target.request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(quoteRequest, MediaType.APPLICATION_JSON), Quote.class);
+                .post(Entity.entity(quoteRequest, MediaType.APPLICATION_JSON), InsuranceQuote.class);
     }
 
-    private static Future<Quote> getQuoteJerseysAsync(QuoteRequest quoteRequest) {
+    private static Future<InsuranceQuote> getQuoteJerseysAsync(InsuranceQuoteRequest quoteRequest) {
+        logger.fine("Using async HTTP call");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://insurance:8000/insurance/simpleQuote");
-        Future<Quote> response = target.request(MediaType.APPLICATION_JSON).async()
-                .post(Entity.entity(quoteRequest, MediaType.APPLICATION_JSON), Quote.class);
+        Future<InsuranceQuote> response = target.request(MediaType.APPLICATION_JSON).async()
+                .post(Entity.entity(quoteRequest, MediaType.APPLICATION_JSON), InsuranceQuote.class);
         return response;
     }
 }

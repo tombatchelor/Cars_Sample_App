@@ -13,6 +13,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.Manufacturer;
 import com.supercars.dataloader.ManufacturerDataLoader;
+import com.supercars.logging.CarLogger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,11 +24,19 @@ import com.supercars.dataloader.ManufacturerDataLoader;
 @Path("/manufacturer")
 public class ManufacturerService {
     
+    private final static Logger logger = Logger.getLogger(ManufacturerService.class.getName());
+
+    static {
+        CarLogger.setup(ManufacturerService.class.getName());
+    }
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Manufacturer> getManufacturers() {
+        logger.fine("GET Getting manufacturers");
         List<Manufacturer> manufacturers = new ManufacturerDataLoader().getManufacturers();
         
+        logger.log(Level.FINE, "Returning {0} manufacturers", manufacturers.size());
         return manufacturers;
     }
     
@@ -33,8 +44,10 @@ public class ManufacturerService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Manufacturer getManufacturer(@PathParam("id") int id) {
+        logger.log(Level.FINE, "GET Getting manufacture ID: {0}", id);
         Manufacturer manufacturer = new ManufacturerDataLoader().getManufacturer(id);
         
+        logger.log(Level.FINE, "Returning manufacturer {0}", manufacturer.toString());
         return manufacturer;
     }
 }

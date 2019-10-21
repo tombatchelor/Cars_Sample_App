@@ -69,4 +69,9 @@ public class LoanQuoteRequest {
     public void setTerm(int term) {
         this.term = term;
     }
+    
+    @Override
+    public String toString() {
+        return "Loan Amount: " + loanAmount + " Price: " + price + " Term: " + term;
+    }
 }

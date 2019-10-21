@@ -57,13 +57,17 @@ public class FuelPrices {
                 timeout = timeout * 60 * 1000;
             }
             if (prices == null || lastUpdate + timeout > System.currentTimeMillis()) {
+                logger.fine("Getting fresh fuel prices");
                 Preference preference = PreferenceManager.getPreference("REST_CLIENT");
                 switch (preference.getValue()) {
                     case "Jersey_Sync":
                         prices = getFuelPricesJerseySync();
+                        break;
                     case "Jersey_Async":
                         prices = getFuelPriceJerseysAsync().get();
+                        break;
                 }
+                logger.fine("Fuel prices refreshed");
             }
         } catch (PreferenceException | InterruptedException | ExecutionException ex) {
             logger.log(Level.SEVERE, null, ex);
@@ -73,6 +77,7 @@ public class FuelPrices {
     }
 
     private static FuelPrices getFuelPricesJerseySync() {
+        logger.fine("Using sync HTTP call");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("https://www.fueleconomy.gov/ws/rest/fuelprices");
         target.register(TracingClientFilter.create(tracing));
@@ -81,6 +86,7 @@ public class FuelPrices {
     }
 
     private static Future<FuelPrices> getFuelPriceJerseysAsync() {
+        logger.fine("Using async HTTP call");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("https://www.fueleconomy.gov/ws/rest/fuelprices");
         Future<FuelPrices> response = target.request(MediaType.APPLICATION_XML).async().get(FuelPrices.class);

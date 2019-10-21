@@ -161,4 +161,24 @@ public class Car {
     public void setRating(float rating) {
         this.rating = rating;
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: ")
+                .append(carId)
+                .append(" Manufacturer ID: ")
+                .append(manufacturerId)
+                .append(" Name: ")
+                .append(name)
+                .append(" Model: ")
+                .append(model)
+                .append(" Price: ")
+                .append(price)
+                .append(" Colour: ")
+                .append(colour)
+                .append(" Rating: ")
+                .append(rating);
+        return sb.toString();
+    }
 }

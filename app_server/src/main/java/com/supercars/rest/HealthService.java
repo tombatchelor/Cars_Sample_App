@@ -33,8 +33,10 @@ public class HealthService {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getHealth() {
+        logger.fine("GET Returning service health");
         try (Connection connection = Constants.getDBConnectionStandardPool()) {
             if (connection == null) {
+                logger.severe("Could not get DB connection");
                 return Response.serverError().entity("NO_DB_CONNECTION").build();
             } else {
             }
@@ -43,6 +45,7 @@ public class HealthService {
             return Response.serverError().entity("EXCEPTION_GETTING_DB_CONNECTION").build();
         }
         
+        logger.fine("Service okay");
         return Response.ok("OK").build();
     }
 }

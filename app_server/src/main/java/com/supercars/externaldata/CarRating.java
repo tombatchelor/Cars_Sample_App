@@ -42,6 +42,7 @@ public class CarRating {
     }
     
     public static Rating getCarRating(int carID) {
+        logger.log(Level.FINE, "Getting rating for carID: {0}", carID);
         Car car = new CarDataLoader().getCar(carID);
         Manufacturer manufacturer = car.getManufacturer();
         RatingRequest ratingRequest = new RatingRequest(manufacturer.getName(), car.getModel());
@@ -53,6 +54,7 @@ public class CarRating {
                 case "Jersey_Async":
                     return getCarRatingAsync(ratingRequest).get();
             }
+            logger.log(Level.FINE, "Success getting insurance quote for carID: {0}", carID);
         } catch (InterruptedException | PreferenceException | ExecutionException ex) {
             logger.log(Level.SEVERE, null, ex);
         }

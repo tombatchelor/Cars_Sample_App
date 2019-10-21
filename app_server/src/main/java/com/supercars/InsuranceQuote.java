@@ -12,17 +12,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author tombatchelor
  */
 @XmlRootElement
-public class Quote {
+public class InsuranceQuote {
 
     private String company;
     private float price;
 
-    public Quote() {
+    public InsuranceQuote() {
         company = "";
         price = 0;
     }
 
-    public Quote(String company, float price) {
+    public InsuranceQuote(String company, float price) {
         this.company = company;
         this.price = price;
     }
@@ -53,5 +53,10 @@ public class Quote {
      */
     public void setPrice(float price) {
         this.price = price;
+    }
+    
+    @Override
+    public String toString() {
+        return "Company: " + company + " Price: " + price;
     }
 }

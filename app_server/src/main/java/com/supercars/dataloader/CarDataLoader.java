@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.supercars.Car;
-import com.supercars.Engine;
-import com.supercars.XMLException;
 import com.supercars.logging.CarLogger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
