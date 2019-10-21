@@ -5,8 +5,6 @@
  */
 package com.supercars.logging;
 
-import brave.Tracing;
-import java.io.PrintStream;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
