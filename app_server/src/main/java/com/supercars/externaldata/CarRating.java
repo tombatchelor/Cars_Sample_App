@@ -17,8 +17,10 @@ import com.supercars.preferences.PreferenceManager;
 import com.supercars.tracing.TracingHelper;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import com.supercars.logging.Logger;
+import com.supercars.logging.CarLogger;
 import com.supercars.preferences.PreferenceException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -33,6 +35,12 @@ public class CarRating {
 
     static Tracing tracing = TracingHelper.getTracing(TracingHelper.RATING_NAME);
 
+    private final static Logger logger = Logger.getLogger(CarRating.class.getName());
+    
+    static {
+        CarLogger.setup(CarRating.class.getName());
+    }
+    
     public static Rating getCarRating(int carID) {
         Car car = new CarDataLoader().getCar(carID);
         Manufacturer manufacturer = car.getManufacturer();
@@ -46,7 +54,7 @@ public class CarRating {
                     return getCarRatingAsync(ratingRequest).get();
             }
         } catch (InterruptedException | PreferenceException | ExecutionException ex) {
-            Logger.log(ex);
+            logger.log(Level.SEVERE, null, ex);
         }
 
         return null;

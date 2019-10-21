@@ -17,7 +17,9 @@ import java.util.List;
 import com.supercars.Car;
 import com.supercars.Engine;
 import com.supercars.XMLException;
-import com.supercars.logging.Logger;
+import com.supercars.logging.CarLogger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author v023094
@@ -29,6 +31,12 @@ public class CarDataLoader {
 
     Statement statement = null;
     ResultSet resultSet = null;
+    
+    private final static Logger logger = Logger.getLogger(CarDataLoader.class.getName());
+    
+    static {
+        CarLogger.setup(CarDataLoader.class.getName());
+    }
     
     public int saveCar(Car car) {
         int carId = -1;
@@ -50,8 +58,8 @@ public class CarDataLoader {
             }
             pstmt.close();
             connection.close();
-        } catch (SQLException e) {
-            Logger.log(e);
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, null, ex);
         }
         
         return carId;
@@ -60,7 +68,6 @@ public class CarDataLoader {
     public Car getCar(int carId) {
 
         Car car = new Car();
-        Engine engine = new Engine();
         try (Connection connection = Constants.getDBConnection()) {
             String sql = "SELECT CARS.CAR_ID, NAME, MODEL, SUMMARY, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, PHOTO";
             sql += " FROM CARS WHERE CARS.CAR_ID = " + carId;
@@ -84,8 +91,8 @@ public class CarDataLoader {
             
             resultSet.close();
             statement.close();
-        } catch (Exception e) {
-            Logger.log(e);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, null, ex);
         }
 
         return car;
@@ -114,8 +121,8 @@ public class CarDataLoader {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch (Exception e) {
-            Logger.log(e);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, null, ex);
         }
         return cars;
     }
@@ -145,11 +152,10 @@ public class CarDataLoader {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch (Exception e) {
-            Logger.log(e);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, null, ex);
         }
 
         return cars;
     }
-
 }

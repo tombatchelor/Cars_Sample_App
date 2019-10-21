@@ -8,7 +8,7 @@
  */
 package com.supercars.dataloader;
 
-import com.supercars.logging.Logger;
+import com.supercars.logging.CarLogger;
 import com.supercars.preferences.Preference;
 import com.supercars.preferences.PreferenceException;
 import com.supercars.preferences.PreferenceManager;
@@ -16,6 +16,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -27,6 +29,8 @@ import javax.sql.DataSource;
  */
 public class Constants {
 
+    private final static Logger logger = Logger.getLogger(Constants.class.getName());
+    
     private static final String PREFERENCES_TABLE = "CREATE TABLE PREFERENCES (\n"
             + " PREFERENCE_ID MEDIUMINT NOT NULL AUTO_INCREMENT,\n"
             + " NAME VARCHAR(30),"
@@ -37,6 +41,7 @@ public class Constants {
             + ");";
 
     static {
+        CarLogger.setup(Constants.class.getName());
         try {
             int schemaVersion = getSchemaVersion();
             switch (schemaVersion) {
@@ -50,8 +55,8 @@ public class Constants {
                     upgradeToSchema_5();
                 default:
             }
-        } catch (SQLException | PreferenceException ex) {
-            Logger.log(ex);
+        } catch (PreferenceException | SQLException ex) {
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -69,7 +74,7 @@ public class Constants {
             Connection connection = ds.getConnection();
             return connection;
         } catch (NamingException | SQLException ex) {
-            Logger.log(ex);
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
@@ -84,7 +89,7 @@ public class Constants {
             Connection dbCon = ds.getConnection();
             return dbCon;
         } catch (NamingException | SQLException | PreferenceException ex) {
-            Logger.log(ex);
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
@@ -95,8 +100,10 @@ public class Constants {
         try (Connection connection = getDBConnectionStandardPool(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'supercars' AND table_name = 'PREFERENCES'")) {
             exists = resultSet.next();
         } catch (NullPointerException ex) {
-            Logger.log(ex);
-            throw new SQLException("NullPointerException when getting DB connection");
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
+            SQLException se =  new SQLException("NullPointerException when getting DB connection");
+            se.addSuppressed(ex);
+            throw se;
         }
         return exists;
     }
@@ -113,7 +120,7 @@ public class Constants {
         try {
             PreferenceManager.updatePreference("SCHEMA_VERSION", String.valueOf(version), "Schema Version", true);
         } catch (PreferenceException ex) {
-            Logger.log(ex);
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

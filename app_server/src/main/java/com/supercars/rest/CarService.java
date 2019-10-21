@@ -19,14 +19,14 @@ import com.supercars.Car;
 import com.supercars.dataloader.CarDataLoader;
 import com.supercars.externaldata.CarRating;
 import com.supercars.externaldata.S3Images;
-import com.supercars.logging.LogLevel;
-import com.supercars.logging.Logger;
+import com.supercars.logging.CarLogger;
 import com.supercars.tracing.TracingHelper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -38,6 +38,12 @@ import javax.naming.NamingException;
 @Path("/car")
 public class CarService {
 
+    private final static Logger logger = Logger.getLogger(CarLogger.class.getName());
+    
+    static {
+        CarLogger.setup(CarService.class.getName());
+    }
+    
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -66,7 +72,7 @@ public class CarService {
             try {
                 Thread.sleep(2);
             } catch (InterruptedException ex) {
-                Logger.log(ex);
+                logger.log(Level.SEVERE, null, ex);
             }
         }
         // Add number of cars to span
@@ -107,11 +113,11 @@ public class CarService {
                 File file = File.createTempFile("IMG_" + carId, ".jpeg");
                 OutputStream os = new FileOutputStream(file);
                 os.write(imageBytes);
-                Logger.log(file.getAbsolutePath(), LogLevel.DEBUG);
+                Logger.getLogger(CarService.class.getName()).log(Level.FINE, file.getAbsolutePath());
                 os.close();
                 S3Images.saveImage(file, "IMG_" + carId + ".jpeg");
             } catch (NamingException | IOException ex) {
-                Logger.log(ex);
+                logger.log(Level.SEVERE, null, ex);
             }
         }
     }

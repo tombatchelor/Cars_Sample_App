@@ -11,13 +11,15 @@ import com.supercars.Car;
 import com.supercars.LoanQuote;
 import com.supercars.LoanQuoteRequest;
 import com.supercars.dataloader.CarDataLoader;
-import com.supercars.logging.Logger;
+import com.supercars.logging.CarLogger;
 import com.supercars.preferences.Preference;
 import com.supercars.preferences.PreferenceException;
 import com.supercars.preferences.PreferenceManager;
 import com.supercars.tracing.TracingHelper;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -32,6 +34,12 @@ public class LoanQuotes {
 
     static Tracing tracing = TracingHelper.getTracing(TracingHelper.LOAN_NAME);
 
+    private final static Logger logger = Logger.getLogger(LoanQuotes.class.getName());
+    
+    static {
+        CarLogger.setup(LoanQuotes.class.getName());
+    }
+    
     public static LoanQuote getQuote(LoanQuoteRequest quoteRequest) {
         LoanQuote loanQuote = null;
         try {
@@ -43,7 +51,7 @@ public class LoanQuotes {
                     loanQuote = getQuoteJerseysAsync(quoteRequest).get();
             }
         } catch (PreferenceException | InterruptedException | ExecutionException ex) {
-            Logger.log(ex);
+            logger.log(Level.SEVERE, null, ex);
         }
 
         return loanQuote;

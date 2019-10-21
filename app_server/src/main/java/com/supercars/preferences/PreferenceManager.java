@@ -6,13 +6,15 @@
 package com.supercars.preferences;
 
 import static com.supercars.dataloader.Constants.getDBConnectionStandardPool;
-import com.supercars.logging.Logger;
+import com.supercars.logging.CarLogger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,6 +22,12 @@ import java.util.List;
  */
 public class PreferenceManager {
 
+    private final static Logger logger = Logger.getLogger(PreferenceManager.class.getName());
+    
+    static {
+        CarLogger.setup(PreferenceManager.class.getName());
+    }
+    
     public static Preference getPreference(String name) throws PreferenceException {
         Preference preference = new Preference(name);
         try {
@@ -38,7 +46,7 @@ public class PreferenceManager {
 
             return preference;
         } catch (SQLException ex) {
-            Logger.log(ex);
+            logger.log(Level.SEVERE, null, ex);
             PreferenceException pe = new PreferenceException("DB error getting preference: " + ex.getMessage());
             pe.addSuppressed(ex);
             throw pe;
@@ -58,7 +66,7 @@ public class PreferenceManager {
                 return exists;
             }
         } catch (SQLException ex) {
-            Logger.log(ex);
+            logger.log(Level.SEVERE, null, ex);
             PreferenceException pe = new PreferenceException("DB error getting preference: " + ex.getMessage());
             pe.addSuppressed(ex);
             throw pe;
@@ -103,7 +111,7 @@ public class PreferenceManager {
                 }
             }
         } catch (SQLException ex) {
-            Logger.log(ex);
+            logger.log(Level.SEVERE, null, ex);
             PreferenceException pe = new PreferenceException("DB error setting preference: " + ex.getMessage());
             pe.addSuppressed(ex);
             throw pe;
@@ -125,7 +133,7 @@ public class PreferenceManager {
                 }
             }
         } catch (SQLException ex) {
-            Logger.log(ex);
+            logger.log(Level.SEVERE, null, ex);
             PreferenceException pe = new PreferenceException("DB error getting all preferences: " + ex.getMessage());
             pe.addSuppressed(ex);
             throw pe;

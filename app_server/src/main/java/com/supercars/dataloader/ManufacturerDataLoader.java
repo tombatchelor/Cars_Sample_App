@@ -14,7 +14,9 @@ import java.util.Collection;
 import java.util.List;
 
 import com.supercars.Manufacturer;
-import com.supercars.logging.Logger;
+import com.supercars.logging.CarLogger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author v023094
@@ -26,6 +28,12 @@ public class ManufacturerDataLoader {
     
     Statement statement = null;
     ResultSet resultSet = null;
+    
+    private final static Logger logger = Logger.getLogger(ManufacturerDataLoader.class.getName());
+    
+    static {
+        CarLogger.setup(ManufacturerDataLoader.class.getName());
+    }
     
     public List<Manufacturer> getManufacturers() {
         
@@ -49,8 +57,8 @@ public class ManufacturerDataLoader {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch(Exception e){
-            Logger.log(e);
+        } catch(Exception ex){
+            logger.log(Level.SEVERE, null, ex);
         }
         
         return manufacturers;
@@ -76,8 +84,8 @@ public class ManufacturerDataLoader {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch(Exception e){
-            Logger.log(e);
+        } catch(Exception ex){
+            logger.log(Level.SEVERE, null, ex);
         }
         
         return manufacturer;

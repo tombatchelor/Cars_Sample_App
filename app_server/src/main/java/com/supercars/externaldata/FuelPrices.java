@@ -7,13 +7,15 @@ package com.supercars.externaldata;
 
 import brave.Tracing;
 import brave.jaxrs2.TracingClientFilter;
-import com.supercars.logging.Logger;
+import com.supercars.logging.CarLogger;
 import com.supercars.preferences.Preference;
 import com.supercars.preferences.PreferenceException;
 import com.supercars.preferences.PreferenceManager;
 import com.supercars.tracing.TracingHelper;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -42,6 +44,12 @@ public class FuelPrices {
 
     static Tracing tracing = TracingHelper.getTracing(TracingHelper.FUEL_PRICES_NAME);
 
+    private final static Logger logger = Logger.getLogger(FuelPrices.class.getName());
+    
+    static {
+        CarLogger.setup(FuelPrices.class.getName());
+    }
+    
     public static FuelPrices getFuelPrices() {
         try {
             if (timeout == 0) {
@@ -58,7 +66,7 @@ public class FuelPrices {
                 }
             }
         } catch (PreferenceException | InterruptedException | ExecutionException ex) {
-            Logger.log(ex);
+            logger.log(Level.SEVERE, null, ex);
         }
 
         return prices;
