@@ -5,7 +5,6 @@
  */
 package com.supercars;
 
-import com.supercars.logging.CarLogger;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,10 +20,6 @@ public class Leak {
     public static List<byte[]> leakyCollection = new LinkedList<>();
 
     private final static Logger logger = Logger.getLogger(Leak.class.getName());
-    
-    static {
-        CarLogger.setup(Leak.class.getName());
-    }
     
     public static void addToCollection(int number, int size) {
         for (int i = 0; i < number; i++) {

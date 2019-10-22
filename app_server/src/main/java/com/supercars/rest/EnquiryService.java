@@ -16,7 +16,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.Enquiry;
 import com.supercars.dataloader.EnquiryDataLoader;
-import com.supercars.logging.CarLogger;
 import com.supercars.tracing.TracingHelper;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,9 +29,6 @@ public class EnquiryService {
 
     private final static Logger logger = Logger.getLogger(EnquiryService.class.getName());
 
-    static {
-        CarLogger.setup(EnquiryService.class.getName());
-    }
 
     @Path("{id}")
     @GET

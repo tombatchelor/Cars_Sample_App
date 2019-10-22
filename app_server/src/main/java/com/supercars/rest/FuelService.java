@@ -10,7 +10,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.externaldata.FuelPrices;
-import com.supercars.logging.CarLogger;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
@@ -22,10 +21,6 @@ import java.util.logging.Logger;
 public class FuelService {
     
     private final static Logger logger = Logger.getLogger(FuelService.class.getName());
-
-    static {
-        CarLogger.setup(FuelService.class.getName());
-    }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)

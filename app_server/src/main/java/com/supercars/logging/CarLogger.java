@@ -19,8 +19,7 @@ public class CarLogger {
     public static void setup(String name) {
         Logger logger = Logger.getLogger(name);
         logger.setLevel(Level.FINEST);
-        Handler handler = new StreamHandler(System.err, new CarLogFormatter());
-        handler.setLevel(Level.FINEST);
-        logger.addHandler(handler);
+        //Handler handler = new StreamHandler(System.err, new CarLogFormatter());
+        //handler.setLevel(Level.FINEST);
     }
 }

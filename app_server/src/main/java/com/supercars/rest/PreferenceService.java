@@ -8,7 +8,6 @@ package com.supercars.rest;
 import com.supercars.preferences.Preference;
 import com.supercars.preferences.PreferenceException;
 import com.supercars.preferences.PreferenceManager;
-import com.supercars.logging.CarLogger;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,10 +26,6 @@ import javax.ws.rs.core.MediaType;
 public class PreferenceService {
     
     private final static Logger logger = Logger.getLogger(PreferenceService.class.getName());
-    
-    static {
-        CarLogger.setup(PreferenceService.class.getName());
-    }
     
     @Path("/all")
     @GET

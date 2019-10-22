@@ -7,7 +7,6 @@ package com.supercars.rest;
 
 import com.supercars.InsuranceQuote;
 import com.supercars.externaldata.InsuranceQuotes;
-import com.supercars.logging.CarLogger;
 import com.supercars.tracing.TracingHelper;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,10 +24,6 @@ import javax.ws.rs.core.MediaType;
 public class InsuranceService {
     
     private final static Logger logger = Logger.getLogger(InsuranceService.class.getName());
-
-    static {
-        CarLogger.setup(InsuranceService.class.getName());
-    }
     
     @Path("quote/{id}")
     @GET

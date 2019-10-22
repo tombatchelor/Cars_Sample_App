@@ -8,13 +8,11 @@ package com.supercars.rest;
 import com.supercars.LoanQuote;
 import com.supercars.LoanQuoteRequest;
 import com.supercars.externaldata.LoanQuotes;
-import com.supercars.logging.CarLogger;
 import com.supercars.tracing.TracingHelper;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -26,10 +24,6 @@ import javax.ws.rs.core.MediaType;
 public class LoanService {
     
     private final static Logger logger = Logger.getLogger(LoanService.class.getName());
-
-    static {
-        CarLogger.setup(LoanService.class.getName());
-    }
     
     @Path("/quote")
     @POST

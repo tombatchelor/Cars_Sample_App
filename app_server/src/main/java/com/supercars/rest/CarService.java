@@ -19,7 +19,6 @@ import com.supercars.Car;
 import com.supercars.dataloader.CarDataLoader;
 import com.supercars.externaldata.CarRating;
 import com.supercars.externaldata.S3Images;
-import com.supercars.logging.CarLogger;
 import com.supercars.tracing.TracingHelper;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,10 +38,6 @@ import javax.naming.NamingException;
 public class CarService {
 
     private final static Logger logger = Logger.getLogger(CarService.class.getName());
-
-    static {
-        CarLogger.setup(CarService.class.getName());
-    }
 
     @Path("{id}")
     @GET
@@ -81,7 +76,7 @@ public class CarService {
         // Add number of cars to span
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
 
-        logger.log(Level.FINE, "Reurning {0} cars for manufacturerID: {1}", new Object[]{cars.size(), id});
+        logger.log(Level.FINE, "Returning {0} cars for manufacturerID: {1}", new Object[]{cars.size(), id});
         return cars;
     }
 

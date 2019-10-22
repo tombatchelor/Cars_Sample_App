@@ -12,7 +12,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.Leak;
-import com.supercars.logging.CarLogger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,10 +24,6 @@ import java.util.logging.Logger;
 public class LeakService {
     
     private final static Logger logger = Logger.getLogger(LeakService.class.getName());
-
-    static {
-        CarLogger.setup(LeakService.class.getName());
-    }
     
     @Path("{number}/{size}")
     @GET

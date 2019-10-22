@@ -11,7 +11,6 @@ import com.supercars.Car;
 import com.supercars.LoanQuote;
 import com.supercars.LoanQuoteRequest;
 import com.supercars.dataloader.CarDataLoader;
-import com.supercars.logging.CarLogger;
 import com.supercars.preferences.Preference;
 import com.supercars.preferences.PreferenceException;
 import com.supercars.preferences.PreferenceManager;
@@ -35,10 +34,6 @@ public class LoanQuotes {
     static Tracing tracing = TracingHelper.getTracing(TracingHelper.LOAN_NAME);
 
     private final static Logger logger = Logger.getLogger(LoanQuotes.class.getName());
-    
-    static {
-        CarLogger.setup(LoanQuotes.class.getName());
-    }
     
     public static LoanQuote getQuote(LoanQuoteRequest quoteRequest) {
         logger.log(Level.FINE, "Getting loan quote request of ${0} over term of {1}", new Object[]{quoteRequest.getLoanAmount(), quoteRequest.getTerm()});

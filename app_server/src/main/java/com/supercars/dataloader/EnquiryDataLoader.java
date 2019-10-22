@@ -13,8 +13,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import com.supercars.Enquiry;
-
-import com.supercars.logging.CarLogger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,10 +28,6 @@ public class EnquiryDataLoader {
     ResultSet resultSet = null;
 
     private final static Logger logger = Logger.getLogger(EnquiryDataLoader.class.getName());
-    
-    static {
-        CarLogger.setup(EnquiryDataLoader.class.getName());
-    }
     
     public Enquiry getEnquiry(int enquiryId) {
 

@@ -12,7 +12,6 @@ import com.supercars.Manufacturer;
 import com.supercars.InsuranceQuote;
 import com.supercars.InsuranceQuoteRequest;
 import com.supercars.dataloader.CarDataLoader;
-import com.supercars.logging.CarLogger;
 import com.supercars.preferences.Preference;
 import com.supercars.preferences.PreferenceException;
 import com.supercars.preferences.PreferenceManager;
@@ -36,10 +35,6 @@ public class InsuranceQuotes {
     static Tracing tracing = TracingHelper.getTracing(TracingHelper.INSURANCE_NAME);
 
     private final static Logger logger = Logger.getLogger(InsuranceQuotes.class.getName());
-    
-    static {
-        CarLogger.setup(InsuranceQuotes.class.getName());
-    }
     
     public static InsuranceQuote getQuote(int carID) {
         logger.log(Level.FINE, "Getting insurance quote for carID: {0}", carID);

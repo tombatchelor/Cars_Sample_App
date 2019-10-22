@@ -6,7 +6,6 @@
 package com.supercars.preferences;
 
 import static com.supercars.dataloader.Constants.getDBConnectionStandardPool;
-import com.supercars.logging.CarLogger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,10 +22,6 @@ import java.util.logging.Logger;
 public class PreferenceManager {
 
     private final static Logger logger = Logger.getLogger(PreferenceManager.class.getName());
-    
-    static {
-        CarLogger.setup(PreferenceManager.class.getName());
-    }
     
     public static Preference getPreference(String name) throws PreferenceException {
         Preference preference = new Preference(name);

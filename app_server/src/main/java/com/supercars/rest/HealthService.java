@@ -6,9 +6,7 @@
 package com.supercars.rest;
 
 import com.supercars.dataloader.Constants;
-import com.supercars.logging.CarLogger;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.GET;
@@ -25,10 +23,6 @@ import javax.ws.rs.core.Response;
 public class HealthService {
 
     private final static Logger logger = Logger.getLogger(HealthService.class.getName());
-    
-    static {
-        CarLogger.setup(HealthService.class.getName());
-    }
     
     @GET
     @Produces(MediaType.TEXT_PLAIN)

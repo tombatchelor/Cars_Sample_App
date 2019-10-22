@@ -5,7 +5,6 @@
  */
 package com.supercars.rest;
 
-import com.supercars.logging.CarLogger;
 import com.supercars.usermanagement.User;
 import com.supercars.usermanagement.UserManager;
 import java.util.logging.Level;
@@ -28,10 +27,6 @@ import javax.ws.rs.core.MediaType;
 public class UserService {
     
     private final static Logger logger = Logger.getLogger(UserService.class.getName());
-
-    static {
-        CarLogger.setup(UserService.class.getName());
-    }
     
     @Path("/login")
     @POST

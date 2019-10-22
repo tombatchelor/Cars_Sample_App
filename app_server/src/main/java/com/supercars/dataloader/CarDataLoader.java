@@ -13,9 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.supercars.Car;
-import com.supercars.logging.CarLogger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,10 +29,6 @@ public class CarDataLoader {
     ResultSet resultSet = null;
     
     private final static Logger logger = Logger.getLogger(CarDataLoader.class.getName());
-    
-    static {
-        CarLogger.setup(CarDataLoader.class.getName());
-    }
     
     public int saveCar(Car car) {
         int carId = -1;

@@ -7,7 +7,6 @@ package com.supercars.externaldata;
 
 import brave.Tracing;
 import brave.jaxrs2.TracingClientFilter;
-import com.supercars.logging.CarLogger;
 import com.supercars.preferences.Preference;
 import com.supercars.preferences.PreferenceException;
 import com.supercars.preferences.PreferenceManager;
@@ -45,10 +44,6 @@ public class FuelPrices {
     static Tracing tracing = TracingHelper.getTracing(TracingHelper.FUEL_PRICES_NAME);
 
     private final static Logger logger = Logger.getLogger(FuelPrices.class.getName());
-    
-    static {
-        CarLogger.setup(FuelPrices.class.getName());
-    }
     
     public static FuelPrices getFuelPrices() {
         try {

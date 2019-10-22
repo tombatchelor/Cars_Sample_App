@@ -17,7 +17,6 @@ import com.supercars.preferences.PreferenceManager;
 import com.supercars.tracing.TracingHelper;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import com.supercars.logging.CarLogger;
 import com.supercars.preferences.PreferenceException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,10 +35,6 @@ public class CarRating {
     static Tracing tracing = TracingHelper.getTracing(TracingHelper.RATING_NAME);
 
     private final static Logger logger = Logger.getLogger(CarRating.class.getName());
-    
-    static {
-        CarLogger.setup(CarRating.class.getName());
-    }
     
     public static Rating getCarRating(int carID) {
         logger.log(Level.FINE, "Getting rating for carID: {0}", carID);

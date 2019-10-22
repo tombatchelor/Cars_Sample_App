@@ -11,7 +11,6 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3Object;
-import com.supercars.logging.CarLogger;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -30,10 +29,6 @@ public class S3Images {
     static final String BUCKET_NAME = "carimages-observeinc";
 
     private final static Logger logger = Logger.getLogger(S3Images.class.getName());
-    
-    static {
-        CarLogger.setup(S3Images.class.getName());
-    }
     
     public static BufferedImage getImage(String imageName) {
         logger.log(Level.FINE, "Getting image: {0} from S3 bucket: " + BUCKET_NAME, imageName);
