@@ -6,6 +6,7 @@
 package com.supercars.prometheus;
 
 import io.prometheus.client.hotspot.DefaultExports;
+import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -15,14 +16,16 @@ import javax.servlet.ServletContextListener;
  */
 public class Init implements ServletContextListener {
     
+    private final static Logger logger = Logger.getLogger(Init.class.getName());
+    
     @Override
     public void contextInitialized(ServletContextEvent event) {
         DefaultExports.initialize();
-        System.out.println("Done default Prometheus exports");
+        logger.fine("Done default Prometheus exports");
     }
 
     @Override
-    public void contextDestroyed(ServletContextEvent sce) {
+    public void contextDestroyed(ServletContextEvent event) {
         return;
     }
 }

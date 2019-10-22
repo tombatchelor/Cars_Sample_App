@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:1.30
+        image:  tombatchelor/cars:1.31
         ports:
         - name: cars-app-port
           containerPort: 8080
