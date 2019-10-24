@@ -36,7 +36,7 @@ spec:
   selector:
     matchLabels:
       app: cars_app
-  replicas: 1 # tells deployment to run 2 pods matching the template
+  replicas: 2 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:1.31
+        image:  tombatchelor/cars:1.32-leak
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -201,7 +201,7 @@ spec:
     spec:
       containers:
       - name: jmeter
-        image: tombatchelor/carsloadgen:1.10
+        image: tombatchelor/carsloadgen:1.11
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
@@ -227,6 +227,86 @@ spec:
                 secretKeyRef:
                   name: aws-cred
                   key: secret-key
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: 2leak
+spec:
+  schedule: "0 */2 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: k8s-role
+          containers:
+          - name: 2leak
+            imagePullPolicy: Always
+            image: tombatchelor/demo_marshaller:1.0
+            env:
+            - name: NEW_YAML
+              value: 2_leak.yaml
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: 4leak
+spec:
+  schedule: "30 */2 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: k8s-role
+          containers:
+          - name: 4leak
+            imagePullPolicy: Always
+            image: tombatchelor/demo_marshaller:1.0
+            env:
+            - name: NEW_YAML
+              value: 4_leak.yaml
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: 4noleak
+spec:
+  schedule: "0 1-23/2 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: k8s-role
+          containers:
+          - name: 4noleak
+            imagePullPolicy: Always
+            image: tombatchelor/demo_marshaller:1.0
+            env:
+            - name: NEW_YAML
+              value: 4_no_leak.yaml
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: 2noleak
+spec:
+  schedule: "30 1-23/2 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: k8s-role
+          containers:
+          - name: 2noleak
+            imagePullPolicy: Always
+            image: tombatchelor/demo_marshaller:1.0
+            env:
+            - name: NEW_YAML
+              value: 2_no_leak.yaml
           restartPolicy: OnFailure
 ---
 apiVersion: v1
@@ -311,6 +391,11 @@ metadata:
   name: prometheus
   namespace: default
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: k8s-role
+---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
@@ -323,6 +408,19 @@ subjects:
 - kind: ServiceAccount
   name: prometheus
   namespace: default
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: k8s-role
+subjects:
+- kind: ServiceAccount
+  name: k8s-role
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -374,7 +472,7 @@ data:
         target_label: kubernetes_namespace
       - source_labels: [__meta_kubernetes_pod_name]
         action: replace
-        target_label: kubernetess_pod_name
+        target_label: kubernetes_pod_name
       - source_labels: [__address__]
         action: replace
         regex: ([^:]+)(?::\d+)?
@@ -390,10 +488,10 @@ data:
       relabel_configs:
       - source_labels: [__meta_kubernetes_namespace]
         action: replace
-        target_label: k8s_namespace
+        target_label: kubernetes_namespace
       - source_labels: [__meta_kubernetes_pod_name]
         action: replace
-        target_label: k8s_pod_name
+        target_label: kubernetes_pod_name
       - source_labels: [__address__]
         action: replace
         regex: ([^:]+)(?::\d+)?

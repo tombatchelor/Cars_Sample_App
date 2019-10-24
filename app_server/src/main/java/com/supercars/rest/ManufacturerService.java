@@ -29,7 +29,6 @@ public class ManufacturerService {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Manufacturer> getManufacturers() {
         logger.fine("GET Getting manufacturers");
-        System.err.println(logger.getLevel());
         List<Manufacturer> manufacturers = new ManufacturerDataLoader().getManufacturers();
         
         logger.log(Level.FINE, "Returning {0} manufacturers", manufacturers.size());
