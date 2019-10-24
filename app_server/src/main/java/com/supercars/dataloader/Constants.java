@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 import javax.sql.DataSource;
 
 /**
@@ -28,7 +27,9 @@ import javax.sql.DataSource;
  * @author Thomas_Batchelor
  */
 public class Constants {
-
+    
+    private final static Logger logger = Logger.getLogger(Constants.class.getName());
+    
     private static final String PREFERENCES_TABLE = "CREATE TABLE PREFERENCES (\n"
             + " PREFERENCE_ID MEDIUMINT NOT NULL AUTO_INCREMENT,\n"
             + " NAME VARCHAR(30),"
@@ -37,7 +38,7 @@ public class Constants {
             + " HIDDEN INT(1), "
             + " PRIMARY KEY (PREFERENCE_ID) "
             + ");";
-
+    
     static {
         try {
             int schemaVersion = getSchemaVersion();
@@ -52,7 +53,7 @@ public class Constants {
                     upgradeToSchema_5();
                 default:
             }
-        } catch (SQLException | PreferenceException ex) {
+        } catch (PreferenceException | SQLException ex) {
             Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -62,7 +63,7 @@ public class Constants {
      */
     public Constants() {
     }
-
+    
     public static Connection getDBConnectionStandardPool() {
         try {
             Context initContext = new InitialContext();
@@ -73,10 +74,10 @@ public class Constants {
         } catch (NamingException | SQLException ex) {
             Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         return null;
     }
-
+    
     public static Connection getDBConnection() {
         try {
             String jndiName = PreferenceManager.getPreference("CONNECTION_POOL").getValue();
@@ -88,18 +89,23 @@ public class Constants {
         } catch (NamingException | SQLException | PreferenceException ex) {
             Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         return null;
     }
-
+    
     private static boolean checkPropertiesTableExist() throws SQLException {
         boolean exists = false;
         try (Connection connection = getDBConnectionStandardPool(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'supercars' AND table_name = 'PREFERENCES'")) {
             exists = resultSet.next();
+        } catch (NullPointerException ex) {
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
+            SQLException se = new SQLException("NullPointerException when getting DB connection");
+            se.addSuppressed(ex);
+            throw se;
         }
         return exists;
     }
-
+    
     private static int getSchemaVersion() throws SQLException, PreferenceException {
         int version = 1;
         if (checkPropertiesTableExist()) {
@@ -107,7 +113,7 @@ public class Constants {
         }
         return version;
     }
-
+    
     private static void updateSchemaVersion(int version) throws SQLException {
         try {
             PreferenceManager.updatePreference("SCHEMA_VERSION", String.valueOf(version), "Schema Version", true);
@@ -115,7 +121,7 @@ public class Constants {
             Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private static boolean upgradeToSchema_2() throws SQLException {
         try (Connection connection = getDBConnectionStandardPool(); Statement statement = connection.createStatement()) {
             statement.execute(PREFERENCES_TABLE);
@@ -123,12 +129,12 @@ public class Constants {
         }
         return true;
     }
-
+    
     private static void upgradeToSchema_3() throws PreferenceException, SQLException {
         PreferenceManager.updatePreference(new Preference("REST_CLIENT", "Jersey_Sync", "Client to call fueleconomy.gov, either 'Jersey_Sync' or 'Jersey_Async'", false));
         updateSchemaVersion(3);
     }
-
+    
     private static void upgradeToSchema_4() throws PreferenceException, SQLException {
         PreferenceManager.updatePreference(new Preference("CONNECTION_POOL", "jdbc/standard", "Connection pool to use, either 'jdbc/standard' or 'jdbc/c3p0'", false));
         updateSchemaVersion(4);

@@ -65,4 +65,18 @@ public class Manufacturer {
 	public void setName(String name) {
 		this.name = name;
 	}
+        
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Manufacturer ID: ")
+                    .append(manufacturerId)
+                    .append(" Name: ")
+                    .append(name)
+                    .append(" Logo: ")
+                    .append(logo)
+                    .append(" Web: ")
+                    .append(web);
+            return sb.toString();
+        }
 }

@@ -13,8 +13,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import com.supercars.Enquiry;
-
-import com.supercars.logging.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author v023094
@@ -27,6 +27,8 @@ public class EnquiryDataLoader {
     Statement statement = null;
     ResultSet resultSet = null;
 
+    private final static Logger logger = Logger.getLogger(EnquiryDataLoader.class.getName());
+    
     public Enquiry getEnquiry(int enquiryId) {
 
         Enquiry enquiry = new Enquiry();
@@ -43,8 +45,8 @@ public class EnquiryDataLoader {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch (Exception e) {
-            Logger.log(e);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, null, ex);
         }
         return enquiry;
     }
@@ -66,8 +68,8 @@ public class EnquiryDataLoader {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch (Exception e) {
-            Logger.log(e);
+        } catch (Exception ex) {
+           logger.log(Level.SEVERE, null, ex);
         }
         return enquiries;
     }
@@ -82,8 +84,8 @@ public class EnquiryDataLoader {
             pstmt.execute();
             pstmt.close();
             connection.close();
-        } catch (Exception e) {
-            Logger.log(e);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -142,8 +142,7 @@ app.controller('leakController', function ($scope, $http) {
                 $scope.leakSize = response.data;
             });
     $scope.addToLeak = function () {
-        $http.get("../public/leak/" + $scope.number + "/" + $scope.size);
-        $http.get('../public/leak')
+        $http.get("../public/leak/" + $scope.number + "/" + $scope.size)
                 .then(function (response) {
                     $scope.leakSize = response.data;
                 });

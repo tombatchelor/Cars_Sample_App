@@ -86,4 +86,18 @@ public class Enquiry {
     public void setCarId(int carId) {
         this.carId = carId;
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Enquiry ID: ")
+                .append(enquiryId)
+                .append(" Car ID: ")
+                .append(carId)
+                .append(" Name: ")
+                .append(name)
+                .append(" email: ")
+                .append(email);
+        return sb.toString();
+    }
 }

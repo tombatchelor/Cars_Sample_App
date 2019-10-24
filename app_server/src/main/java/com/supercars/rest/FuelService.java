@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.externaldata.FuelPrices;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,9 +20,12 @@ import java.util.concurrent.ExecutionException;
 @Path("/fuel")
 public class FuelService {
     
+    private final static Logger logger = Logger.getLogger(FuelService.class.getName());
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public FuelPrices getFuelPrices() throws InterruptedException, ExecutionException {
+        logger.fine("GET Get fuel prices");
         return FuelPrices.getFuelPrices();
     }
 }

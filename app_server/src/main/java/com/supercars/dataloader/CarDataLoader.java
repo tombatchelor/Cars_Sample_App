@@ -13,11 +13,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.supercars.Car;
-import com.supercars.Engine;
-import com.supercars.XMLException;
-import com.supercars.logging.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author v023094
@@ -30,9 +28,12 @@ public class CarDataLoader {
     Statement statement = null;
     ResultSet resultSet = null;
     
-    public void saveCar(Car car) {
+    private final static Logger logger = Logger.getLogger(CarDataLoader.class.getName());
+    
+    public int saveCar(Car car) {
+        int carId = -1;
         try (Connection connection = Constants.getDBConnection()) {
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO CARS(NAME, MODEL, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, SUMMARY, PHOTO) SELECT ?, ?, ?, ?, ?, ?, ?, ?, 0");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO CARS(NAME, MODEL, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, SUMMARY, PHOTO) SELECT ?, ?, ?, ?, ?, ?, ?, ?, 0", Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, car.getName());
             pstmt.setString(2, car.getModel());
             pstmt.setString(3, car.getDescription());
@@ -41,18 +42,24 @@ public class CarDataLoader {
             pstmt.setInt(6, car.getYear());
             pstmt.setFloat(7, car.getPrice());
             pstmt.setString(8, car.getSummary());
+            
             pstmt.execute();
+            ResultSet generatedKeys = pstmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                carId = generatedKeys.getInt(1);
+            }
             pstmt.close();
             connection.close();
-        } catch (SQLException e) {
-            Logger.log(e);
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, null, ex);
         }
+        
+        return carId;
     }
 
     public Car getCar(int carId) {
 
         Car car = new Car();
-        Engine engine = new Engine();
         try (Connection connection = Constants.getDBConnection()) {
             String sql = "SELECT CARS.CAR_ID, NAME, MODEL, SUMMARY, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, PHOTO";
             sql += " FROM CARS WHERE CARS.CAR_ID = " + carId;
@@ -76,8 +83,8 @@ public class CarDataLoader {
             
             resultSet.close();
             statement.close();
-        } catch (Exception e) {
-            Logger.log(e);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, null, ex);
         }
 
         return car;
@@ -106,8 +113,8 @@ public class CarDataLoader {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch (Exception e) {
-            Logger.log(e);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, null, ex);
         }
         return cars;
     }
@@ -137,11 +144,10 @@ public class CarDataLoader {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch (Exception e) {
-            Logger.log(e);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, null, ex);
         }
 
         return cars;
     }
-
 }

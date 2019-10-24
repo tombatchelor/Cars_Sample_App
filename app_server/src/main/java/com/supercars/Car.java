@@ -28,6 +28,7 @@ public class Car {
     private boolean isManual;
     private String photo;
     private Manufacturer manufacturer;
+    private float rating;
 
     public String getPhoto() {
         return photo;
@@ -145,5 +146,39 @@ public class Car {
      */
     public void setManufacturer(Manufacturer manufacturer) {
         this.manufacturer = manufacturer;
+    }
+    
+        /**
+     * @return the rating
+     */
+    public float getRating() {
+        return rating;
+    }
+
+    /**
+     * @param rating the rating to set
+     */
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: ")
+                .append(carId)
+                .append(" Manufacturer ID: ")
+                .append(manufacturerId)
+                .append(" Name: ")
+                .append(name)
+                .append(" Model: ")
+                .append(model)
+                .append(" Price: ")
+                .append(price)
+                .append(" Colour: ")
+                .append(colour)
+                .append(" Rating: ")
+                .append(rating);
+        return sb.toString();
     }
 }

@@ -8,9 +8,9 @@ package com.supercars.rest;
 import com.supercars.preferences.Preference;
 import com.supercars.preferences.PreferenceException;
 import com.supercars.preferences.PreferenceManager;
-import com.supercars.logging.Logger;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -25,6 +25,8 @@ import javax.ws.rs.core.MediaType;
 @Path("/preferences")
 public class PreferenceService {
     
+    private final static Logger logger = Logger.getLogger(PreferenceService.class.getName());
+    
     @Path("/all")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -33,7 +35,7 @@ public class PreferenceService {
         try {
             preferences = PreferenceManager.getAllPreferences(false);
         } catch (PreferenceException ex) {
-            Logger.log(ex);
+            logger.log(Level.SEVERE, null, ex);
         }
         
         return preferences;
@@ -46,7 +48,7 @@ public class PreferenceService {
         try {
             PreferenceManager.setPreferences(preferences);
         } catch (PreferenceException ex) {
-            Logger.log(ex);
+            logger.log(Level.SEVERE, null, ex);
         }
     }
     
@@ -57,7 +59,7 @@ public class PreferenceService {
         try {
             PreferenceManager.updatePreference(preference);
         } catch (PreferenceException ex) {
-            Logger.log(ex);
+            logger.log(Level.SEVERE, null, ex);
         }
     }
 }

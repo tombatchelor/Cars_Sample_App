@@ -17,6 +17,8 @@ import javax.ws.rs.core.MediaType;
 import com.supercars.Enquiry;
 import com.supercars.dataloader.EnquiryDataLoader;
 import com.supercars.tracing.TracingHelper;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,31 +27,39 @@ import com.supercars.tracing.TracingHelper;
 @Path("/enquiry")
 public class EnquiryService {
 
+    private final static Logger logger = Logger.getLogger(EnquiryService.class.getName());
+
+
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Enquiry getEnqury(@PathParam("id") int id) {
+        logger.log(Level.FINE, "GET Getting enquiry ID: {0}", id);
         Enquiry enquiry = new EnquiryDataLoader().getEnquiry(id);
-        
+
+        logger.log(Level.FINE, "Returing enquiry {0}", enquiry.toString());
         return enquiry;
     }
-    
+
     @Path("{carId}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public List<Enquiry> getEnquiryForCar(@PathParam("carId") int carId) {
+        logger.log(Level.FINE, "POST Getting enquiries for carID: {0}", carId);
         List<Enquiry> enquiries = new EnquiryDataLoader().getEnquirysForCar(carId);
-        
-                
+
         // Add number of cars to span
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.EnquiryCount", enquiries.size());
+        logger.log(Level.FINE, "Returing {0} enquiries", enquiries.size());
         return enquiries;
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void saveEnquiry(Enquiry enquiry) {
+        logger.fine("PUT Saving enquiry");
         new EnquiryDataLoader().saveEnquiry(enquiry);
+        logger.log(Level.FINE, "Saved enquiry {0}", enquiry.toString());
     }
-    
+
 }
