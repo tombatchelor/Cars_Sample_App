@@ -28,8 +28,9 @@ There are a number of directories in this repo for the other components, each ha
 * [app_server](app_server/) - All the code and config for the Tomcat layer, this is where the bulk of the code sits
 * [db_server](db_server/) - Schema and container definition for MySQL
 * [cron_cleanup](cron_cleanup/) - A CronJob that runs to clean up after the load test
-* [JMeter](JMeter/README.md) - Definition for the load testing
+* [JMeter](JMeter/load_gen.md) - Definition for the load testing
 * [kubernetes](kubernetes/) - Config for standing up the whole app in K8s
+* [demo_marshaller](demo_marshaller/) - Container and app_server YAML files for cycling issues and scaling of app_server
 * [prometheus](prometheus/) - Container def for collecting metrics
 * [mobile/iOS](mobile/iOS/) - Mobile app for Cars
 * [docimages]() - Just the images for the READMEs
