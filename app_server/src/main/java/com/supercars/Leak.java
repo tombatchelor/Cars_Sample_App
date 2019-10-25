@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Random;
 
 /**
  *
@@ -18,14 +17,11 @@ import java.util.Random;
  */
 public class Leak {
 
-    private static List<byte[]> leakyCollection = new LinkedList<>();
-    private static long jvmStarted = 0;
-    private static long keepAliveTime = 0;
+    public static List<byte[]> leakyCollection = new LinkedList<>();
 
     private final static Logger logger = Logger.getLogger(Leak.class.getName());
 
     public static void addToCollection(int number, int size) {
-        checkShouldKill();
         for (int i = 0; i < number; i++) {
             leakyCollection.add(new byte[size]);
         }
@@ -47,21 +43,5 @@ public class Leak {
     public static void drainCollection() {
         leakyCollection = new LinkedList<>();
         System.gc();
-    }
-    
-    private static void checkShouldKill() {
-        if (jvmStarted == 0) {
-            jvmStarted = System.currentTimeMillis();
-            Random random = new Random();
-            keepAliveTime = random.nextInt(5)+10;
-            keepAliveTime *= 60;
-            keepAliveTime *= 1000;
-            keepAliveTime += System.currentTimeMillis();
-        }
-        
-        if (jvmStarted < keepAliveTime) {
-            logger.log(Level.SEVERE, "Out of Memory", new java.lang.OutOfMemoryError("Out of Memory"));
-            System.exit(-1);
-        }
     }
 }
