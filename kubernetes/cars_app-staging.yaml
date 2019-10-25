@@ -234,7 +234,7 @@ kind: CronJob
 metadata:
   name: 2leak
 spec:
-  schedule: "0 */2 * * *"
+  schedule: "0 0,4,8,12,16,20 * * *"
   jobTemplate:
     spec:
       template:
@@ -254,7 +254,7 @@ kind: CronJob
 metadata:
   name: 4leak
 spec:
-  schedule: "30 */2 * * *"
+  schedule: "0 1,5,9,13,17,21 * * *"
   jobTemplate:
     spec:
       template:
@@ -274,7 +274,7 @@ kind: CronJob
 metadata:
   name: 4noleak
 spec:
-  schedule: "0 1-23/2 * * *"
+  schedule: "0 2,6,10,14,18,22 * * *"
   jobTemplate:
     spec:
       template:
@@ -294,7 +294,7 @@ kind: CronJob
 metadata:
   name: 2noleak
 spec:
-  schedule: "30 1-23/2 * * *"
+  schedule: "0 3,7,11,15,19,23 * * *"
   jobTemplate:
     spec:
       template:
