@@ -114,7 +114,7 @@ spec:
     spec:
       containers:
       - name: insurance-quoter
-        image: tombatchelor/car-insurance:1.5
+        image: tombatchelor/car-insurance:1.6
         ports:
         - name: http
           containerPort: 8000
