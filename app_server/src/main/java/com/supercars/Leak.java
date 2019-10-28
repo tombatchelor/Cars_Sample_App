@@ -53,13 +53,13 @@ public class Leak {
         if (jvmStarted == 0) {
             jvmStarted = System.currentTimeMillis();
             Random random = new Random();
-            keepAliveTime = random.nextInt(5)+10;
+            keepAliveTime = random.nextInt(5)+20;
             keepAliveTime *= 60;
             keepAliveTime *= 1000;
             keepAliveTime += System.currentTimeMillis();
         }
         
-        if (jvmStarted < keepAliveTime) {
+        if (keepAliveTime < System.currentTimeMillis()) {
             logger.log(Level.SEVERE, "Out of Memory", new java.lang.OutOfMemoryError("Out of Memory"));
             System.exit(-1);
         }

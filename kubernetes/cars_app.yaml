@@ -201,7 +201,7 @@ spec:
     spec:
       containers:
       - name: jmeter
-        image: tombatchelor/carsloadgen:1.12
+        image: tombatchelor/carsloadgen:1.13
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
