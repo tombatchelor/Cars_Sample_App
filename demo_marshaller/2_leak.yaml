@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:1.32-leak
+        image:  tombatchelor/cars:1.33-leak
         ports:
         - name: cars-app-port
           containerPort: 8080
