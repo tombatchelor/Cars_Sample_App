@@ -19,7 +19,6 @@ import java.util.Random;
 public class Leak {
 
     private static List<byte[]> leakyCollection = new LinkedList<>();
-    private static long jvmStarted = 0;
     private static long keepAliveTime = 0;
 
     private final static Logger logger = Logger.getLogger(Leak.class.getName());
@@ -50,13 +49,13 @@ public class Leak {
     }
     
     private static void checkShouldKill() {
-        if (jvmStarted == 0) {
-            jvmStarted = System.currentTimeMillis();
+        if (keepAliveTime == 0) {
             Random random = new Random();
             keepAliveTime = random.nextInt(5)+20;
             keepAliveTime *= 60;
             keepAliveTime *= 1000;
             keepAliveTime += System.currentTimeMillis();
+            logger.log(Level.FINE, "Setting JVM kill time to: {0} current time is: {1}", new Object[]{keepAliveTime, System.currentTimeMillis()});
         }
         
         if (keepAliveTime < System.currentTimeMillis()) {
