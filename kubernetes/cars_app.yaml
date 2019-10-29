@@ -70,6 +70,11 @@ spec:
             configMapKeyRef:
               name: aws
               key: bucket.name
+        - name: RATING_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: aws
+              key: rating.endpoint
         livenessProbe:
           httpGet:
             path: /Cars_Sample_App/public/health
@@ -459,6 +464,7 @@ metadata:
   name: aws
 data:
   bucket.name: carimages-observeinc
+  rating.endpoint: https://qsii07giue.execute-api.us-west-2.amazonaws.com/test/carrating
 ---
 apiVersion: v1
 kind: ConfigMap

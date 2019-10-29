@@ -32,7 +32,9 @@ import javax.ws.rs.core.MediaType;
  */
 public class CarRating {
 
-    static Tracing tracing = TracingHelper.getTracing(TracingHelper.RATING_NAME);
+    private static String carRatingEndpoint = System.getenv("RATING_ENDPOINT");
+    
+    private static Tracing tracing = TracingHelper.getTracing(TracingHelper.RATING_NAME);
 
     private final static Logger logger = Logger.getLogger(CarRating.class.getName());
     
@@ -59,7 +61,7 @@ public class CarRating {
 
     private static Rating getCarRatingSync(RatingRequest ratingRequest) {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("https://qsii07giue.execute-api.us-west-2.amazonaws.com/test/carrating");
+        WebTarget target = client.target(carRatingEndpoint);
         target.register(TracingClientFilter.create(tracing));
         return target.request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(ratingRequest, MediaType.APPLICATION_JSON), Rating.class);
@@ -67,7 +69,7 @@ public class CarRating {
 
     private static Future<Rating> getCarRatingAsync(RatingRequest ratingRequest) {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("https://qsii07giue.execute-api.us-west-2.amazonaws.com/test/carrating");
+        WebTarget target = client.target(carRatingEndpoint);
         Future<Rating> response = target.request(MediaType.APPLICATION_JSON).async()
                 .post(Entity.entity(ratingRequest, MediaType.APPLICATION_JSON), Rating.class);
         return response;
