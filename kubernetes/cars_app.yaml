@@ -15,6 +15,7 @@ spec:
       containers:
       - name: web-server
         image: tombatchelor/cars_web:1.6
+        imagePullPolicy: Always
         ports:
         - name: cars-web-port
           containerPort: 80
@@ -105,6 +106,7 @@ spec:
       containers:
       - name: db-server
         image: tombatchelor/carsdb:1.2
+        imagePullPolicy: Always
         ports:
         - name: mysql
           containerPort: 3306
@@ -126,6 +128,7 @@ spec:
       containers:
       - name: insurance-quoter
         image: tombatchelor/car-insurance:1.6
+        imagePullPolicy: Always
         ports:
         - name: http
           containerPort: 8000
@@ -153,6 +156,7 @@ spec:
       containers:
       - name: loan-quoter
         image: tombatchelor/car-loan:1.0
+        imagePullPolicy: Always
         ports:
         - name: http
           containerPort: 80
@@ -181,6 +185,7 @@ spec:
       containers:
       - name: prometheus
         image: prom/prometheus:v2.10.0
+        imagePullPolicy: Always
         args:
         - --config.file=/etc/prometheus/config.yaml
         ports:
@@ -213,6 +218,7 @@ spec:
       containers:
       - name: jmeter
         image: tombatchelor/carsloadgen:1.13
+        imagePullPolicy: Always
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
@@ -227,6 +233,7 @@ spec:
           containers:
           - name: cleanup
             image: tombatchelor/carscleanup:1.4
+            imagePullPolicy: Always
             env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
