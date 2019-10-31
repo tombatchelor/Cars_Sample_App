@@ -19,7 +19,7 @@ public class CarLogFormatter extends SimpleFormatter {
 
     @Override
     public String format​(LogRecord record) {
-        record.setMessage(getSpanID() + " " + record.getMessage());
+        record.setMessage(getTraceID() + " " + getSpanID() + " " + record.getMessage());
         return super.format(record);
     }
 
@@ -29,6 +29,17 @@ public class CarLogFormatter extends SimpleFormatter {
             Span span = tracer.currentSpan();
             if (span != null) {
                 return span.context().spanId();
+            }
+        }
+        return 0l;
+    }
+    
+    private static long getTraceID() {
+        Tracer tracer = Tracing.currentTracer();
+        if (tracer != null) {
+            Span span = tracer.currentSpan();
+            if (span != null) {
+                return span.context().traceId();
             }
         }
         return 0l;
