@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: tombatchelor/cars_web:1.6
+        image: tombatchelor/cars_web:2.0
         ports:
         - name: cars-web-port
           containerPort: 80
@@ -44,7 +44,8 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:1.33-leak
+        image:  tombatchelor/cars:2.0-leak
+        imagePullPolicy: Always
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -103,7 +104,7 @@ spec:
     spec:
       containers:
       - name: db-server
-        image: tombatchelor/carsdb:1.2
+        image: tombatchelor/carsdb:2.0
         ports:
         - name: mysql
           containerPort: 3306
@@ -124,7 +125,7 @@ spec:
     spec:
       containers:
       - name: insurance-quoter
-        image: tombatchelor/car-insurance:1.6
+        image: tombatchelor/car-insurance:2.0
         ports:
         - name: http
           containerPort: 8000
@@ -151,7 +152,7 @@ spec:
     spec:
       containers:
       - name: loan-quoter
-        image: tombatchelor/car-loan:1.0
+        image: tombatchelor/car-loan:2.0
         ports:
         - name: http
           containerPort: 80
@@ -211,7 +212,7 @@ spec:
     spec:
       containers:
       - name: jmeter
-        image: tombatchelor/carsloadgen:1.13
+        image: tombatchelor/carsloadgen:2.0
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
@@ -225,7 +226,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:1.4
+            image: tombatchelor/carscleanup:2.0
             env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
@@ -252,8 +253,7 @@ spec:
           serviceAccountName: k8s-role
           containers:
           - name: 2leak
-            imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:1.1
+            image: tombatchelor/demo_marshaller:2.0
             env:
             - name: NEW_YAML
               value: 2_leak.yaml
@@ -273,7 +273,7 @@ spec:
           containers:
           - name: 4leak
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:1.1
+            image: tombatchelor/demo_marshaller:2.0
             env:
             - name: NEW_YAML
               value: 4_leak.yaml
@@ -293,7 +293,7 @@ spec:
           containers:
           - name: 4noleak
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:1.1
+            image: tombatchelor/demo_marshaller:2.0
             env:
             - name: NEW_YAML
               value: 4_no_leak.yaml
@@ -313,7 +313,7 @@ spec:
           containers:
           - name: 2noleak
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:1.1
+            image: tombatchelor/demo_marshaller:2.0
             env:
             - name: NEW_YAML
               value: 2_no_leak.yaml
@@ -459,8 +459,8 @@ metadata:
     app: app-server
   name: aws
 data:
-  bucket.name: carimages-observeinc
-  rating.endpoint: https://qsii07giue.execute-api.us-west-2.amazonaws.com/test/carrating
+  bucket.name: carimages-observeinc-stage
+  rating.endpoint: https://qdnvyzfav9.execute-api.us-west-2.amazonaws.com/default/car-rating
 ---
 apiVersion: v1
 kind: ConfigMap
