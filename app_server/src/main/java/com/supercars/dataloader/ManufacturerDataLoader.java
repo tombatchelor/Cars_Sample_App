@@ -64,15 +64,14 @@ public class ManufacturerDataLoader {
     
     public Manufacturer getManufacturer(int manufacturerId) {
         
-        Manufacturer manufacturer = null;
+        Manufacturer manufacturer = new Manufacturer();
         
         try (Connection connection = Constants.getDBConnection()) {
             String sql = "SELECT MANUFACTURER_ID, NAME, WEB, EMAIL, LOGO FROM MANUFACTURER WHERE MANUFACTURER_ID = "+manufacturerId;
             
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
-            while(resultSet.next()) {
-                manufacturer = new Manufacturer();
+            if (resultSet.next()) {
                 manufacturer.setManufacturerId(resultSet.getInt("MANUFACTURER_ID"));
                 manufacturer.setName(resultSet.getString("NAME"));
                 manufacturer.setWeb(resultSet.getString("WEB"));
@@ -88,5 +87,4 @@ public class ManufacturerDataLoader {
         
         return manufacturer;
     }
-    
 }

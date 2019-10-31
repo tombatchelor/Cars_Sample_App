@@ -19,16 +19,16 @@ public class CarLogFormatter extends SimpleFormatter {
 
     @Override
     public String format​(LogRecord record) {
-        record.setMessage(getTraceID() + " " + record.getMessage());
+        record.setMessage(getSpanID() + " " + record.getMessage());
         return super.format(record);
     }
 
-    private static long getTraceID() {
+    private static long getSpanID() {
         Tracer tracer = Tracing.currentTracer();
         if (tracer != null) {
             Span span = tracer.currentSpan();
             if (span != null) {
-                return span.context().traceId();
+                return span.context().spanId();
             }
         }
         return 0l;
