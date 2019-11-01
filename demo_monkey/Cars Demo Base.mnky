@@ -17,8 +17,17 @@ $appname=online-bank
 $domain=bankco//Set the main domain of your prospect. This will be used in the User Experience Section
 $tld=com
 
-[log-fields]
+[Imports]
++Manufacturers
+
 com.supercars=$tld.$domain
+
+[K8s-resrouce-fields]
+cars-app=$appname
+tombatchelor=$prospect
+cars=$appname
+
+[log-fields]
 Car=Account
 Manufacturer=BusinessUnit
 Rating=Status
@@ -26,12 +35,6 @@ FuelPrice=Rate
 car=account
 manufacturer=businessUnit
 Rating=Status
-
-
-[K8s-resrouce-fields]
-cars-app=$appname
-tombatchelor=$prospect
-cars=$appname
 
 
 ; Write simple replacements like this:
