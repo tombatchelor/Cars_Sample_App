@@ -5,4 +5,4 @@ MAINTAINER your_name
 COPY target/Cars_Sample_App.war /usr/local/tomcat/webapps/
 
 # This set is the leak short circuits to no-op or not, if TRUE leak occures
-ENV LEAKING=TRUE
+ENV LEAKING=FALSE
