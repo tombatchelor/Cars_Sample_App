@@ -5,6 +5,7 @@
  */
 package com.supercars;
 
+import com.supercars.rest.HealthService;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.List;
@@ -60,7 +61,7 @@ public class Leak {
         
         if (keepAliveTime < System.currentTimeMillis()) {
             logger.log(Level.SEVERE, "Out of Memory", new java.lang.OutOfMemoryError("Out of Memory"));
-            System.exit(-1);
+            HealthService.setAsUnhealthy();
         }
     }
 }

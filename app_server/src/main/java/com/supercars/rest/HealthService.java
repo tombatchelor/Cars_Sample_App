@@ -24,15 +24,22 @@ public class HealthService {
 
     private final static Logger logger = Logger.getLogger(HealthService.class.getName());
     
+    private static boolean shouldSendUnhealthy = false;
+    
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getHealth() {
         logger.fine("GET Returning service health");
+        if (shouldSendUnhealthy) {
+            logger.log(Level.SEVERE, "Out of Memory", new java.lang.OutOfMemoryError("Out of Memory"));
+            return Response.serverError().entity("Out of Memory").build();
+        }
         try (Connection connection = Constants.getDBConnectionStandardPool()) {
             if (connection == null) {
                 logger.severe("Could not get DB connection");
                 return Response.serverError().entity("NO_DB_CONNECTION").build();
             } else {
+                logger.fine("Got DB Connection Okay");
             }
         } catch (Exception ex) {
             logger.log(Level.SEVERE, null, ex);
@@ -41,5 +48,9 @@ public class HealthService {
         
         logger.fine("Service okay");
         return Response.ok("OK").build();
+    }
+    
+    public static void setAsUnhealthy() {
+        shouldSendUnhealthy = true;
     }
 }
