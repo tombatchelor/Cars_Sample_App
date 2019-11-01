@@ -257,6 +257,11 @@ spec:
             env:
             - name: NEW_YAML
               value: 2_leak.yaml
+            - name: NAMESPACE
+              valueFrom:
+                configMapKeyRef:
+                  name: marshall-config
+                  key: namespace.name
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -277,6 +282,11 @@ spec:
             env:
             - name: NEW_YAML
               value: 4_leak.yaml
+            - name: NAMESPACE
+              valueFrom:
+                configMapKeyRef:
+                  name: marshall-config
+                  key: namespace.name
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -297,6 +307,11 @@ spec:
             env:
             - name: NEW_YAML
               value: 4_no_leak.yaml
+            - name: NAMESPACE
+              valueFrom:
+                configMapKeyRef:
+                  name: marshall-config
+                  key: namespace.name
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -317,6 +332,11 @@ spec:
             env:
             - name: NEW_YAML
               value: 2_no_leak.yaml
+            - name: NAMESPACE
+              valueFrom:
+                configMapKeyRef:
+                  name: marshall-config
+                  key: namespace.name
           restartPolicy: OnFailure
 ---
 apiVersion: v1
@@ -461,6 +481,13 @@ metadata:
 data:
   bucket.name: carimages-observeinc-stage
   rating.endpoint: https://qdnvyzfav9.execute-api.us-west-2.amazonaws.com/default/car-rating
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: marshall-config
+data:
+  namespace.name: cars-app
 ---
 apiVersion: v1
 kind: ConfigMap

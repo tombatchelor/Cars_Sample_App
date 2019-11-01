@@ -261,10 +261,15 @@ spec:
           containers:
           - name: 2leak
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:1.1
+            image: tombatchelor/demo_marshaller:2.1
             env:
             - name: NEW_YAML
               value: 2_leak.yaml
+            - name: NAMESPACE
+              valueFrom:
+                configMapKeyRef:
+                  name: marshall-config
+                  key: namespace.name
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -281,10 +286,15 @@ spec:
           containers:
           - name: 4leak
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:1.1
+            image: tombatchelor/demo_marshaller:2.1
             env:
             - name: NEW_YAML
               value: 4_leak.yaml
+            - name: NAMESPACE
+              valueFrom:
+                configMapKeyRef:
+                  name: marshall-config
+                  key: namespace.name
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -301,10 +311,15 @@ spec:
           containers:
           - name: 4noleak
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:1.1
+            image: tombatchelor/demo_marshaller:2.1
             env:
             - name: NEW_YAML
               value: 4_no_leak.yaml
+            - name: NAMESPACE
+              valueFrom:
+                configMapKeyRef:
+                  name: marshall-config
+                  key: namespace.name
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -321,10 +336,15 @@ spec:
           containers:
           - name: 2noleak
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:1.1
+            image: tombatchelor/demo_marshaller:2.1
             env:
             - name: NEW_YAML
               value: 2_no_leak.yaml
+            - name: NAMESPACE
+              valueFrom:
+                configMapKeyRef:
+                  name: marshall-config
+                  key: namespace.name
           restartPolicy: OnFailure
 ---
 apiVersion: v1
@@ -472,6 +492,13 @@ metadata:
 data:
   bucket.name: carimages-observeinc
   rating.endpoint: https://qsii07giue.execute-api.us-west-2.amazonaws.com/test/carrating
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: marshall-config
+data:
+  namespace.name: default
 ---
 apiVersion: v1
 kind: ConfigMap
