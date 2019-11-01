@@ -1,0 +1,51 @@
+; You can write comments using ;
+; Sections are optional, but make things more clear
+; For example, you can create a section for options...
+[Options]
+; Introduce a option using @
+; Use @include to specify a list of urls where these replacements should be applied
+@include[] = /^https:\/\/.*observe.*\.com\/.*/
+
+
+; ... or you can create a section for your variables:
+[Variables]
+; Introduce variables using $
+; The value after = is used as placeholder
+; Use // to introduce a description for the variable
+$prospect=BankCo//Set the name of your prospect. This will be used to name the application
+$appname=online-bank
+$domain=bankco//Set the main domain of your prospect. This will be used in the User Experience Section
+$tld=com
+
+[log-fields]
+com.supercars=$tld.$domain
+Car=Account
+Manufacturer=BusinessUnit
+Rating=Status
+FuelPrice=Rate
+car=account
+manufacturer=businessUnit
+Rating=Status
+
+
+[K8s-resrouce-fields]
+cars-app=$appname
+tombatchelor=$prospect
+cars=$appname
+
+
+; Write simple replacements like this:
+Inventory-Services=Self-Service-Portal
+; Insert variables anywhere
+ECommerce=$prospect Customer Care
+api.shipping.com=api.$domain
+; Spaces around the = sign are not required, but make the configuration more readable
+Order-Processing = Invoice-Processing
+!/demomonkey/ip = TestApe
+
+[EUM]
+www.ecommerce.com = www.$domain
+; commands (like regex) are introduced with a ! ...
+!/cart/ip = issue
+; ... so you can use / without quoting ...
+/en/ = /de/
