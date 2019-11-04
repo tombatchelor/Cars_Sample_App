@@ -37,7 +37,7 @@ spec:
   selector:
     matchLabels:
       app: cars_app
-  replicas: 2 # tells deployment to run 2 pods matching the template
+  replicas: 1 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
@@ -257,7 +257,7 @@ spec:
     spec:
       template:
         spec:
-          serviceAccountName: k8s-role
+          serviceAccountName: marshaller
           containers:
           - name: 2leak
             imagePullPolicy: Always
@@ -282,7 +282,7 @@ spec:
     spec:
       template:
         spec:
-          serviceAccountName: k8s-role
+          serviceAccountName: marshaller
           containers:
           - name: 4leak
             imagePullPolicy: Always
@@ -307,7 +307,7 @@ spec:
     spec:
       template:
         spec:
-          serviceAccountName: k8s-role
+          serviceAccountName: marshaller
           containers:
           - name: 4noleak
             imagePullPolicy: Always
@@ -332,7 +332,7 @@ spec:
     spec:
       template:
         spec:
-          serviceAccountName: k8s-role
+          serviceAccountName: marshaller
           containers:
           - name: 2noleak
             imagePullPolicy: Always
@@ -423,6 +423,16 @@ rules:
 - nonResourceURLs: ["/metrics"]
   verbs: ["get"]
 ---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: marshaller
+rules:
+- apiGroups: ["apps"]
+  resources:
+  - deployments
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -432,7 +442,7 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: k8s-role
+  name: marshaller
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -447,18 +457,17 @@ subjects:
   name: prometheus
   namespace: default
 ---
+apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: k8s-role
+  name: marshaller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: marshaller
 subjects:
 - kind: ServiceAccount
-  name: k8s-role
-  namespace: default
-roleRef:
-  kind: ClusterRole
-  name: cluster-admin
-  apiGroup: rbac.authorization.k8s.io
+  name: marshaller
 ---
 apiVersion: v1
 kind: ConfigMap
