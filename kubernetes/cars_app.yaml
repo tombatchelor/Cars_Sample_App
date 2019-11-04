@@ -232,7 +232,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:1.4
+            image: tombatchelor/carscleanup:2.1
             imagePullPolicy: Always
             env:
             - name: AWS_ACCESS_KEY_ID
@@ -245,6 +245,11 @@ spec:
                 secretKeyRef:
                   name: aws-cred
                   key: secret-key
+            - name: BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: aws
+                  key: bucket.name
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -267,9 +272,8 @@ spec:
               value: 2_leak.yaml
             - name: NAMESPACE
               valueFrom:
-                configMapKeyRef:
-                  name: marshall-config
-                  key: namespace.name
+                fieldRef:
+                  fieldPath: metadata.namespace
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -292,9 +296,8 @@ spec:
               value: 4_leak.yaml
             - name: NAMESPACE
               valueFrom:
-                configMapKeyRef:
-                  name: marshall-config
-                  key: namespace.name
+                fieldRef:
+                  fieldPath: metadata.namespace
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -317,9 +320,8 @@ spec:
               value: 4_no_leak.yaml
             - name: NAMESPACE
               valueFrom:
-                configMapKeyRef:
-                  name: marshall-config
-                  key: namespace.name
+                fieldRef:
+                  fieldPath: metadata.namespace
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -342,9 +344,8 @@ spec:
               value: 2_no_leak.yaml
             - name: NAMESPACE
               valueFrom:
-                configMapKeyRef:
-                  name: marshall-config
-                  key: namespace.name
+                fieldRef:
+                  fieldPath: metadata.namespace
           restartPolicy: OnFailure
 ---
 apiVersion: v1
@@ -468,6 +469,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: marshaller
+  namespace: default
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -501,13 +503,6 @@ metadata:
 data:
   bucket.name: carimages-observeinc
   rating.endpoint: https://qsii07giue.execute-api.us-west-2.amazonaws.com/test/carrating
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: marshall-config
-data:
-  namespace.name: default
 ---
 apiVersion: v1
 kind: ConfigMap

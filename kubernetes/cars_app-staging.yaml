@@ -219,14 +219,14 @@ kind: CronJob
 metadata:
   name: cleanup
 spec:
-  schedule: "0 */12 * * *"
+  schedule: "0 */6 * * *"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:2.0
+            image: tombatchelor/carscleanup:2.1
             env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
@@ -238,6 +238,11 @@ spec:
                 secretKeyRef:
                   name: aws-cred
                   key: secret-key
+            - name: BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: aws
+                  key: bucket.name
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -259,9 +264,8 @@ spec:
               value: 2_leak.yaml
             - name: NAMESPACE
               valueFrom:
-                configMapKeyRef:
-                  name: marshall-config
-                  key: namespace.name
+                fieldRef:
+                  fieldPath: metadata.namespace
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -284,9 +288,8 @@ spec:
               value: 4_leak.yaml
             - name: NAMESPACE
               valueFrom:
-                configMapKeyRef:
-                  name: marshall-config
-                  key: namespace.name
+                fieldRef:
+                  fieldPath: metadata.namespace
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -309,9 +312,8 @@ spec:
               value: 4_no_leak.yaml
             - name: NAMESPACE
               valueFrom:
-                configMapKeyRef:
-                  name: marshall-config
-                  key: namespace.name
+                fieldRef:
+                  fieldPath: metadata.namespace
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -334,9 +336,8 @@ spec:
               value: 2_no_leak.yaml
             - name: NAMESPACE
               valueFrom:
-                configMapKeyRef:
-                  name: marshall-config
-                  key: namespace.name
+                fieldRef:
+                  fieldPath: metadata.namespace
           restartPolicy: OnFailure
 ---
 apiVersion: v1
@@ -446,6 +447,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: prometheus
+  namespace: default
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -458,6 +460,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: marshaller
+  namespace: default
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -490,13 +493,6 @@ metadata:
 data:
   bucket.name: carimages-observeinc-stage
   rating.endpoint: https://qdnvyzfav9.execute-api.us-west-2.amazonaws.com/default/car-rating
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: marshall-config
-data:
-  namespace.name: cars-app
 ---
 apiVersion: v1
 kind: ConfigMap
