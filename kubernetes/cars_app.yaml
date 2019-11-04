@@ -225,7 +225,7 @@ kind: CronJob
 metadata:
   name: cleanup
 spec:
-  schedule: "0 */12 * * *"
+  schedule: "0 */6 * * *"
   jobTemplate:
     spec:
       template:
