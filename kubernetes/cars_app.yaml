@@ -232,7 +232,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:2.1
+            image: tombatchelor/carscleanup:2.3
             imagePullPolicy: Always
             env:
             - name: AWS_ACCESS_KEY_ID
@@ -266,14 +266,10 @@ spec:
           containers:
           - name: 2leak
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:2.1
+            image: tombatchelor/demo_marshaller:2.3
             env:
             - name: NEW_YAML
-              value: 2_leak.yaml
-            - name: NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
+              value: 2_leak
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -290,14 +286,10 @@ spec:
           containers:
           - name: 4leak
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:2.1
+            image: tombatchelor/demo_marshaller:2.3
             env:
             - name: NEW_YAML
-              value: 4_leak.yaml
-            - name: NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
+              value: 4_leak
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -314,14 +306,10 @@ spec:
           containers:
           - name: 4noleak
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:2.1
+            image: tombatchelor/demo_marshaller:2.3
             env:
             - name: NEW_YAML
-              value: 4_no_leak.yaml
-            - name: NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
+              value: 4_no_leak
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -338,14 +326,10 @@ spec:
           containers:
           - name: 2noleak
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:2.1
+            image: tombatchelor/demo_marshaller:2.3
             env:
             - name: NEW_YAML
-              value: 2_no_leak.yaml
-            - name: NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
+              value: 2_no_leak
           restartPolicy: OnFailure
 ---
 apiVersion: v1
@@ -429,9 +413,10 @@ kind: ClusterRole
 metadata:
   name: marshaller
 rules:
-- apiGroups: ["apps"]
+- apiGroups: ["apps", "extensions"]
   resources:
   - deployments
+  - deployments/scale
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 apiVersion: v1

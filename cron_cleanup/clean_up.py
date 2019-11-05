@@ -1,6 +1,7 @@
 import mysql.connector
 import random
 import boto3
+import os
 
 def get_array_of_randoms(length, limit):
     randoms = []
@@ -35,7 +36,7 @@ def trim_table(selectQuery, deleteQuery, max, toDelete, cnx):
     return IDsDeleted
 
 def delete_s3_objects(IDsDeleted):
-    s3_bucket_name = os.envion['BUCKET_NAME']
+    s3_bucket_name = os.environ['BUCKET_NAME']
     s3_client = boto3.client('s3', region_name='us-west-2')
     for id in IDsDeleted:
         s3_client.delete_object(Bucket=s3_bucket_name, Key='IMG_' + str(id) + '.jpeg')
