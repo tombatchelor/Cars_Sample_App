@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: tombatchelor/cars_web:2.0
+        image: tombatchelor/cars_web:2.1
         ports:
         - name: cars-web-port
           containerPort: 80
@@ -45,7 +45,6 @@ spec:
       containers:
       - name: app-server
         image:  tombatchelor/cars:2.1-leak
-        imagePullPolicy: Always
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -277,7 +276,6 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 4leak
-            imagePullPolicy: Always
             image: tombatchelor/demo_marshaller:2.3
             env:
             - name: NEW_YAML
@@ -297,12 +295,10 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 4noleak
-            imagePullPolicy: Always
             image: tombatchelor/demo_marshaller:2.3
             env:
             - name: NEW_YAML
               value: 4_no_leak
-            - name: NAMESPACE
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -318,7 +314,6 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 2noleak
-            imagePullPolicy: Always
             image: tombatchelor/demo_marshaller:2.3
             env:
             - name: NEW_YAML
@@ -516,6 +511,9 @@ data:
       - source_labels: [__meta_kubernetes_pod_label_app]
         action: keep
         regex: cars_app
+      - source_labels: [__meta_kubernetes_pod_uid]
+        action: replace
+        target_label: kubernetes_pod_uid
     - job_name: car-insurance
       metrics_path: /metrics
       kubernetes_sd_configs:
