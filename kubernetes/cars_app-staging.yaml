@@ -74,6 +74,10 @@ spec:
             configMapKeyRef:
               name: aws
               key: rating.endpoint
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         livenessProbe:
           httpGet:
             path: /Cars_Sample_App/public/health
