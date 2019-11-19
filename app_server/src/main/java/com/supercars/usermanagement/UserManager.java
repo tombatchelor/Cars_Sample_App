@@ -5,7 +5,9 @@
  */
 package com.supercars.usermanagement;
 
+import com.supercars.tracing.TracingHelper;
 import javax.servlet.http.HttpSession;
+import org.redisson.tomcat.RedissonSessionManager;
 
 /**
  *
@@ -21,7 +23,7 @@ public class UserManager {
     private static User[] users = {bob, geoff, bill, dave};
 
     private static final String USER_ATTRIBUTE = "user";
-
+    
     public static boolean login(User user, HttpSession session) {
         if (user == null || user.getUsername() == null || user.getPassword() == null) {
             return false;
@@ -33,6 +35,7 @@ public class UserManager {
             if (u.getUsername().equals(username)) {
                 if (u.getPassword().equals(password)) {
                     session.setAttribute(USER_ATTRIBUTE, u.clone());
+                    TracingHelper.tag(TracingHelper.CARS_APP_NAME, "user.username", u.getUsername());
                     return true;
                 }
             }

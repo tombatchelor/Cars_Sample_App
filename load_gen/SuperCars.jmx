@@ -88,7 +88,7 @@
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
               <stringProp name="HTTPSampler.path">/public/user/login</stringProp>
-              <stringProp name="HTTPSampler.method">PUT</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
               <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -144,7 +144,7 @@
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
               <stringProp name="HTTPSampler.path">/public/user/login</stringProp>
-              <stringProp name="HTTPSampler.method">PUT</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
               <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -200,7 +200,7 @@
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
               <stringProp name="HTTPSampler.path">/public/user/login</stringProp>
-              <stringProp name="HTTPSampler.method">PUT</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
               <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -256,7 +256,7 @@
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
               <stringProp name="HTTPSampler.path">/public/user/login</stringProp>
-              <stringProp name="HTTPSampler.method">PUT</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
               <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -312,7 +312,7 @@
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
               <stringProp name="HTTPSampler.path">/public/user/login</stringProp>
-              <stringProp name="HTTPSampler.method">PUT</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
               <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -6391,6 +6391,11 @@
             <hashTree/>
           </hashTree>
         </hashTree>
+        <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+          <collectionProp name="CookieManager.cookies"/>
+          <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+        </CookieManager>
+        <hashTree/>
       </hashTree>
     </hashTree>
   </hashTree>
