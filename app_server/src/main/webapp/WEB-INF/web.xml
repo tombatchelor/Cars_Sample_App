@@ -51,6 +51,15 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
         <filter-name>tracingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>kubernetesTagFilter</filter-name>
+        <filter-class>com.supercars.tracing.KubernetesTagFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>kubernetesTagFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     
     <!-- Prometheus Servlet Metrics Filter -->
     <filter>
