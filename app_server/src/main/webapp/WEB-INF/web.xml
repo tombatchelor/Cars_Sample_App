@@ -1,10 +1,5 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
-         id="WebApp_ID" version="3.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <display-name>Super Car Store Application</display-name>
     <!-- Added for Jersey REST Service -->
     <servlet>
@@ -29,38 +24,33 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
         <servlet-name>Metrics Servlet</servlet-name>
         <url-pattern>/metrics/</url-pattern>
     </servlet-mapping>
-    
     <!-- Added to generate default Prometheus metrics -->
-    <listener>  
+    <listener>
         <listener-class>
             com.supercars.prometheus.Init
         </listener-class>
-    </listener> 
+    </listener>
     <!-- The Usual Welcome File List -->
     <welcome-file-list>
         <welcome-file>/angular/index.html</welcome-file>
     </welcome-file-list>
-    
     <!-- Adding Brave to support tracing through Zipkin -->
     <filter>
         <filter-name>tracingFilter</filter-name>
         <filter-class>com.supercars.tracing.DelegatingTracingFilter</filter-class>
     </filter>
-
     <filter-mapping>
         <filter-name>tracingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <filter>
-        <filter-name>kubernetesTagFilter</filter-name>
-        <filter-class>com.supercars.tracing.KubernetesTagFilter</filter-class>
+        <filter-name>observeTagFilter</filter-name>
+        <filter-class>com.supercars.tracing.ObserveTagFilter</filter-class>
     </filter>
-
     <filter-mapping>
-        <filter-name>kubernetesTagFilter</filter-name>
+        <filter-name>observeTagFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
     <!-- Prometheus Servlet Metrics Filter -->
     <filter>
         <filter-name>prometheusFilter</filter-name>
@@ -84,7 +74,6 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
             <param-value>3</param-value>
         </init-param>
     </filter>
-
     <!-- You will most likely want this to be the first filter in the chain
     (therefore the first <filter-mapping> in the web.xml file), so that you can get
     the most accurate measurement of latency. -->

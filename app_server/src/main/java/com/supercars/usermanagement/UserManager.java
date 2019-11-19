@@ -5,6 +5,7 @@
  */
 package com.supercars.usermanagement;
 
+import com.supercars.tracing.TracingHelper;
 import javax.servlet.http.HttpSession;
 import org.redisson.tomcat.RedissonSessionManager;
 
@@ -34,6 +35,7 @@ public class UserManager {
             if (u.getUsername().equals(username)) {
                 if (u.getPassword().equals(password)) {
                     session.setAttribute(USER_ATTRIBUTE, u.clone());
+                    TracingHelper.tag(TracingHelper.CARS_APP_NAME, "user.username", u.getUsername());
                     return true;
                 }
             }
