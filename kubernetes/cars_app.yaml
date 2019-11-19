@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:2.1-leak
+        image:  tombatchelor/cars:2.2-leak
         imagePullPolicy: Always
         ports:
         - name: cars-app-port
@@ -167,6 +167,27 @@ spec:
               name: zipkin-config
               key: zipkin.endpoint
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-session-manager-deployment
+spec:
+  selector:
+    matchLabels:
+      app: redis_session_manager
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis_session_manager
+    spec:
+      containers:
+      - name: redis
+        image: redis:5.0
+        ports:
+        - name: redis
+          containerPort: 6379
+---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
@@ -217,7 +238,7 @@ spec:
     spec:
       containers:
       - name: jmeter
-        image: tombatchelor/carsloadgen:1.13
+        image: tombatchelor/carsloadgen:2.1
         imagePullPolicy: Always
 ---
 apiVersion: batch/v1beta1
@@ -391,6 +412,17 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  selector:
+    app: redis_session_manager
+  ports:
+  - protocol: TCP
+    port: 6379
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole

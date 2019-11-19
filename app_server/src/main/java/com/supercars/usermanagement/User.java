@@ -5,11 +5,13 @@
  */
 package com.supercars.usermanagement;
 
+import java.io.Serializable;
+
 /**
  *
  * @author tom.batchelor
  */
-public class User {
+public class User implements Serializable {
     
     private String username;
     private String password;

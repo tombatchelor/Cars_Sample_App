@@ -6,6 +6,7 @@
 package com.supercars.usermanagement;
 
 import javax.servlet.http.HttpSession;
+import org.redisson.tomcat.RedissonSessionManager;
 
 /**
  *
@@ -21,7 +22,7 @@ public class UserManager {
     private static User[] users = {bob, geoff, bill, dave};
 
     private static final String USER_ATTRIBUTE = "user";
-
+    
     public static boolean login(User user, HttpSession session) {
         if (user == null || user.getUsername() == null || user.getPassword() == null) {
             return false;
