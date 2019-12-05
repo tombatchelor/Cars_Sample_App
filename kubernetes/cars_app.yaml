@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:2.3-leak
+        image:  tombatchelor/cars:2.4-leak
         imagePullPolicy: Always
         ports:
         - name: cars-app-port
@@ -225,25 +225,6 @@ spec:
         configMap:
           defaultMode: 420
           name: prometheus-config
----
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
-kind: Deployment
-metadata:
-  name: cars-loadgen-deployment
-spec:
-  selector:
-    matchLabels:
-      app: cars_loadgen
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: cars_loadgen
-    spec:
-      containers:
-      - name: jmeter
-        image: tombatchelor/carsloadgen:2.1
-        imagePullPolicy: Always
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
