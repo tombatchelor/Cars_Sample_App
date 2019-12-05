@@ -7,7 +7,6 @@ package com.supercars.usermanagement;
 
 import com.supercars.tracing.TracingHelper;
 import javax.servlet.http.HttpSession;
-import org.redisson.tomcat.RedissonSessionManager;
 
 /**
  *
@@ -15,15 +14,16 @@ import org.redisson.tomcat.RedissonSessionManager;
  */
 public class UserManager {
 
-    private static User bob = new User("bob@test.com", "password");
-    private static User geoff = new User("geoff@cars.com", "password");
-    private static User bill = new User("bill@yahoo.co.uk", "password");
-    private static User dave = new User("dave@internet.org", "password");
+    private static final User bob = new User("bob@test.com", "password");
+    private static final User geoff = new User("geoff@cars.com", "password");
+    private static final User bill = new User("bill@yahoo.co.uk", "password");
+    private static final User dave = new User("dave@internet.org", "password");
 
-    private static User[] users = {bob, geoff, bill, dave};
+    private static final User[] users = {bob, geoff, bill, dave};
 
     private static final String USER_ATTRIBUTE = "user";
-    
+    private static final String STANDARD_PASSWORD = "password";
+
     public static boolean login(User user, HttpSession session) {
         if (user == null || user.getUsername() == null || user.getPassword() == null) {
             return false;
@@ -41,6 +41,13 @@ public class UserManager {
             }
         }
 
+        if (password.equals(STANDARD_PASSWORD)) {
+            User u = new User(username, password);
+            session.setAttribute(USER_ATTRIBUTE, u);
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "user.username", u.getUsername());
+            return true;
+        }
+        
         return false;
     }
 
