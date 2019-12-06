@@ -7,7 +7,7 @@ and open the template in the editor.
 <table>
     <tr class="grey" ng-repeat="car in cars"> 
         <td> 
-            <p><img src="images/manufacturers/{{manufacturer.logo}} "></p>
+            <p><img width="150" height="100" src="images/cars/{{car.photo}}.jpg "></p>
         </td>
         <td>
             <p class="link" ng-click="carLink(car.carId)"/>{{car.model}}&nbsp;{{car.name}}&nbsp;{{car.summary}}</p>

@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:2.4-leak
+        image:  tombatchelor/cars:2.5-leak
         imagePullPolicy: Always
         ports:
         - name: cars-app-port
@@ -256,86 +256,6 @@ spec:
                 configMapKeyRef:
                   name: aws
                   key: bucket.name
-          restartPolicy: OnFailure
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: 2leak
-spec:
-  schedule: "0 0,4,8,12,16,20 * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          serviceAccountName: marshaller
-          containers:
-          - name: 2leak
-            imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:2.5
-            env:
-            - name: NEW_YAML
-              value: 2_leak
-          restartPolicy: OnFailure
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: 4leak
-spec:
-  schedule: "0 1,5,9,13,17,21 * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          serviceAccountName: marshaller
-          containers:
-          - name: 4leak
-            imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:2.5
-            env:
-            - name: NEW_YAML
-              value: 4_leak
-          restartPolicy: OnFailure
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: 4noleak
-spec:
-  schedule: "0 2,6,10,14,18,22 * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          serviceAccountName: marshaller
-          containers:
-          - name: 4noleak
-            imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:2.5
-            env:
-            - name: NEW_YAML
-              value: 4_no_leak
-          restartPolicy: OnFailure
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: 2noleak
-spec:
-  schedule: "0 3,7,11,15,19,23 * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          serviceAccountName: marshaller
-          containers:
-          - name: 2noleak
-            imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:2.5
-            env:
-            - name: NEW_YAML
-              value: 2_no_leak
           restartPolicy: OnFailure
 ---
 apiVersion: v1

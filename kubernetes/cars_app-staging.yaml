@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:2.4-leak
+        image:  tombatchelor/cars:2.5-leak
         imagePullPolicy: Always
         ports:
         - name: cars-app-port
