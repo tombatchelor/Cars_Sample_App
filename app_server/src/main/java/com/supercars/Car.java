@@ -31,7 +31,8 @@ public class Car {
     private float rating;
 
     public String getPhoto() {
-        return photo;
+        // do this as a hack, there is only 1 car photo per manufacturer DEMO-18
+        return Integer.toString(getManufacturerId());
     }
 
     public void setPhoto(String photo) {

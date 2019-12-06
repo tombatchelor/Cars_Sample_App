@@ -109,6 +109,7 @@ public class CarDataLoader {
                 car.setDescription(resultSet.getString("DESCRIPTION"));
                 car.setPrice(resultSet.getInt("PRICE"));
                 car.setPhoto(resultSet.getString("PHOTO"));
+                car.setManufacturerId(manufacturerId);
                 cars.add(car);
             }
             resultSet.close();
