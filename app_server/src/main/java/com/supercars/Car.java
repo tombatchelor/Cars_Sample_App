@@ -166,9 +166,9 @@ public class Car {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("ID: ")
+        sb.append("carID: ")
                 .append(carId)
-                .append(" Manufacturer ID: ")
+                .append(" manufacturerID: ")
                 .append(manufacturerId)
                 .append(" Name: ")
                 .append(name)

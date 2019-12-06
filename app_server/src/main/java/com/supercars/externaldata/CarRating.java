@@ -39,9 +39,9 @@ public class CarRating {
     private final static Logger logger = Logger.getLogger(CarRating.class.getName());
     
     public static Rating getCarRating(int carID) {
-        logger.log(Level.FINE, "Getting rating for carID: {0}", carID);
         Car car = new CarDataLoader().getCar(carID);
         Manufacturer manufacturer = car.getManufacturer();
+        logger.log(Level.FINE, "Getting rating for carID: {0} manufacturerID: {1}", new Object[]{carID, manufacturer.getManufacturerId()});
         RatingRequest ratingRequest = new RatingRequest(manufacturer.getName(), car.getModel());
         try {
             Preference preference = PreferenceManager.getPreference("REST_CLIENT");
@@ -53,13 +53,15 @@ public class CarRating {
             }
             logger.log(Level.FINE, "Success getting insurance quote for carID: {0}", carID);
         } catch (InterruptedException | PreferenceException | ExecutionException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, "Error getting rating for carID: " + carID + " manufacturerID: " + manufacturer.getManufacturerId(), ex);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "Error getting rating for carID: " + carID + " manufacturerID: " + manufacturer.getManufacturerId(), ex);
         }
 
         return null;
     }
 
-    private static Rating getCarRatingSync(RatingRequest ratingRequest) {
+    private static Rating getCarRatingSync(RatingRequest ratingRequest) throws Exception {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(carRatingEndpoint);
         target.register(TracingClientFilter.create(tracing));
@@ -67,7 +69,7 @@ public class CarRating {
                 .post(Entity.entity(ratingRequest, MediaType.APPLICATION_JSON), Rating.class);
     }
 
-    private static Future<Rating> getCarRatingAsync(RatingRequest ratingRequest) {
+    private static Future<Rating> getCarRatingAsync(RatingRequest ratingRequest) throws Exception {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(carRatingEndpoint);
         Future<Rating> response = target.request(MediaType.APPLICATION_JSON).async()

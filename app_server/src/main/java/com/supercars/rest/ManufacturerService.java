@@ -39,7 +39,7 @@ public class ManufacturerService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Manufacturer getManufacturer(@PathParam("id") int id) {
-        logger.log(Level.FINE, "GET Getting manufacture ID: {0}", id);
+        logger.log(Level.FINE, "GET Getting manufactureID: {0}", id);
         Manufacturer manufacturer = new ManufacturerDataLoader().getManufacturer(id);
         
         logger.log(Level.FINE, "Returning manufacturer {0}", manufacturer.toString());
