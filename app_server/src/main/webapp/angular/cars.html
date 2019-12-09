@@ -3,14 +3,25 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<p class="normal"><img src="images/manufacturers/{{manufacturer.logo}}" align="absmiddle">{{cars.length}} cars found:<img src="images/line.gif"></p>
-<table>
-    <tr class="grey" ng-repeat="car in cars"> 
-        <td> 
-            <p><img width="150" height="100" src="images/cars/{{car.photo}}.jpg "></p>
-        </td>
-        <td>
-            <p class="link" ng-click="carLink(car.carId)"/>{{car.model}}&nbsp;{{car.name}}&nbsp;{{car.summary}}</p>
-        </td>
-    </tr>
-</table>
+<div class="regularpage"><img src="images/manufacturers/{{manufacturer.logo}}" align="absmiddle">{{cars.length}} cars found<img src="images/line.gif">
+    <table>
+        <tr ng-repeat="car in cars"> 
+            <td>
+                <div class="carlist">
+                    <div class="carlist-image">
+                        <a ng-click="carLink(car.carId)">
+                            <img width="150" height="150" src="images/cars/{{car.photo}}.jpg ">
+                        </a>
+                    </div>
+                    <div class="carlist-text">
+                        <a class="link" ng-click="carLink(car.carId)">
+                            <p class="headline">{{manufacturer.name}} - {{car.model}}</p>
+                            <p class="subline">{{car.name}}</p>
+                            <p>{{car.summary}}</p>
+                        </a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

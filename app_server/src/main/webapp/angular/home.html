@@ -1,103 +1,38 @@
-<table>
-    <tr>
-        <td>Welcome: {{currentUser.username}}<br /><img src="images/line.gif"></td>
-    </tr>
-</table>
-<table>
-    <tr>
-        <td class="home">
-            <table>
-                <tr>
-                    <td><br /><b>New to the site?</b><br />
-                        <a href="" name="&lid=Register+Benefits&lpos=Left+Nav">Registration Benefits</a><br />
-                        <a href="" name="&lid=Register&lpos=Left+Nav">Register here</a><br />
-                        <br /><b>Already a customer?</b><br />
-                        <a href="#login" name="&lid=Log+In&lpos=Left+Nav">Log in</a><br />
-                        <a href="#logout" name="&lid=Log+Out&lpos=Left+Nav">Log out</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><br />
-                        <form>
-                            <b>Quick Search</b><br /><input type="text" ng-model="searchTerm" />&nbsp;<br />
-                            <input type="image" src="images/small_search_but.gif" align="absmiddle" ng-click="search()"><br />
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>Trade Advertisers</b><br />
-                        <a href="" name="&lid=List&lpos=Left+Nav">List your stock</a><br />
-                        <a href="" name="&lid=Place+Trade+Advert&lpos=Left+Nav">Place a Trade Advert</a><br />
-                        <a href="" name="&lid=Testemonials&lpos=Left+Nav">Testimonials</a><br />
-                        <a href="" name="&lid=Trader+Link&lpos=Left+Nav">Trader Link</a><br />
-                        <a href="" name="&lid=Dealer+Directory&lpos=Left+Nav">Dealer Directory</a><br />
-                        <a href="" name="&lid=Research+Centre&lpos=Left+Nav">Research Centre</a><br />
-                        <a href="" name="&lid=Media+Centre&lpos=Left+Nav">Media Centre</a><br />
-                    </td>
-                </tr>
-            </table>
-        </td>
-        <td class="home">
-            <table>
-                <tr>
-                    <td><img src="images/homepage_car.gif"><br /><br /><b>Search the biggest selection of <a href="">new cars</a>, <a href="">used cars</a></b><br />
-                        <img src="images/ukmap.gif" align="right" alt="Find a local car dealer" /><br />
-                        <b>Find a local car dealer</b><br />
-                        <a href="">UK car dealer directory</a><br />
-                        <a href="">Car dealers in your area</a></p>
-                        <br />
-                        <b>&nbsp;Research your next car</b><br /><br />
-                        <img src="images/magnify.gif" align="right" alt="Find a local car dealer" /><a href="">New Car Roadtests</a><br />
-                        <a href="">Used Car Roadtests</a><br/>
-                        <a href="">Car buying advice</a>
-
-                    </td>
-                </tr>
-            </table>
-        </td>
-        <td class="home">
-            <table>
-                <tr>
-                    <td>
-                        <table>
-                            <tr>
-                                <td class="ad">
-                                    <b>TEST APP PREFERENCES</b>
-                                    <br />Change test app behavior, e.g. DB pool type etc.<br />
-                                    <br /><a href="#preferences">Preferences</a>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="ad">
-                                    <b>Performance Accessories</b>
-                                    <br />Manufacturer OEM parts from:<br />
-                                    <br /><a href="AMG.html">AMG</a>
-                                    <br /><a href="Alpina.html">Alpina</a>
-                                    <br /><a href="Mazdaspeed.html">MazdaSpeed</a>
-                                    <br /><a href="RUF.html">Ruf</a>
-                                    <br /><a href="Gembella.html">Gemballa</a>
-                                    <br />&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="ad">
-                                    <b>Latest Fuel Prices</b><br />
-                                    <br />Regular: {{fuelPrices.regular}}
-                                    <br />Mid Grade: {{fuelPrices.midgrade}}
-                                    <br />Premium: {{fuelPrices.premium}}
-                                    <br />E85: {{fuelPrices.e85}}
-                                    <br />Diesel: {{fuelPrices.diesel}}
-                                    <br />&nbsp;
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+<div class="homepage">
+    <p>Welcome: {{currentUser.username}}</p><br />
+    <div>
+        <a href="#login" name="&lid=Log+In&lpos=Left+Nav">
+            <img src="images/login.png" />
+        </a>
+        <a href="#logout" name="&lid=Log+Out&lpos=Left+Nav">
+            <img src="images/logout.png" />
+        </a>
+    </div>
+    <div class="homepagebox homepagebox-left">
+        <b>Latest Fuel Prices</b><br />
+        <br />Regular: {{fuelPrices.regular}}
+        <br />Mid Grade: {{fuelPrices.midgrade}}
+        <br />Premium: {{fuelPrices.premium}}
+        <br />E85: {{fuelPrices.e85}}
+        <br />Diesel: {{fuelPrices.diesel}}
+    </div>
+    <div class="homepagebox homepagebox-center">
+        <b>Performance Accessories</b>
+        <br />Manufacturer OEM parts from:<br />
+        <br /><a style="color: #f5f9ff;" href="AMG.html">AMG</a>
+        <br /><a style="color: #f5f9ff;" href="Alpina.html">Alpina</a>
+        <br /><a style="color: #f5f9ff;" href="Mazdaspeed.html">MazdaSpeed</a>
+        <br /><a style="color: #f5f9ff;" href="RUF.html">Ruf</a>
+        <br /><a style="color: #f5f9ff;" href="Gembella.html">Gemballa</a>
+    </div>
+    <!--
+    <div class="homepagebox homepagebox-right">
+        <b>TEST APP PREFERENCES</b>
+        <br />Change test app behavior, e.g. DB pool type etc.<br />
+        <br /><a href="#preferences">Preferences</a>
+    </div>
+    -->
+    <div class="clearbox">
+        
+    </div>
+</div>

@@ -27,7 +27,9 @@ public class ObserveTagFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        TracingHelper.tag(TracingHelper.CARS_APP_NAME, "kubernetes.pod.name", System.getenv("POD_NAME"));
+        if (System.getenv("POD_NAME") != null) {
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "kubernetes.pod.name", System.getenv("POD_NAME"));
+        }
         if (request instanceof HttpServletRequest) {
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "session.id", httpServletRequest.getSession().getId());

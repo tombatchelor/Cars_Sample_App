@@ -3,16 +3,11 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<table>
-    <tr ng-repeat="manufacturer in manufacturers"> 
-        <td>
-            <p class="manulink" ng-click="manufacturerLink(manufacturer.manufacturerId)">
-                <img src="images/manufacturers/{{manufacturer.logo}}" />{{manufacturer.name}}
-            </p>
-        </td>
-    </tr>
-</table>
-
+<div class="regularpage">
+    <div ng-repeat="manufacturer in manufacturers" class="manulink" ng-click="manufacturerLink(manufacturer.manufacturerId)"> 
+        <img src="images/manufacturers/{{manufacturer.logo}}" />
+    </div>
+</div>
 
 
 

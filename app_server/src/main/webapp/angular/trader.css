@@ -1,12 +1,108 @@
+html, body {
+    margin:0; 
+    padding:0; 
+    height: 100%;
+    min-height: 100%;
+}
+
+.homepage
+{
+    background-image:url(images/homepagebackground.jpg);
+    height: 100%;
+    min-height: 100%;
+}
+
+.homepagebox
+{
+    position:absolute;
+    width: 200px;
+    height: 150px;
+    margin-left: -100px;
+    background: #063;
+    bottom: 0px;
+    text-align: center;
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 11px;
+    color: #f5f9ff;
+    background-color: #313336;
+    border: 0px #d79900 solid;
+    border-collapse: collapse;
+    border-spacing: 10px;
+    opacity: 0.5;
+}
+
+.homepagebox-link
+{
+    color: #f5f9ff;
+}
+
+.homepagebox-left
+{
+    left: 20%;
+}
+
+.homepagebox-center
+{
+    left: 50%;
+}
+
+.homepagebox-right
+{
+    left: 80%;
+}
+
+.clearbox
+{
+    position:relative;
+    width: 1px;
+    height: 1024px;
+    margin-left: -100px;
+    opacity: 0.0;
+    left: -50%;
+}
+
+.regularpage
+{
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 11px;
+}
+
+.carlist
+{
+    width: 500px;
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 11px;
+    border-bottom: 3px solid #313336;
+    vertical-align: middle;
+}
+
+.carlist-image
+{
+    width: 150px;
+    height: 100px;
+    display: table-cell;
+    left: 0%;
+}
+
+.carlist-text
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+
 table
-{ text-align: center;
-  font-family: Verdana;
-  font-weight: normal;
-  font-size: 11px;
-  color: #404040;
-  border: 0px #d79900 solid;
-  border-collapse: collapse;
-  border-spacing: 0px;
+{
+    text-align: center;
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 11px;
+    color: #404040;
+    border: 0px #d79900 solid;
+    border-collapse: collapse;
+    border-spacing: 0px;
 }
 
 td.home
@@ -135,13 +231,28 @@ p.link
     border-collapse: collapse;
     border-spacing: 0px;
     cursor: pointer;
-    color: blue;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
-p.manulink
+p.headline
+{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+p.subline
+{
+    font-size: 12px;
+    font-style: italic;
+}
+
+.manulink
 {
     cursor: pointer;
-    color: blue;
-    text-decoration: underline;
+    color: #000000;
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 14px;
+    vertical-align: bottom;
+    height: 75px;
 }
