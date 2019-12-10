@@ -163,6 +163,7 @@ app.controller('loginController', function ($scope, $http, $location) {
         loginJSON["password"] = $scope.password;
         $http.post("../public/user/login", loginJSON);
         $location.path("/home");
+        $scope.$apply();
     };
 });
 

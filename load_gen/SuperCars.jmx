@@ -623,7 +623,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="7 /angular/images/enquire_but.gif" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="7 /angular/images/enquire.png" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -631,7 +631,7 @@
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/enquire_but.gif</stringProp>
+            <stringProp name="HTTPSampler.path">/angular/images/enquire.png</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -668,7 +668,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="8 /angular/images/insurance_but.gif" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="8 /angular/images/insurance.png" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -676,7 +676,7 @@
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/insurance_but.gif</stringProp>
+            <stringProp name="HTTPSampler.path">/angular/images/insurance.png</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -713,7 +713,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="9 /angular/images/sell_but.gif" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="9 /angular/images/sell.png" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -721,7 +721,7 @@
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/sell_but.gif</stringProp>
+            <stringProp name="HTTPSampler.path">/angular/images/sell.png</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -758,7 +758,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="10 /angular/images/supercars_but.gif" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="10 /angular/images/car.png" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -766,7 +766,7 @@
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/supercars_but.gif</stringProp>
+            <stringProp name="HTTPSampler.path">/angular/images/cars.png</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -803,7 +803,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="11 /angular/images/aboutus_but.gif" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="11 /angular/images/about.png" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -811,7 +811,7 @@
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/aboutus_but.gif</stringProp>
+            <stringProp name="HTTPSampler.path">/angular/images/about.png</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -893,7 +893,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="13 /angular/images/search_but.gif" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="13 /angular/images/search.png" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -901,7 +901,7 @@
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/search_but.gif</stringProp>
+            <stringProp name="HTTPSampler.path">/angular/images/search.png</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1069,7 +1069,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="17 /angular/images/homepage_car.gif" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="17 /angular/images/homepagebackground.jpg" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1077,7 +1077,7 @@
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/homepage_car.gif</stringProp>
+            <stringProp name="HTTPSampler.path">/angular/images/homepagebackground.jpg</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1123,141 +1123,6 @@
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
             <stringProp name="HTTPSampler.path">/angular/images/small_search_but.gif</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://192.168.99.100:31187/angular/index.jsp</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:69.0) Gecko/20100101 Firefox/69.0</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">image/webp,*/*</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="19 /angular/images/line.gif" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/line.gif</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://192.168.99.100:31187/angular/index.jsp</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:69.0) Gecko/20100101 Firefox/69.0</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">image/webp,*/*</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="20 /angular/images/magnify.gif" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/magnify.gif</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://192.168.99.100:31187/angular/index.jsp</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:69.0) Gecko/20100101 Firefox/69.0</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">image/webp,*/*</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="21 /angular/images/ukmap.gif" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/ukmap.gif</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -5148,152 +5013,6 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="106 /angular/tuner.jsp" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="tunerName" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.name">tunerName</stringProp>
-                  <stringProp name="Argument.value">AMG</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/tuner.jsp</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://192.168.99.100:31187/angular/index.jsp</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Upgrade-Insecure-Requests" elementType="Header">
-                  <stringProp name="Header.name">Upgrade-Insecure-Requests</stringProp>
-                  <stringProp name="Header.value">1</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:69.0) Gecko/20100101 Firefox/69.0</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="107 /angular/images/performance/amg.gif" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/performance/amg.gif</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://192.168.99.100:31187/angular/tuner.jsp?tunerName=AMG</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:69.0) Gecko/20100101 Firefox/69.0</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">image/webp,*/*</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="108 /angular/images/performance/slk.gif" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/performance/slk.gif</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://192.168.99.100:31187/angular/tuner.jsp?tunerName=AMG</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:69.0) Gecko/20100101 Firefox/69.0</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">image/webp,*/*</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="109 /angular/index.jsp" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
@@ -5428,152 +5147,6 @@
                 <elementProp name="Accept" elementType="Header">
                   <stringProp name="Header.name">Accept</stringProp>
                   <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="112 /angular/tuner.jsp" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="tunerName" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.name">tunerName</stringProp>
-                  <stringProp name="Argument.value">Mazdaspeed</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">/angular/tuner.jsp</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://192.168.99.100:31187/angular/index.jsp</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Upgrade-Insecure-Requests" elementType="Header">
-                  <stringProp name="Header.name">Upgrade-Insecure-Requests</stringProp>
-                  <stringProp name="Header.value">1</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:69.0) Gecko/20100101 Firefox/69.0</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="113 /angular/images/performance/mazda.gif" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/performance/mazda.gif</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://192.168.99.100:31187/angular/tuner.jsp?tunerName=Mazdaspeed</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:69.0) Gecko/20100101 Firefox/69.0</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">image/webp,*/*</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="114 /angular/images/performance/rx8.gif" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/angular/images/performance/rx8.gif</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://192.168.99.100:31187/angular/tuner.jsp?tunerName=Mazdaspeed</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:69.0) Gecko/20100101 Firefox/69.0</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">image/webp,*/*</stringProp>
                 </elementProp>
               </collectionProp>
             </HeaderManager>

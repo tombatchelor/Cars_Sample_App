@@ -12,6 +12,13 @@ html, body {
     min-height: 100%;
 }
 
+loginbuttons
+{
+    width: 300px;
+    height: 200px;
+    margin-top: 150px
+}
+
 .homepagebox
 {
     position:absolute;
