@@ -4,6 +4,6 @@ COPY --from=lachlanevenson/k8s-kubectl:v1.15.5 /usr/local/bin/kubectl /usr/local
 
 COPY script.sh /
 
-ENV VERSION=2.5
+ENV VERSION=3.0
 
 CMD ["bash", "/script.sh"]

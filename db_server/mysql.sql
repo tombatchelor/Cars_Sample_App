@@ -42,3 +42,6 @@ INSERT INTO MANUFACTURER (MANUFACTURER_ID, NAME, WEB, EMAIL, LOGO) VALUES
     (6, 'Jaguar', 'http://www.jaguarusa.com/index.html', 'web@jaguarusa.com', 'Jaguar.gif'),
     (7, 'Lamborghini', 'http://www.lamborghini.com/en/home/', 'web@lamborghini.com', 'Lamborghini.gif'),
     (8, 'Lotus', 'http://www.lotuscars.com', 'web@lotuscars.com', 'Lotus.gif');
+
+INSERT INTO CARS(NAME, MODEL, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, SUMMARY, PHOTO) VALUES
+    ("488", "GTB", "Low mileage with high spec!", 2, "Red", 2018, 130000, "This is a excellent example offered at a price for a quick sale", "IMG_1.jpeg");

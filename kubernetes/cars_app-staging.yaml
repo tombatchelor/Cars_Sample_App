@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: tombatchelor/cars_web:2.1
+        image: tombatchelor/cars_web:3.0
         ports:
         - name: cars-web-port
           containerPort: 80
@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:2.6-leak
+        image:  tombatchelor/cars:3.0-leak
         imagePullPolicy: Always
         ports:
         - name: cars-app-port
@@ -108,7 +108,7 @@ spec:
     spec:
       containers:
       - name: db-server
-        image: tombatchelor/carsdb:2.0
+        image: tombatchelor/carsdb:3.0
         ports:
         - name: mysql
           containerPort: 3306
@@ -129,7 +129,7 @@ spec:
     spec:
       containers:
       - name: insurance-quoter
-        image: tombatchelor/car-insurance:2.0
+        image: tombatchelor/car-insurance:3.0
         ports:
         - name: http
           containerPort: 8000
@@ -156,7 +156,7 @@ spec:
     spec:
       containers:
       - name: loan-quoter
-        image: tombatchelor/car-loan:2.0
+        image: tombatchelor/car-loan:3.0
         ports:
         - name: http
           containerPort: 80
@@ -237,7 +237,7 @@ spec:
     spec:
       containers:
       - name: jmeter
-        image: tombatchelor/carsloadgen:2.1
+        image: tombatchelor/carsloadgen:3.0
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
@@ -251,7 +251,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:2.3
+            image: tombatchelor/carscleanup:3.0
             env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
@@ -283,7 +283,7 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 2leak
-            image: tombatchelor/demo_marshaller:2.6
+            image: tombatchelor/demo_marshaller:3.0
             env:
             - name: NEW_YAML
               value: 2_leak
@@ -302,7 +302,7 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 4leak
-            image: tombatchelor/demo_marshaller:2.6
+            image: tombatchelor/demo_marshaller:3.0
             env:
             - name: NEW_YAML
               value: 4_leak
@@ -321,7 +321,7 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 4noleak
-            image: tombatchelor/demo_marshaller:2.6
+            image: tombatchelor/demo_marshaller:3.0
             env:
             - name: NEW_YAML
               value: 4_no_leak
@@ -340,7 +340,7 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 2noleak
-            image: tombatchelor/demo_marshaller:2.6
+            image: tombatchelor/demo_marshaller:3.0
             env:
             - name: NEW_YAML
               value: 2_no_leak

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: tombatchelor/cars_web:2.1
+        image: tombatchelor/cars_web:3.0
         imagePullPolicy: Always
         ports:
         - name: cars-web-port
@@ -37,7 +37,7 @@ spec:
   selector:
     matchLabels:
       app: cars_app
-  replicas: 1
+  replicas: 1 
   template:
     metadata:
       labels:
@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:2.6-leak
+        image:  tombatchelor/cars:3.0-leak
         imagePullPolicy: Always
         ports:
         - name: cars-app-port
@@ -109,7 +109,7 @@ spec:
     spec:
       containers:
       - name: db-server
-        image: tombatchelor/carsdb:1.2
+        image: tombatchelor/carsdb:3.0
         imagePullPolicy: Always
         ports:
         - name: mysql
@@ -131,7 +131,7 @@ spec:
     spec:
       containers:
       - name: insurance-quoter
-        image: tombatchelor/car-insurance:1.6
+        image: tombatchelor/car-insurance:3.0
         imagePullPolicy: Always
         ports:
         - name: http
@@ -159,7 +159,7 @@ spec:
     spec:
       containers:
       - name: loan-quoter
-        image: tombatchelor/car-loan:1.0
+        image: tombatchelor/car-loan:3.0
         imagePullPolicy: Always
         ports:
         - name: http
@@ -238,7 +238,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:2.3
+            image: tombatchelor/carscleanup:3.0
             imagePullPolicy: Always
             env:
             - name: AWS_ACCESS_KEY_ID
