@@ -3,7 +3,10 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<div class="regularpage"><img src="images/manufacturers/{{manufacturer.logo}}" align="absmiddle">{{cars.length}} cars found<img src="images/line.gif">
+<div class="regularpage" ng-show="cars == null">
+    Loading ...
+</div>
+<div class="regularpage" ng-show="cars != null"><img src="images/manufacturers/{{manufacturer.logo}}" align="absmiddle">{{cars.length}} cars found<img src="images/line.gif">
     <table>
         <tr ng-repeat="car in cars"> 
             <td>
