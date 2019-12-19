@@ -19,7 +19,8 @@ public class CarLogFormatter extends SimpleFormatter {
 
     @Override
     public String format​(LogRecord record) {
-        record.setMessage(getTraceID() + " " + getSpanID() + " " + record.getMessage());
+        String sessionID = SessionIDHolder.getSessionID();
+        record.setMessage(sessionID + " " + getTraceID() + " " + getSpanID() + " " + record.getMessage());
         return super.format(record);
     }
 

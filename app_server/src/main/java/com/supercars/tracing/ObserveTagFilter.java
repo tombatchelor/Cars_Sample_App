@@ -5,6 +5,7 @@
  */
 package com.supercars.tracing;
 
+import com.supercars.logging.SessionIDHolder;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -32,7 +33,9 @@ public class ObserveTagFilter implements Filter {
         }
         if (request instanceof HttpServletRequest) {
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "session.id", httpServletRequest.getSession().getId());
+            String sessionID = httpServletRequest.getSession().getId();
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "session.id", sessionID);
+            SessionIDHolder.setSessionID(sessionID);
         }
         chain.doFilter(request, response);
     }
