@@ -44,8 +44,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:3.0-leak
-        imagePullPolicy: Always
+        image:  tombatchelor/cars:3.1-leak
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -283,7 +282,7 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 2leak
-            image: tombatchelor/demo_marshaller:3.0
+            image: tombatchelor/demo_marshaller:3.1
             env:
             - name: NEW_YAML
               value: 2_leak
@@ -302,7 +301,7 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 4leak
-            image: tombatchelor/demo_marshaller:3.0
+            image: tombatchelor/demo_marshaller:3.1
             env:
             - name: NEW_YAML
               value: 4_leak
@@ -321,7 +320,7 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 4noleak
-            image: tombatchelor/demo_marshaller:3.0
+            image: tombatchelor/demo_marshaller:3.1
             env:
             - name: NEW_YAML
               value: 4_no_leak
@@ -340,7 +339,7 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 2noleak
-            image: tombatchelor/demo_marshaller:3.0
+            image: tombatchelor/demo_marshaller:3.1
             env:
             - name: NEW_YAML
               value: 2_no_leak
