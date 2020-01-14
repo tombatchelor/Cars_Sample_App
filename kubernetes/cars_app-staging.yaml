@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:3.1-leak
+        image:  tombatchelor/cars:3.3-leak
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -107,7 +107,7 @@ spec:
     spec:
       containers:
       - name: db-server
-        image: tombatchelor/carsdb:3.0
+        image: tombatchelor/carsdb:3.1
         ports:
         - name: mysql
           containerPort: 3306
@@ -250,7 +250,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:3.0
+            image: tombatchelor/carscleanup:3.1
             env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
@@ -282,7 +282,7 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 2leak
-            image: tombatchelor/demo_marshaller:3.1
+            image: tombatchelor/demo_marshaller:3.3
             env:
             - name: NEW_YAML
               value: 2_leak
@@ -301,7 +301,7 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 4leak
-            image: tombatchelor/demo_marshaller:3.1
+            image: tombatchelor/demo_marshaller:3.3
             env:
             - name: NEW_YAML
               value: 4_leak
@@ -320,7 +320,7 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 4noleak
-            image: tombatchelor/demo_marshaller:3.1
+            image: tombatchelor/demo_marshaller:3.3
             env:
             - name: NEW_YAML
               value: 4_no_leak
@@ -339,7 +339,7 @@ spec:
           serviceAccountName: marshaller
           containers:
           - name: 2noleak
-            image: tombatchelor/demo_marshaller:3.1
+            image: tombatchelor/demo_marshaller:3.3
             env:
             - name: NEW_YAML
               value: 2_no_leak

@@ -44,4 +44,11 @@ INSERT INTO MANUFACTURER (MANUFACTURER_ID, NAME, WEB, EMAIL, LOGO) VALUES
     (8, 'Lotus', 'http://www.lotuscars.com', 'web@lotuscars.com', 'Lotus.gif');
 
 INSERT INTO CARS(NAME, MODEL, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, SUMMARY, PHOTO) VALUES
-    ("488", "GTB", "Low mileage with high spec!", 2, "Red", 2018, 130000, "This is a excellent example offered at a price for a quick sale", "IMG_1.jpeg");
+    ("GTB", "488", "Low mileage with high spec!", 2, "Red", 2018, 130000, "This is a excellent example offered at a price for a quick sale", "IMG_1.jpeg"),
+    ("35i", "X1", "Leather interior, navigation", 4, "Blue", 2013, 13000, "Offered for a quick sale, reliable small SUV", "IMG_2.jpeg"),
+    ("GT3", "911", "Great track day car", 1, "Silver", 2018, 135000, "Track day car that can be used daily", "IMG_3.jpeg"),
+    ("Base", "DB11", "Great looking car", 3, "Black", 2019, 168000, "Great", "IMG_4.jpeg"),
+    ("Raptor", "F150", "Performance truck", 5, "Black", 2018, 76000, "Roush", "IMG_5.jpeg"),
+    ("V8", "F-Type", "Classic British GT", 6, "Green", 2017, 45000, "Great car!", "IMG_6.jpeg"),
+    ("LP580-2", "Huracan", "2 wheel drive", 7, "Orange", 2016, 180000, "Great!", "IMG_7.jpeg"),
+    ("V6", "Exige", "British track car", 8, "Black", 2017, 55000, "Wonderful", "IMG_8.jpeg");

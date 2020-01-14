@@ -10,8 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,39 +24,52 @@ import java.util.logging.Logger;
 public class PreferenceManager {
 
     private final static Logger logger = Logger.getLogger(PreferenceManager.class.getName());
-    
+
+    private static Map<String, Preference> preferences = new HashMap<>();
+    private static long lastRefresh = 0;
+
     public static Preference getPreference(String name) throws PreferenceException {
-        Preference preference = new Preference(name);
-        try {
-            try (Connection connection = getDBConnectionStandardPool(); PreparedStatement statement = connection.prepareStatement("SELECT VALUE, DESCRIPTION, HIDDEN FROM PREFERENCES WHERE NAME=?")) {
-                statement.setString(1, name);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    if (resultSet.next()) {
-                        preference.setValue(resultSet.getString(1));
-                        preference.setDescription(resultSet.getString(2));
-                        preference.setHidden((resultSet.getInt(3) != 0));
-                    } else {
-                        throw new PreferenceException("No preference found for: " + name);
+        if (System.currentTimeMillis() > lastRefresh + (5 * 1000 * 60)) {
+            preferences = new HashMap<>();
+            lastRefresh = System.currentTimeMillis();
+        }
+
+        Preference preference = preferences.get(name);
+        if (preference != null) {
+            return preference;
+        } else {
+            preference = new Preference(name);
+            try {
+                try ( Connection connection = getDBConnectionStandardPool();  PreparedStatement statement = connection.prepareStatement("SELECT VALUE, DESCRIPTION, HIDDEN FROM PREFERENCES WHERE NAME=?")) {
+                    statement.setString(1, name);
+                    try ( ResultSet resultSet = statement.executeQuery()) {
+                        if (resultSet.next()) {
+                            preference.setValue(resultSet.getString(1));
+                            preference.setDescription(resultSet.getString(2));
+                            preference.setHidden((resultSet.getInt(3) != 0));
+                        } else {
+                            throw new PreferenceException("No preference found for: " + name);
+                        }
                     }
                 }
-            }
 
-            return preference;
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, null, ex);
-            PreferenceException pe = new PreferenceException("DB error getting preference: " + ex.getMessage());
-            pe.addSuppressed(ex);
-            throw pe;
+                return preference;
+            } catch (SQLException ex) {
+                logger.log(Level.SEVERE, null, ex);
+                PreferenceException pe = new PreferenceException("DB error getting preference: " + ex.getMessage());
+                pe.addSuppressed(ex);
+                throw pe;
+            }
         }
     }
 
     public static boolean doesPreferenceExist(String name) throws PreferenceException {
         try {
-            try (Connection connection = getDBConnectionStandardPool()) {
+            try ( Connection connection = getDBConnectionStandardPool()) {
                 boolean exists;
-                try (PreparedStatement statement = connection.prepareStatement("SELECT VALUE FROM PREFERENCES WHERE NAME=?")) {
+                try ( PreparedStatement statement = connection.prepareStatement("SELECT VALUE FROM PREFERENCES WHERE NAME=?")) {
                     statement.setString(1, name);
-                    try (ResultSet resultSet = statement.executeQuery()) {
+                    try ( ResultSet resultSet = statement.executeQuery()) {
                         exists = resultSet.next();
                     }
                 }
@@ -86,9 +101,9 @@ public class PreferenceManager {
             hidden = 1;
         }
         try {
-            try (Connection connection = getDBConnectionStandardPool()) {
+            try ( Connection connection = getDBConnectionStandardPool()) {
                 if (doesPreferenceExist(preference.getName())) {
-                    try (PreparedStatement statement = connection.prepareStatement("UPDATE PREFERENCES SET VALUE = ?, DESCRIPTION = ?, HIDDEN = ? WHERE NAME = ?")) {
+                    try ( PreparedStatement statement = connection.prepareStatement("UPDATE PREFERENCES SET VALUE = ?, DESCRIPTION = ?, HIDDEN = ? WHERE NAME = ?")) {
                         statement.setString(1, preference.getValue());
                         statement.setString(2, preference.getDescription());
                         statement.setInt(3, hidden);
@@ -96,7 +111,7 @@ public class PreferenceManager {
                         statement.execute();
                     }
                 } else {
-                    try (PreparedStatement statement = connection.prepareStatement("INSERT INTO PREFERENCES (NAME, VALUE, DESCRIPTION, HIDDEN) SELECT ?, ?, ?, ?")) {
+                    try ( PreparedStatement statement = connection.prepareStatement("INSERT INTO PREFERENCES (NAME, VALUE, DESCRIPTION, HIDDEN) SELECT ?, ?, ?, ?")) {
                         statement.setString(1, preference.getName());
                         statement.setString(2, preference.getValue());
                         statement.setString(3, preference.getDescription());
@@ -105,6 +120,8 @@ public class PreferenceManager {
                     }
                 }
             }
+
+            preferences.put(preference.getName(), preference);
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, null, ex);
             PreferenceException pe = new PreferenceException("DB error setting preference: " + ex.getMessage());
@@ -115,7 +132,7 @@ public class PreferenceManager {
 
     public static List<Preference> getAllPreferences(boolean includeHidden) throws PreferenceException {
         List<Preference> preferences = new LinkedList<>();
-        try (Connection connection = getDBConnectionStandardPool(); PreparedStatement statement = connection.prepareStatement("SELECT NAME, VALUE, DESCRIPTION, HIDDEN FROM PREFERENCES")) {
+        try ( Connection connection = getDBConnectionStandardPool();  PreparedStatement statement = connection.prepareStatement("SELECT NAME, VALUE, DESCRIPTION, HIDDEN FROM PREFERENCES")) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Preference preference = new Preference();

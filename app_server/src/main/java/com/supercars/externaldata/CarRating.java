@@ -39,6 +39,7 @@ public class CarRating {
     private final static Logger logger = Logger.getLogger(CarRating.class.getName());
     
     public static Rating getCarRating(int carID) {
+        Rating rating = new Rating();
         Car car = new CarDataLoader().getCar(carID);
         Manufacturer manufacturer = car.getManufacturer();
         logger.log(Level.FINE, "Getting rating for carID: {0} manufacturerID: {1}", new Object[]{carID, manufacturer.getManufacturerId()});
@@ -47,18 +48,22 @@ public class CarRating {
             Preference preference = PreferenceManager.getPreference("REST_CLIENT");
             switch (preference.getValue()) {
                 case "Jersey_Sync":
-                    return getCarRatingSync(ratingRequest);
+                    rating = getCarRatingSync(ratingRequest);
+                    break;
                 case "Jersey_Async":
-                    return getCarRatingAsync(ratingRequest).get();
+                    rating =  getCarRatingAsync(ratingRequest).get();
+                    break;
             }
-            logger.log(Level.FINE, "Success getting insurance quote for carID: {0}", carID);
+            logger.log(Level.FINE, "Success getting rating for carID: {0}", carID);
         } catch (InterruptedException | PreferenceException | ExecutionException ex) {
             logger.log(Level.SEVERE, "Error getting rating for carID: " + carID + " manufacturerID: " + manufacturer.getManufacturerId(), ex);
+            return null;
         } catch (Exception ex) {
             logger.log(Level.SEVERE, "Error getting rating for carID: " + carID + " manufacturerID: " + manufacturer.getManufacturerId(), ex);
+            return null;
         }
 
-        return null;
+        return rating;
     }
 
     private static Rating getCarRatingSync(RatingRequest ratingRequest) throws Exception {
