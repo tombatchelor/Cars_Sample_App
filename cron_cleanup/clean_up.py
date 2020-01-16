@@ -27,7 +27,7 @@ def trim_table(selectQuery, deleteQuery, max, toDelete, cnx):
         cursor = cnx.cursor()
         # Don't delete car 1 as that is where enquiries get posted
         for x in randoms:
-            if x > 7:
+            if x > 8:
                 cursor.execute(deleteQuery, IDs[x])
                 IDsDeleted.append(IDs[x][0])
         cnx.commit()

@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:3.3-leak
+        image:  tombatchelor/cars:3.4-leak
         imagePullPolicy: Always
         ports:
         - name: cars-app-port
@@ -109,7 +109,7 @@ spec:
     spec:
       containers:
       - name: db-server
-        image: tombatchelor/carsdb:3.1
+        image: tombatchelor/carsdb:3.2
         imagePullPolicy: Always
         ports:
         - name: mysql
@@ -238,7 +238,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:3.1
+            image: tombatchelor/carscleanup:3.2
             imagePullPolicy: Always
             env:
             - name: AWS_ACCESS_KEY_ID

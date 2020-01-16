@@ -41,7 +41,8 @@ INSERT INTO MANUFACTURER (MANUFACTURER_ID, NAME, WEB, EMAIL, LOGO) VALUES
     (5, 'Ford', 'http://www.ford.com', 'web@ford.com', 'Ford.gif'),
     (6, 'Jaguar', 'http://www.jaguarusa.com/index.html', 'web@jaguarusa.com', 'Jaguar.gif'),
     (7, 'Lamborghini', 'http://www.lamborghini.com/en/home/', 'web@lamborghini.com', 'Lamborghini.gif'),
-    (8, 'Lotus', 'http://www.lotuscars.com', 'web@lotuscars.com', 'Lotus.gif');
+    (8, 'Lotus', 'http://www.lotuscars.com', 'web@lotuscars.com', 'Lotus.gif'),
+    (9, 'McLaren', 'https://cars.mclaren.com/en', 'web@mclaren.com', 'McLaren.png');
 
 INSERT INTO CARS(NAME, MODEL, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, SUMMARY, PHOTO) VALUES
     ("GTB", "488", "Low mileage with high spec!", 2, "Red", 2018, 130000, "This is a excellent example offered at a price for a quick sale", "IMG_1.jpeg"),
@@ -51,4 +52,5 @@ INSERT INTO CARS(NAME, MODEL, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE,
     ("Raptor", "F150", "Performance truck", 5, "Black", 2018, 76000, "Roush", "IMG_5.jpeg"),
     ("V8", "F-Type", "Classic British GT", 6, "Green", 2017, 45000, "Great car!", "IMG_6.jpeg"),
     ("LP580-2", "Huracan", "2 wheel drive", 7, "Orange", 2016, 180000, "Great!", "IMG_7.jpeg"),
-    ("V6", "Exige", "British track car", 8, "Black", 2017, 55000, "Wonderful", "IMG_8.jpeg");
+    ("V6", "Exige", "British track car", 8, "Black", 2017, 55000, "Wonderful", "IMG_8.jpeg"),
+    ("Spider", "720S", "Fantastic", 9, "Blue", 2019, 345000, "Great", "IMG_9.jpeg");
