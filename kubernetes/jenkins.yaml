@@ -24,6 +24,8 @@ spec:
         volumeMounts:
         - name: jenkins-config
           mountPath: /tmp/secrets
+        - name: dockersock
+          mountPath: "/var/run/docker.sock"
         lifecycle:
           postStart:
             exec:
@@ -35,3 +37,6 @@ spec:
       - name: jenkins-config
         secret:
           secretName: jenkins-config
+      - name: dockersock
+        hostPath:
+          path: /var/run/docker.sock
