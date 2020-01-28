@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+spec:
+  selector:
+    matchLabels:
+      app: jenkins
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      serviceAccountName: marshaller
+      containers:
+      - name: jenkins
+        image: tombatchelor/jenkins:0.1
+        imagePullPolicy: Always
+        ports:
+        - name: jenkins-ui
+          containerPort: 8080
+        volumeMounts:
+        volumeMounts:
+        - name: jenkins-config
+          mountPath: /tmp/secrets
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - cp /tmp/secrets/* /var/jenkins_home/
+      volumes:
+      - name: jenkins-config
+        secret:
+          secretName: jenkins-config
