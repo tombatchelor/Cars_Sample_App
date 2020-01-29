@@ -5,6 +5,8 @@ USER root
 ADD --chown=jenkins:jenkins jenkins/jobs /var/jenkins_home/jobs/
 ADD --chown=jenkins:jenkins jenkins/plugins /var/jenkins_home/plugins/
 ADD --chown=jenkins:jenkins jenkins/users /var/jenkins_home/users/
+ADD --chown=jenkins:jenkins jenkins/secrets /var/jenkins_home/secrets/
+RUN chmod 700 /var/jenkins_home/secrets
 
 ARG MAVEN_VERSION=3.6.3
 ARG USER_HOME_DIR="/root"

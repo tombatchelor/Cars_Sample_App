@@ -33,10 +33,6 @@ spec:
               - /bin/sh
               - -c
               - cp /tmp/secrets/*.xml /var/jenkins_home/
-              command:
-              - /bin/sh
-              - -c
-              - cp /tmp/secrets/master.key /var/jenkins_home/secrets/master.key
       volumes:
       - name: jenkins-config
         secret:
