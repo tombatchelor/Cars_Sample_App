@@ -55,7 +55,20 @@ public class CarService {
 
         S3Images.getImage("IMG_" + car.getCarId() + ".jpeg");
         car.setRating(CarRating.getCarRating(car.getCarId()).getRating());
+
+        try {
+            logger.fine("Before Manufacturer check");
+            if (car.getManufacturerId() == 3) {
+                logger.fine("Before throw error");
+                throw new OutOfMemoryError("Out of Memory");
+            }
+        } catch (OutOfMemoryError ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            throw ex;
+        }
+        
         logger.log(Level.FINE, "Returing car {0}", car.toString());
+
         return car;
     }
 

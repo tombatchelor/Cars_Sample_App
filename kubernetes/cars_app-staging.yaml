@@ -269,81 +269,47 @@ spec:
                   key: bucket.name
           restartPolicy: OnFailure
 ---
-apiVersion: batch/v1beta1
-kind: CronJob
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: 2leak
+  name: jenkins
 spec:
-  schedule: "0 0,4,8,12,16,20 * * *"
-  jobTemplate:
+  selector:
+    matchLabels:
+      app: jenkins
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: jenkins
     spec:
-      template:
-        spec:
-          serviceAccountName: marshaller
-          containers:
-          - name: 2leak
-            image: tombatchelor/demo_marshaller:3.4
-            env:
-            - name: NEW_YAML
-              value: 2_leak
-          restartPolicy: OnFailure
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: 4leak
-spec:
-  schedule: "0 1,5,9,13,17,21 * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          serviceAccountName: marshaller
-          containers:
-          - name: 4leak
-            image: tombatchelor/demo_marshaller:3.4
-            env:
-            - name: NEW_YAML
-              value: 4_leak
-          restartPolicy: OnFailure
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: 4noleak
-spec:
-  schedule: "0 2,6,10,14,18,22 * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          serviceAccountName: marshaller
-          containers:
-          - name: 4noleak
-            image: tombatchelor/demo_marshaller:3.4
-            env:
-            - name: NEW_YAML
-              value: 4_no_leak
-          restartPolicy: OnFailure
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: 2noleak
-spec:
-  schedule: "0 3,7,11,15,19,23 * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          serviceAccountName: marshaller
-          containers:
-          - name: 2noleak
-            image: tombatchelor/demo_marshaller:3.4
-            env:
-            - name: NEW_YAML
-              value: 2_no_leak
-          restartPolicy: OnFailure
+      serviceAccountName: marshaller
+      containers:
+      - name: jenkins
+        image: tombatchelor/jenkins:1.0
+        imagePullPolicy: Always
+        ports:
+        - name: jenkins-ui
+          containerPort: 8080
+        volumeMounts:
+        - name: jenkins-config
+          mountPath: /tmp/secrets
+        - name: dockersock
+          mountPath: "/var/run/docker.sock"
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - cp /tmp/secrets/*.xml /var/jenkins_home/
+      volumes:
+      - name: jenkins-config
+        secret:
+          secretName: jenkins-config
+      - name: dockersock
+        hostPath:
+          path: /var/run/docker.sock
 ---
 apiVersion: v1
 kind: Service
