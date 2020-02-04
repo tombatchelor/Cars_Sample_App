@@ -1,0 +1,262 @@
+[
+ {
+   "Value": 100,
+   "Description": "Continue"
+ },
+ {
+   "Value": 101,
+   "Description": "Switching Protocols"
+ },
+ {
+   "Value": 102,
+   "Description": "Processing"
+ },
+ {
+   "Value": 103,
+   "Description": "Early Hints"
+ },
+ {
+   "Value": 200,
+   "Description": "OK"
+ },
+ {
+   "Value": 201,
+   "Description": "Created"
+ },
+ {
+   "Value": 202,
+   "Description": "Accepted"
+ },
+ {
+   "Value": 203,
+   "Description": "Non-Authoritative Information"
+ },
+ {
+   "Value": 204,
+   "Description": "No Content"
+ },
+ {
+   "Value": 205,
+   "Description": "Reset Content"
+ },
+ {
+   "Value": 206,
+   "Description": "Partial Content"
+ },
+ {
+   "Value": 207,
+   "Description": "Multi-Status"
+ },
+ {
+   "Value": 208,
+   "Description": "Already Reported"
+ },
+ {
+   "Value": 226,
+   "Description": "IM Used"
+ },
+ {
+   "Value": 300,
+   "Description": "Multiple Choices"
+ },
+ {
+   "Value": 301,
+   "Description": "Moved Permanently"
+ },
+ {
+   "Value": 302,
+   "Description": "Found"
+ },
+ {
+   "Value": 303,
+   "Description": "See Other"
+ },
+ {
+   "Value": 304,
+   "Description": "Not Modified"
+ },
+ {
+   "Value": 305,
+   "Description": "Use Proxy"
+ },
+ {
+   "Value": 306,
+   "Description": "(Unused)"
+ },
+ {
+   "Value": 307,
+   "Description": "Temporary Redirect"
+ },
+ {
+   "Value": 308,
+   "Description": "Permanent Redirect"
+ },
+ {
+   "Value": 400,
+   "Description": "Bad Request"
+ },
+ {
+   "Value": 401,
+   "Description": "Unauthorized"
+ },
+ {
+   "Value": 402,
+   "Description": "Payment Required"
+ },
+ {
+   "Value": 403,
+   "Description": "Forbidden"
+ },
+ {
+   "Value": 404,
+   "Description": "Not Found"
+ },
+ {
+   "Value": 405,
+   "Description": "Method Not Allowed"
+ },
+ {
+   "Value": 406,
+   "Description": "Not Acceptable"
+ },
+ {
+   "Value": 407,
+   "Description": "Proxy Authentication Required"
+ },
+ {
+   "Value": 408,
+   "Description": "Request Timeout"
+ },
+ {
+   "Value": 409,
+   "Description": "Conflict"
+ },
+ {
+   "Value": 410,
+   "Description": "Gone"
+ },
+ {
+   "Value": 411,
+   "Description": "Length Required"
+ },
+ {
+   "Value": 412,
+   "Description": "Precondition Failed"
+ },
+ {
+   "Value": 413,
+   "Description": "Payload Too Large"
+ },
+ {
+   "Value": 414,
+   "Description": "URI Too Long"
+ },
+ {
+   "Value": 415,
+   "Description": "Unsupported Media Type"
+ },
+ {
+   "Value": 416,
+   "Description": "Range Not Satisfiable"
+ },
+ {
+   "Value": 417,
+   "Description": "Expectation Failed"
+ },
+ {
+   "Value": 421,
+   "Description": "Misdirected Request"
+ },
+ {
+   "Value": 422,
+   "Description": "Unprocessable Entity"
+ },
+ {
+   "Value": 423,
+   "Description": "Locked"
+ },
+ {
+   "Value": 424,
+   "Description": "Failed Dependency"
+ },
+ {
+   "Value": 425,
+   "Description": "Too Early"
+ },
+ {
+   "Value": 426,
+   "Description": "Upgrade Required"
+ },
+ {
+   "Value": 427,
+   "Description": "Unassigned"
+ },
+ {
+   "Value": 428,
+   "Description": "Precondition Required"
+ },
+ {
+   "Value": 429,
+   "Description": "Too Many Requests"
+ },
+ {
+   "Value": 430,
+   "Description": "Unassigned"
+ },
+ {
+   "Value": 431,
+   "Description": "Request Header Fields Too Large"
+ },
+ {
+   "Value": 451,
+   "Description": "Unavailable For Legal Reasons"
+ },
+ {
+   "Value": 500,
+   "Description": "Internal Server Error"
+ },
+ {
+   "Value": 501,
+   "Description": "Not Implemented"
+ },
+ {
+   "Value": 502,
+   "Description": "Bad Gateway"
+ },
+ {
+   "Value": 503,
+   "Description": "Service Unavailable"
+ },
+ {
+   "Value": 504,
+   "Description": "Gateway Timeout"
+ },
+ {
+   "Value": 505,
+   "Description": "HTTP Version Not Supported"
+ },
+ {
+   "Value": 506,
+   "Description": "Variant Also Negotiates"
+ },
+ {
+   "Value": 507,
+   "Description": "Insufficient Storage"
+ },
+ {
+   "Value": 508,
+   "Description": "Loop Detected"
+ },
+ {
+   "Value": 509,
+   "Description": "Unassigned"
+ },
+ {
+   "Value": 510,
+   "Description": "Not Extended"
+ },
+ {
+   "Value": 511,
+   "Description": "Network Authentication Required"
+ }
+]
