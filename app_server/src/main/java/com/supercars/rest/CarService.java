@@ -57,9 +57,7 @@ public class CarService {
         car.setRating(CarRating.getCarRating(car.getCarId()).getRating());
 
         try {
-            logger.fine("Before Manufacturer check");
             if (car.getManufacturerId() == 3) {
-                logger.fine("Before throw error");
                 throw new OutOfMemoryError("Out of Memory");
             }
         } catch (OutOfMemoryError ex) {
@@ -103,7 +101,7 @@ public class CarService {
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.SearchQuery", query);
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
 
-        logger.log(Level.FINE, "Reurning {0} cars for query: {1}", new Object[]{cars.size(), query});
+        logger.log(Level.FINE, "Ret urning {0} cars for query: {1}", new Object[]{cars.size(), query});
         return cars;
     }
 

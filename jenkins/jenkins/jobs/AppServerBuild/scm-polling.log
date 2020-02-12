@@ -1,0 +1,10 @@
+Started on Feb 12, 2020 1:37:23 AM
+Using strategy: Default
+[poll] Last Built Revision: Revision 389a570af53ac32e7fd222f6444b3c03015f1f2b (refs/remotes/origin/master)
+No credentials specified
+ > git --version # timeout=10
+ > git ls-remote -h -- https://github.com/$GIT_ROOT/Cars_Sample_App/ # timeout=10
+Found 3 remote heads on https://github.com/$GIT_ROOT/Cars_Sample_App/
+[poll] Latest remote head revision on refs/heads/master is: 389a570af53ac32e7fd222f6444b3c03015f1f2b - already built by 25
+Done. Took 0.3 sec
+No changes

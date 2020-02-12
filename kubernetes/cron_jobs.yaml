@@ -1,79 +1,53 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: 2leak
+  name: marshaller
 spec:
-  schedule: "0 0,4,8,12,16,20 * * *"
+  schedule: "0 5 * * *"
   jobTemplate:
     spec:
       template:
         spec:
-          serviceAccountName: marshaller
           containers:
-          - name: 2leak
-            imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:3.4
+          - name: apply-data
+            image: tombatchelor/demo_marshaller:3.6
             env:
-            - name: NEW_YAML
-              value: 2_leak
+            - name: COLLECTOR_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: marshaller
+                  key: collector.url
+            - name: CUSTOMER_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: marshaller
+                  key: customer.id
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: observe-key
+                  key: token
+            - name: GIT_ROOT
+              valueFrom:
+                configMapKeyRef:
+                  name: jenkins-env
+                  key: git.root
+            volumeMounts:
+            - name: git-key
+              mountPath: /keys
           restartPolicy: OnFailure
+          volumes:
+          - name: git-key
+            secret:
+              secretName: git-key
 ---
-apiVersion: batch/v1beta1
-kind: CronJob
+apiVersion: v1
+kind: ConfigMap
 metadata:
-  name: 4leak
-spec:
-  schedule: "0 1,5,9,13,17,21 * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          serviceAccountName: marshaller
-          containers:
-          - name: 4leak
-            imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:3.4
-            env:
-            - name: NEW_YAML
-              value: 4_leak
-          restartPolicy: OnFailure
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: 4noleak
-spec:
-  schedule: "0 2,6,10,14,18,22 * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          serviceAccountName: marshaller
-          containers:
-          - name: 4noleak
-            imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:3.4
-            env:
-            - name: NEW_YAML
-              value: 4_no_leak
-          restartPolicy: OnFailure
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: 2noleak
-spec:
-  schedule: "0 3,7,11,15,19,23 * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          serviceAccountName: marshaller
-          containers:
-          - name: 2noleak
-            imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:3.4
-            env:
-            - name: NEW_YAML
-              value: 2_no_leak
-          restartPolicy: OnFailure
+  labels:
+    app: marshaller
+  name: marshaller
+data:
+  collector.url: https://collect.observe-staging.com/v1/observations/
+  customer.id: "126338107931"
+  
