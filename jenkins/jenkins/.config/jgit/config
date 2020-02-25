@@ -1,0 +1,3 @@
+[filesystem "7a743aa66a63|Oracle Corporation|1.8.0_232|osxfs"]
+	timestampResolution = 1001 milliseconds
+	minRacyThreshold = 0 nanoseconds

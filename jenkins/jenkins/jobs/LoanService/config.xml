@@ -1,0 +1,43 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>H/30 * * * *</spec>
+    </hudson.triggers.TimerTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>export GIT_COMMIT=`cat /dev/urandom | tr -dc &apos;a-zA-Z0-9&apos; | fold -w 40 | head -n 1`
+export GIT_BRANCH=&apos;origin/master&apos;
+# Pick Random committer
+export RAND=$(($RANDOM % 4))
+if [ $RAND -eq 0 ] ; then export GIT_COMMIT_NAME=&quot;Martin Brundell&quot;; export GIT_COMMIT_EMAIL=&quot;martin.brundell@observeinc.com&quot;; fi
+if [ $RAND -eq 1 ] ; then export GIT_COMMIT_NAME=&quot;Damon Hill&quot;; export GIT_COMMIT_EMAIL=&quot;damon.hill@observeinc.com&quot;; fi
+if [ $RAND -eq 2 ] ; then export GIT_COMMIT_NAME=&quot;Nigel Mansell&quot;; export GIT_COMMIT_EMAIL=&quot;nigel.mansell@observeinc.com&quot;; fi
+if [ $RAND -eq 3 ] ; then export GIT_COMMIT_NAME=&quot;Paul di Resta&quot;; export GIT_COMMIT_EMAIL=&quot;paul.diresta@observeinc.com&quot;; fi
+# Pick random commit message
+export RAND=$(($RANDOM % 4))
+if [ $RAND -eq 0 ] ; then export GIT_COMMIT_SUBJECT=&apos;Cache updates&apos;; fi
+if [ $RAND -eq 1 ] ; then export GIT_COMMIT_SUBJECT=&apos;Removing some dead code&apos;; fi
+if [ $RAND -eq 2 ] ; then export GIT_COMMIT_SUBJECT=&apos;Updated session timeout&apos;; fi
+if [ $RAND -eq 3 ] ; then export GIT_COMMIT_SUBJECT=&apos;Refactoring connection management&apos;; fi
+export BUILD_STATUS=&apos;SUCCESS&apos;
+export RAND=$(($RANDOM % 4))
+if [ $RAND -eq 1 ] ; then export BUILD_STATUS=&apos;FAILED&apos;; fi
+export AUTH=&quot;Authorization: Bearer $CUSTOMER_ID $TOKEN&quot;
+curl  -X POST https://collect.observe-staging.com/v1/observations/jenkins -H &apos;Content-Type: application/json&apos; -H &quot;$AUTH&quot; -d &apos;{&quot;BUILD_NUMBER&quot;:&quot;&apos;$BUILD_NUMBER&apos;&quot;,&quot;BUILD_ID&quot;:&quot;&apos;$BUILD_ID&apos;&quot;,&quot;JOB_NAME&quot;:&quot;&apos;$JOB_NAME&apos;&quot;,&quot;GIT_COMMIT&quot;:&quot;&apos;$GIT_COMMIT&apos;&quot;,&quot;GIT_BRANCH&quot;:&quot;&apos;$GIT_BRANCH&apos;&quot;,&quot;GIT_COMMITTER_NAME&quot;:&quot;&apos;&quot;$GIT_COMMIT_NAME&quot;&apos;&quot;,&quot;GIT_COMMITTER_EMAIL&quot;:&quot;&apos;&quot;$GIT_COMMIT_EMAIL&quot;&apos;&quot;,&quot;GIT_COMMIT_SUBJECT&quot;:&quot;&apos;&quot;$GIT_COMMIT_SUBJECT&quot;&apos;&quot;,&quot;IMAGE&quot;:&quot;&apos;tombatchelor/insurance:$BUILD_NUMBER&apos;&quot;,&quot;BUILD_STATUS&quot;:&quot;&apos;$BUILD_STATUS&apos;&quot;}&apos;</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

@@ -286,7 +286,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:1.0
+        image: tombatchelor/jenkins:3.1
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
@@ -310,6 +310,45 @@ spec:
       - name: dockersock
         hostPath:
           path: /var/run/docker.sock
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: marshaller
+spec:
+  schedule: "0 13 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: apply-data
+            imagePullPolicy: Always
+            image: tombatchelor/demo_marshaller:3.5
+            env:
+            - name: COLLECTOR_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: marshaller
+                  key: collector.url
+            - name: CUSTOMER_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: marshaller
+                  key: customer.id
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: observe-key
+                  key: token
+            volumeMounts:
+            - name: git-key
+              mountPath: /keys
+          restartPolicy: OnFailure
+          volumes:
+          - name: git-key
+            secret:
+              secretName: git-key
 ---
 apiVersion: v1
 kind: Service
@@ -476,6 +515,16 @@ metadata:
 data:
   bucket.name: carimages-observeinc-stage
   rating.endpoint: https://qdnvyzfav9.execute-api.us-west-2.amazonaws.com/default/car-rating
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: marshaller
+  name: marshaller
+data:
+  collector.url: https://collect.observe-staging.com/v1/observations/
+  customer.id: "108237415577"
 ---
 apiVersion: v1
 kind: ConfigMap

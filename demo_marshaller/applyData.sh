@@ -1,2 +1,21 @@
-curl  -X POST -H 'Content-Type: application/json' -H 'Authorization: Bearer 108237415577 rCUpCy2Lgfbifvhb2UtWKw3bTKERQvJQ' -d @HTTPCodes.json https://collect.observe-staging.com/v1/observations/httpcodes
-curl  -X POST -H 'Content-Type: application/json' -H 'Authorization: Bearer 108237415577 rCUpCy2Lgfbifvhb2UtWKw3bTKERQvJQ' -d @users.json https://collect.observe-staging.com/v1/observations/users
+# Add SSH key from Volumn Mount
+cp /keys/id_rsa /id_rsa
+sed -i -e '$a\' /id_rsa
+chmod 600 /id_rsa
+eval "$(ssh-agent -s)"
+ssh-add /id_rsa
+
+# Send in ref data
+cd /
+python sendJSON.py HTTPCodes.json httpcodes
+python sendJSON.py users.json users
+
+# Clone and make Git Commit
+cd /tmp
+git config --global user.email tom.batchelor@me.com
+git clone git@github.com:$GIT_ROOT/Cars_Sample_App.git
+cd Cars_Sample_App/
+echo 'Adding a line to file' >> file.txt
+git add file.txt
+git commit -m "Small change to cache code"
+git push

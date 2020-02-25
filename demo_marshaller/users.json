@@ -1,6 +1,14 @@
 
 [
     {
+        "firstname": "Mike",
+        "lastname": "Redman",
+        "email": "mike@observeinc.com",
+        "type:": "Customer",
+        "status": "Gold",
+        "country": "USA"
+    },
+    {
         "firstname": "Tom",
         "lastname": "Batchelor",
         "email": "tom@observeinc.com",
