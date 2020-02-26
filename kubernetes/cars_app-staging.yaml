@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:3.4-leak
+        image:  tombatchelor/cars:3.5-leak
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -286,7 +286,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:3.1
+        image: tombatchelor/jenkins:3.2
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
@@ -296,6 +296,22 @@ spec:
           mountPath: /tmp/secrets
         - name: dockersock
           mountPath: "/var/run/docker.sock"
+        env:
+        - name: GIT_ROOT
+          valueFrom:
+            configMapKeyRef:
+              name: jenkins-env
+              key: git.root
+        - name: CUSTOMER_ID
+          valueFrom:
+            configMapKeyRef:
+              name: marshaller
+              key: customer.id
+        - name: TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: observe-key
+              key: token
         lifecycle:
           postStart:
             exec:
@@ -324,7 +340,7 @@ spec:
           containers:
           - name: apply-data
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:3.5
+            image: tombatchelor/demo_marshaller:3.6
             env:
             - name: COLLECTOR_URL
               valueFrom:
@@ -341,6 +357,11 @@ spec:
                 secretKeyRef:
                   name: observe-key
                   key: token
+            - name: GIT_ROOT
+              valueFrom:
+                configMapKeyRef:
+                  name: jenkins-env
+                  key: git.root
             volumeMounts:
             - name: git-key
               mountPath: /keys
@@ -525,6 +546,16 @@ metadata:
 data:
   collector.url: https://collect.observe-staging.com/v1/observations/
   customer.id: "108237415577"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: jenkins
+  name: jenkins-env
+data:
+  git.root: observeinc
+
 ---
 apiVersion: v1
 kind: ConfigMap
