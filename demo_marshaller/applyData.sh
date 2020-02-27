@@ -1,4 +1,4 @@
-# Add SSH key from Volumn Mount
+# Add SSH key from Volume Mount
 cp /keys/id_rsa /id_rsa
 sed -i -e '$a\' /id_rsa
 chmod 600 /id_rsa
