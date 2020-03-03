@@ -14,5 +14,7 @@ spec:
     spec:
       containers:
       - name: jmeter
-        image: tombatchelor/carsloadgen:3.2
+        image: tombatchelor/carsloadgen:3.3
         imagePullPolicy: Always
+        args:
+        - -n -t /tests/SuperCars.jmx

@@ -7,7 +7,7 @@
               username="root" 
               password="AppDynamics"
               driverClassName="com.mysql.cj.jdbc.Driver"
-              url="jdbc:mysql://mysql:3306/supercars?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=America/Los_Angeles"
+              url="jdbc:mysql://mysql:3306/supercars?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=America/Los_Angeles?queryInterceptors=brave.mysql8.TracingQueryInterceptor"
               maxIdle="4" />
     <Resource name="jdbc/c3p0" 
               auth="Container"
