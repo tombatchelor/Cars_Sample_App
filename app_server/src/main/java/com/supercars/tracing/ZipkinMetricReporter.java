@@ -48,7 +48,7 @@ public class ZipkinMetricReporter implements zipkin2.reporter.ReporterMetrics, R
 
     @Override
     public void incrementMessageBytes(int arg0) {
-        messageBytes = +arg0;
+        messageBytes += arg0;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class ZipkinMetricReporter implements zipkin2.reporter.ReporterMetrics, R
     
     public void run() {
         while (true) {
-            logger.log(Level.INFO, "Metrics messages: {0} messagesDropped: {1} spans: {2} spansDropped: {3} spanBytes: {4} messageBytes: {5} queuedSpans: {6} queuedBytes: {7}",
+            logger.log(Level.INFO, "Metrics messages={0} messagesDropped={1} spans={2} spansDropped={3} spanBytes={4} messageBytes={5} queuedSpans={6} queuedBytes={7}",
                     new Object[]{messages, messagesDropped, spans, spansDropped, spanBytes, messageBytes, queuedSpans, queuedBytes});
             try {
                 Thread.sleep(30000);
