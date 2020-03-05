@@ -36,6 +36,8 @@ public class TracingBuilder {
         spanReporter = AsyncReporter.builder(sender)
                 .metrics(metrics)
                 .messageMaxBytes(1000*1024)
+                .queuedMaxSpans(20000)
+                .queuedMaxBytes((int) (Runtime.getRuntime().totalMemory() * 0.02))
                 .build();
         Thread t = new Thread(metrics);
         t.start();
