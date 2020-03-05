@@ -32,7 +32,10 @@ public class TracingBuilder {
         
         sender = URLConnectionSender.newBuilder().endpoint(getZipkinEndpoint()).build();
         //sender = URLConnectionSender.create(getZipkinSink());
-        spanReporter = AsyncReporter.create(sender);
+        ZipkinMetricReporter metrics = new ZipkinMetricReporter();
+        spanReporter = AsyncReporter.builder(sender).metrics(metrics).build();
+        Thread t = new Thread(metrics);
+        t.start();
         tracings = new HashMap();
     }
 
