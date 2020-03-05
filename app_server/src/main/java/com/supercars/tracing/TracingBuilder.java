@@ -35,9 +35,9 @@ public class TracingBuilder {
         ZipkinMetricReporter metrics = new ZipkinMetricReporter();
         spanReporter = AsyncReporter.builder(sender)
                 .metrics(metrics)
-                .messageMaxBytes(1000*1024)
+                .messageMaxBytes(2000*1024)
                 .queuedMaxSpans(20000)
-                .queuedMaxBytes((int) (Runtime.getRuntime().totalMemory() * 0.02))
+                .queuedMaxBytes((int) (Runtime.getRuntime().totalMemory() * 0.05))
                 .build();
         Thread t = new Thread(metrics);
         t.start();
