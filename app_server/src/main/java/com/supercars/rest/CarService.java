@@ -126,7 +126,6 @@ public class CarService {
                     File file = File.createTempFile("IMG_" + carId, ".jpeg");
                     OutputStream os = new FileOutputStream(file);
                     os.write(imageBytes);
-                    Logger.getLogger(CarService.class.getName()).log(Level.FINE, file.getAbsolutePath());
                     os.close();
                     S3Images.saveImage(file, "IMG_" + carId + ".jpeg");
                 } catch (NamingException | IOException ex) {
