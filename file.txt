@@ -3,3 +3,4 @@ And another change
 Adding a line to fileAdding a line to file
 Adding a line to file
 Adding a line to file
+Adding a line to file
