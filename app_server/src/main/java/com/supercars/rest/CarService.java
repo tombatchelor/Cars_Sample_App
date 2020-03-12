@@ -101,7 +101,7 @@ public class CarService {
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.SearchQuery", query);
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
 
-        logger.log(Level.FINE, "Ret urning {0} cars for query: {1}", new Object[]{cars.size(), query});
+        logger.log(Level.FINE, "Returning {0} cars for query: {1}", new Object[]{cars.size(), query});
         return cars;
     }
 
