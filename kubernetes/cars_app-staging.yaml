@@ -532,7 +532,7 @@ metadata:
     app: web-server
   name: zipkin-config
 data:
-  zipkin.endpoint: http://proxy.observe-staging.svc.cluster.local:9411/
+  zipkin.endpoint: http://proxy.observe-next.svc.cluster.local:9411/
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -544,7 +544,7 @@ data:
   zipkin-config.json: |-
     {
       "service_name": "nginx",
-      "collector_host": "proxy.observe-staging.svc.cluster.local"
+      "collector_host": "proxy.observe-next.svc.cluster.local"
     }
 ---
 apiVersion: v1
@@ -565,7 +565,7 @@ metadata:
   name: marshaller
 data:
   collector.url: https://collect.observe-staging.com/v1/observations/
-  customer.id: "108237415577"
+  customer.id: "198243902175"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -590,7 +590,7 @@ data:
       scrape_interval: 30s
 
     remote_write:
-    - url: http://proxy.observe-staging.svc.cluster.local:2001/prometheus/write
+    - url: http://proxy.observe-next.svc.cluster.local:2001/
       remote_timeout: 30s
 
     scrape_configs:
