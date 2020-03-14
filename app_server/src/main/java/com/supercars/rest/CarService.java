@@ -101,7 +101,7 @@ public class CarService {
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.SearchQuery", query);
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
 
-        logger.log(Level.FINE, "Ret urning {0} cars for query: {1}", new Object[]{cars.size(), query});
+        logger.log(Level.FINE, "Returning {0} cars for query: {1}", new Object[]{cars.size(), query});
         return cars;
     }
 
@@ -126,7 +126,6 @@ public class CarService {
                     File file = File.createTempFile("IMG_" + carId, ".jpeg");
                     OutputStream os = new FileOutputStream(file);
                     os.write(imageBytes);
-                    Logger.getLogger(CarService.class.getName()).log(Level.FINE, file.getAbsolutePath());
                     os.close();
                     S3Images.saveImage(file, "IMG_" + carId + ".jpeg");
                 } catch (NamingException | IOException ex) {

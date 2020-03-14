@@ -24,25 +24,26 @@ public class CarLogFormatter extends SimpleFormatter {
         return super.format(record);
     }
 
-    private static long getSpanID() {
+    private String getSpanID() {
         Tracer tracer = Tracing.currentTracer();
         if (tracer != null) {
             Span span = tracer.currentSpan();
             if (span != null) {
-                return span.context().spanId();
+                return span.context().spanIdString();
+                
             }
         }
-        return 0l;
+        return "BLANK";
     }
     
-    private static long getTraceID() {
+    private String getTraceID() {
         Tracer tracer = Tracing.currentTracer();
         if (tracer != null) {
             Span span = tracer.currentSpan();
             if (span != null) {
-                return span.context().traceId();
+                return span.context().traceIdString();
             }
         }
-        return 0l;
+        return "BLANK";
     }
 }

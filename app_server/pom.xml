@@ -180,7 +180,6 @@
             <artifactId>redisson-tomcat-8</artifactId>
             <version>3.11.5</version>
         </dependency>
-
     </dependencies>
 
     <build>

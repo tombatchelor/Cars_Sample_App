@@ -31,7 +31,9 @@ public class HealthService {
     public Response getHealth() {
         logger.fine("GET Returning service health");
         if (shouldSendUnhealthy) {
-            logger.log(Level.SEVERE, "Out of Memory", new java.lang.OutOfMemoryError("Out of Memory"));
+            for (int i = 0; i < 100; i++) {
+                logger.log(Level.SEVERE, "Out of Memory", new java.lang.OutOfMemoryError("Out of Memory"));
+            }
             return Response.serverError().entity("Out of Memory").build();
         }
         try (Connection connection = Constants.getDBConnectionStandardPool()) {
