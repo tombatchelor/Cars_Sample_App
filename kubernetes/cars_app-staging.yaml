@@ -36,7 +36,7 @@ spec:
   selector:
     matchLabels:
       app: cars_app
-  replicas: 2 # tells deployment to run 2 pods matching the template
+  replicas: 3 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
@@ -78,6 +78,16 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+        - name: DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: db-connection
+              key: database.username
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-connection
+              key: database.password
         livenessProbe:
           httpGet:
             path: /Cars_Sample_App/public/health
@@ -90,27 +100,6 @@ spec:
             memory: "256M"
           limits:
             memory: "768M"
----
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
-kind: Deployment
-metadata:
-  name: cars-db-deployment
-spec:
-  selector:
-    matchLabels:
-      app: cars_db
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: cars_db
-    spec:
-      containers:
-      - name: db-server
-        image: tombatchelor/carsdb:3.2
-        ports:
-        - name: mysql
-          containerPort: 3306
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -394,14 +383,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: mysql-rds
 spec:
-  selector:
-    app: cars_db
-  ports:
-  - protocol: TCP
-    port: 3306
-    targetPort: mysql
+  type: ExternalName
+  externalName: cars-db.ckmymsl26zdw.us-west-2.rds.amazonaws.com
 ---
 apiVersion: v1
 kind: Service

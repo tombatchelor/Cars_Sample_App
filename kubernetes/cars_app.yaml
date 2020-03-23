@@ -80,11 +80,6 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        - name: DATABASE_ADDRESS
-          valueFrom:
-            secretKeyRef:
-              name: db-connection
-              key: database.address
         - name: DATABASE_USERNAME
           valueFrom:
             secretKeyRef:
