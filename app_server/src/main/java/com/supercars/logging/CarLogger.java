@@ -5,10 +5,8 @@
  */
 package com.supercars.logging;
 
-import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.StreamHandler;
 
 /**
  *
@@ -19,7 +17,5 @@ public class CarLogger {
     public static void setup(String name) {
         Logger logger = Logger.getLogger(name);
         logger.setLevel(Level.FINEST);
-        //Handler handler = new StreamHandler(System.err, new CarLogFormatter());
-        //handler.setLevel(Level.FINEST);
     }
 }

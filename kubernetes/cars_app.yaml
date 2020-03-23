@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:3.5-leak
+        image:  tombatchelor/cars:4.0
         imagePullPolicy: Always
         ports:
         - name: cars-app-port
@@ -80,6 +80,16 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+        - name: DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: db-connection
+              key: database.username
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-connection
+              key: database.password
         livenessProbe:
           httpGet:
             path: /Cars_Sample_App/public/health
