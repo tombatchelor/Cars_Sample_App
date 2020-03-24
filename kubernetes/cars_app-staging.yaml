@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:3.5-leak
+        image:  tombatchelor/cars:4.1
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -100,6 +100,16 @@ spec:
             memory: "256M"
           limits:
             memory: "768M"
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - cars-app
+            topologyKey: failure-domain.beta.kubernetes.io/zone
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -241,7 +251,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:3.2
+            image: tombatchelor/carscleanup:4.1
             env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
@@ -258,6 +268,16 @@ spec:
                 configMapKeyRef:
                   name: aws
                   key: bucket.name
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection
+                  key: database.username
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection
+                  key: database.password
           restartPolicy: OnFailure
 ---
 apiVersion: apps/v1

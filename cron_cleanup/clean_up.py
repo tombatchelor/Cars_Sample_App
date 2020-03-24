@@ -43,9 +43,9 @@ def delete_s3_objects(IDsDeleted):
 
 
 config = {
-  'user': 'root',
-  'password': 'AppDynamics',
-  'host': 'mysql',
+  'user': os.environ["DATABASE_USERNAME"],
+  'password': os.environ["DATABASE_PASSWORD"],
+  'host': 'mysql-rds',
   'database': 'supercars',
   'raise_on_warnings': True
 }
