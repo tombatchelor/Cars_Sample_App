@@ -42,7 +42,7 @@ public class HealthService {
             try ( Connection connection = Constants.getDBConnectionStandardPool()) {
                 if (connection == null) {
                     logger.severe("Could not get DB connection");
-                    return Response.serverError().entity("NO_DB_CONNECTION").build();
+                    dbError = true;
                 } else {
                     logger.fine("Got DB Connection Okay");
                     break;
