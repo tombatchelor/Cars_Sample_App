@@ -61,7 +61,7 @@ mvn clean install
 sleep 5
 kubectl set image deployment/cars-deployment app-server=tombatchelor/carsdemo:$GIT_COMMIT
 kubectl scale --replicas=3 deployment/cars-deployment
-sleep 10</command>
+sleep 60</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>export GIT_COMMIT_NAME=&quot;`git log --format=%an -n 1`&quot;
