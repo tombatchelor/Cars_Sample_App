@@ -69,7 +69,6 @@ public class Constants {
             Context initContext = new InitialContext();
             Context webContext = (Context) initContext.lookup("java:/comp/env");
             DataSource ds = (DataSource) webContext.lookup("jdbc/standard");
-            ds.setLoginTimeout(1);
             Connection connection = ds.getConnection();
             return connection;
         } catch (NamingException | SQLException ex) {

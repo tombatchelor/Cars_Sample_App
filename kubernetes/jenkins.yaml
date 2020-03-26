@@ -15,7 +15,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:4.0
+        image: tombatchelor/jenkins:4.1
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
