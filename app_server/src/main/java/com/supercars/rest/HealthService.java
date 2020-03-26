@@ -36,6 +36,8 @@ public class HealthService {
             }
             return Response.serverError().entity("Out of Memory").build();
         }
+        
+        boolean dbError = false;
         for (int i = 0; i < 20; i++) {
             try ( Connection connection = Constants.getDBConnectionStandardPool()) {
                 if (connection == null) {
@@ -47,9 +49,11 @@ public class HealthService {
                 }
             } catch (Exception ex) {
                 logger.log(Level.SEVERE, null, ex);
-                return Response.serverError().entity("EXCEPTION_GETTING_DB_CONNECTION").build();
+                dbError = true;
             }
         }
+        if (dbError)
+            return Response.serverError().entity("EXCEPTION_GETTING_DB_CONNECTION").build();
 
         logger.fine("Service okay");
         return Response.ok("OK").build();
