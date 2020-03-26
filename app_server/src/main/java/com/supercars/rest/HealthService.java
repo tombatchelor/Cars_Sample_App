@@ -23,9 +23,9 @@ import javax.ws.rs.core.Response;
 public class HealthService {
 
     private final static Logger logger = Logger.getLogger(HealthService.class.getName());
-    
+
     private static boolean shouldSendUnhealthy = false;
-    
+
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getHealth() {
@@ -36,22 +36,29 @@ public class HealthService {
             }
             return Response.serverError().entity("Out of Memory").build();
         }
-        try (Connection connection = Constants.getDBConnectionStandardPool()) {
-            if (connection == null) {
-                logger.severe("Could not get DB connection");
-                return Response.serverError().entity("NO_DB_CONNECTION").build();
-            } else {
-                logger.fine("Got DB Connection Okay");
-            }
-        } catch (Exception ex) {
-            logger.log(Level.SEVERE, null, ex);
-            return Response.serverError().entity("EXCEPTION_GETTING_DB_CONNECTION").build();
-        }
         
+        boolean dbError = false;
+        for (int i = 0; i < 20; i++) {
+            try ( Connection connection = Constants.getDBConnectionStandardPool()) {
+                if (connection == null) {
+                    logger.severe("Could not get DB connection");
+                    dbError = true;
+                } else {
+                    logger.fine("Got DB Connection Okay");
+                    break;
+                }
+            } catch (Exception ex) {
+                logger.log(Level.SEVERE, null, ex);
+                dbError = true;
+            }
+        }
+        if (dbError)
+            return Response.serverError().entity("EXCEPTION_GETTING_DB_CONNECTION").build();
+
         logger.fine("Service okay");
         return Response.ok("OK").build();
     }
-    
+
     public static void setAsUnhealthy() {
         shouldSendUnhealthy = true;
     }

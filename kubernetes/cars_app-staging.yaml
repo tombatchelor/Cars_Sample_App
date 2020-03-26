@@ -108,8 +108,8 @@ spec:
               - key: app
                 operator: In
                 values:
-                - cars-app
-            topologyKey: failure-domain.beta.kubernetes.io/zone
+                - cars_app
+            topologyKey: kubernetes.io/hostname
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -297,7 +297,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:3.6
+        image: tombatchelor/jenkins:4.0
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
@@ -323,6 +323,16 @@ spec:
             secretKeyRef:
               name: observe-key
               key: token
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: aws-cred
+              key: access-key
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aws-cred
+              key: secret-key
         lifecycle:
           postStart:
             exec:
@@ -488,10 +498,11 @@ kind: ClusterRole
 metadata:
   name: marshaller
 rules:
-- apiGroups: ["apps", "extensions"]
+- apiGroups: ["apps", "extensions", ""]
   resources:
   - deployments
   - deployments/scale
+  - pods
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 apiVersion: v1
