@@ -15,7 +15,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:3.6
+        image: tombatchelor/jenkins:4.0
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
@@ -41,6 +41,16 @@ spec:
             secretKeyRef:
               name: observe-key
               key: token
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: aws-cred
+              key: access-key
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aws-cred
+              key: secret-key
         lifecycle:
           postStart:
             exec:

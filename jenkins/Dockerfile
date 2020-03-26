@@ -24,7 +24,15 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
 ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
-RUN apt-get -yqq update  
+RUN apt-get -yqq update
+RUN apt-get -yqq install awscli
+RUN apt-get -yqq install jq
+RUN mkdir /var/jenkins_home/script
+COPY checkSecGroups.sh /var/jenkins_home/script/checkSecGroups.sh
+RUN chmod +x /var/jenkins_home/script/checkSecGroups.sh
+RUN mkdir /root/.aws
+COPY config /root/.aws/config
+
 RUN curl -sSL https://get.docker.com/ | sh
 RUN usermod -g docker jenkins
 VOLUME /var/run/docker.sock
