@@ -31,12 +31,10 @@ public class HealthService {
     public Response getHealth() {
         logger.fine("GET Returning service health");
         if (shouldSendUnhealthy) {
-            for (int i = 0; i < 100; i++) {
-                logger.log(Level.SEVERE, "Out of Memory", new java.lang.OutOfMemoryError("Out of Memory"));
-            }
+            logger.log(Level.SEVERE, "Out of Memory", new java.lang.OutOfMemoryError("Out of Memory"));
             return Response.serverError().entity("Out of Memory").build();
         }
-        
+
         boolean dbError = false;
         for (int i = 0; i < 20; i++) {
             try ( Connection connection = Constants.getDBConnectionStandardPool()) {
@@ -52,8 +50,9 @@ public class HealthService {
                 dbError = true;
             }
         }
-        if (dbError)
+        if (dbError) {
             return Response.serverError().entity("EXCEPTION_GETTING_DB_CONNECTION").build();
+        }
 
         logger.fine("Service okay");
         return Response.ok("OK").build();
