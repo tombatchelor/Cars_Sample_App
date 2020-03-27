@@ -51,7 +51,7 @@ public class CarDataLoader {
             pstmt.close();
             connection.close();
         } catch (SQLException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, "SQLExceltion saving car: " + car.toString(), ex);
         }
 
         return carId;
@@ -84,8 +84,8 @@ public class CarDataLoader {
 
             resultSet.close();
             statement.close();
-        } catch (Exception ex) {
-            logger.log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "SQLException getting carID: " + carId, ex);
         }
 
         return car;
@@ -115,8 +115,8 @@ public class CarDataLoader {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch (Exception ex) {
-            logger.log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "SQLException getting cars for manufacturerID: " + manufacturerId, ex);
         }
         return cars;
     }
@@ -146,8 +146,8 @@ public class CarDataLoader {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch (Exception ex) {
-            logger.log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "SQLException getting cars for search: " + query, ex);
         }
 
         return cars;

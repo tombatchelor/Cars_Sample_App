@@ -46,7 +46,7 @@ public class EnquiryService {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Enquiry> getEnquiryForCar(@PathParam("carId") int carId) {
         logger.log(Level.FINE, "POST Getting enquiries for carID: {0}", carId);
-        List<Enquiry> enquiries = new EnquiryDataLoader().getEnquirysForCar(carId);
+        List<Enquiry> enquiries = new EnquiryDataLoader().getEnquiriesForCar(carId);
 
         // Add number of cars to span
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.EnquiryCount", enquiries.size());
