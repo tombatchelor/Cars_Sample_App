@@ -58,7 +58,7 @@ mvn clean install
     </com.nirima.jenkins.plugins.docker.builder.DockerBuilderPublisher>
     <hudson.tasks.Shell>
       <command>kubectl scale --replicas=0 deployment/cars-deployment
-sleep 5
+sleep 30
 kubectl set image deployment/cars-deployment app-server=tombatchelor/carsdemo:$GIT_COMMIT
 kubectl scale --replicas=3 deployment/cars-deployment
 sleep 60</command>
