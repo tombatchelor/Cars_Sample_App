@@ -2,6 +2,7 @@ import mysql.connector
 import random
 import boto3
 import os
+import socket
 
 def get_array_of_randoms(length, limit):
     randoms = []
@@ -36,8 +37,8 @@ def trim_table(selectQuery, deleteQuery, max, toDelete, cnx):
     return IDsDeleted
 
 def delete_s3_objects(IDsDeleted):
+    s3_client = boto3.client('s3', region_name=region)
     s3_bucket_name = os.environ['BUCKET_NAME']
-    s3_client = boto3.client('s3', region_name='us-west-2')
     for id in IDsDeleted:
         s3_client.delete_object(Bucket=s3_bucket_name, Key='IMG_' + str(id) + '.jpeg')
 
@@ -60,6 +61,31 @@ carsToDelete = 2000
 maxEnquiries = 3000
 enquiriesToDelete = 2000
 
+region = 'us-west-2'
+securityGroup = "sg-0c793b435ce34cdd0"
+
+print("Opening Firewall")
+hostname = socket.gethostname()
+myIP = socket.gethostbyname(hostname)
+ec2 = boto3.client('ec2', region_name=region)
+response = ec2.authorize_security_group_ingress(
+    GroupId=securityGroup,
+    IpPermissions=[
+        {
+            'FromPort': 3306,
+            'IpProtocol': 'tcp',
+            'IpRanges': [
+                {
+                    'CidrIp': myIP + '/32',
+                    'Description': 'MySQL access for cleanup',
+                },
+            ],
+            'ToPort': 3306,
+        },
+    ],
+)
+print(response)
+
 print('Start Cleanup')
 cnx = mysql.connector.connect(**config)
 
@@ -73,3 +99,22 @@ trim_table(enquiryQuery, enquiryDelete, maxEnquiries, enquiriesToDelete, cnx)
 print('End ENQUIRIES cleanup')
 
 cnx.close()
+
+print("Closing Firewall")
+response = ec2.revoke_security_group_ingress(
+    GroupId=securityGroup,
+    IpPermissions=[
+        {
+            'FromPort': 3306,
+            'IpProtocol': 'tcp',
+            'IpRanges': [
+                {
+                    'CidrIp': myIP + '/32',
+                    'Description': 'MySQL access for cleanup',
+                },
+            ],
+            'ToPort': 3306,
+        },
+    ],
+)
+print(response)

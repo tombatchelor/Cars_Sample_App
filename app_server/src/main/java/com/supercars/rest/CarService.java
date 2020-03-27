@@ -5,6 +5,8 @@
  */
 package com.supercars.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Base64;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -29,6 +31,7 @@ import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -42,7 +45,7 @@ public class CarService {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Car getCar(@PathParam("id") int carID) {
+    public Response getCar(@PathParam("id") int carID) {
         logger.log(Level.FINE, "GET request for carID: {0}", carID);
         Car car = new CarDataLoader().getCar(carID);
 
@@ -62,12 +65,19 @@ public class CarService {
             }
         } catch (OutOfMemoryError ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
-            throw ex;
+            return Response.status(503).build();
         }
-        
+
         logger.log(Level.FINE, "Returing car {0}", car.toString());
 
-        return car;
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(car);
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
+        } catch (JsonProcessingException ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            return Response.status(503).build();
+        }
     }
 
     @Path("/manufacturer/{id}")

@@ -47,7 +47,27 @@ done < <( kubectl get pods -o json -n $NAMESPACE -l app=cars_app | jq -r '.items
 echo Host IPs
 echo "${host_ips[@]}"
 
-# Loop over Security Group IPs and if they don't match a pod or it's host, remove
+# Revoke all hosts that are in the security group
+
+for host_ip in ${host_ips[@]}; do
+  for sec_ip in ${sec_ips[@]}; do
+    if [ "$host_ip" == "$sec_ip" ]; then
+      echo Removing host: $host_ip from security Group
+      aws ec2 revoke-security-group-ingress --group-id $SEC_GROUP_ID --protocol tcp --port 3306 --cidr $sec_ip/32
+    fi
+  done
+done
+
+# Get IPs for Securty Group, Pods and Hosts
+sec_ips=()
+while IFS= read -r line; do
+  sec_ips+=( "$(grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' <<< "$line")" )
+done < <( aws ec2 describe-security-groups --group-ids $SEC_GROUP_ID | jq -r '.SecurityGroups[] | .IpPermissions[] | .IpRanges[] | .CidrIp' )
+
+echo Security Group IPs, Hosts removed
+echo "${sec_ips[@]}"
+
+# Loop over Security Group IPs and if they don't match a pod, remove
 for sec_ip in ${sec_ips[@]}; do
   match=FALSE
   for pod_ip in ${pod_ips[@]}; do
@@ -55,15 +75,9 @@ for sec_ip in ${sec_ips[@]}; do
       match=TRUE
     fi
   done
-  for host_ip in ${host_ips[@]}; do
-    if [ "$host_ip" == "$sec_ip" ]; then
-      match=TRUE
-    fi
-  done
   if [ "$match" == "FALSE" ]; then
-    echo Removing Pod $sec_ip and Host ${host_ips[$i]} from security group
+    echo Removing Pod $sec_ip from security group
     aws ec2 revoke-security-group-ingress --group-id $SEC_GROUP_ID --protocol tcp --port 3306 --cidr $sec_ip/32
-    aws ec2 revoke-security-group-ingress --group-id $SEC_GROUP_ID --protocol tcp --port 3306 --cidr ${host_ips[$i]}/32
   fi
 done
 
@@ -76,9 +90,12 @@ for i in ${!pod_ips[@]}; do
       match=TRUE
     fi
   done
-  if [ "$match" == "FALSE" ] && [ $i != 2 ]; then
-    echo Adding Pod IP $pod_ip to and Host IP ${host_ips[$i]}  security group
-    aws ec2 authorize-security-group-ingress --group-id $SEC_GROUP_ID --protocol tcp --port 3306 --cidr $pod_ip/32
+  if [ $i != 2 ]; then
+    if [ "$match" == "FALSE" ]; then
+      echo Adding Pod IP $pod_ip to security group
+      aws ec2 authorize-security-group-ingress --group-id $SEC_GROUP_ID --protocol tcp --port 3306 --cidr $pod_ip/32
+    fi
+    echo Adding Host IP ${host_ips[$i]} security group
     aws ec2 authorize-security-group-ingress --group-id $SEC_GROUP_ID --protocol tcp --port 3306 --cidr ${host_ips[$i]}/32
   fi
 done

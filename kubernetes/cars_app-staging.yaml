@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: app-server
-        image:  tombatchelor/cars:4.1
+        image:  tombatchelor/cars:4.2
         ports:
         - name: cars-app-port
           containerPort: 8080
@@ -251,7 +251,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:4.1
+            image: tombatchelor/carscleanup:4.2
             env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
@@ -297,7 +297,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:4.0
+        image: tombatchelor/jenkins:4.1
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
