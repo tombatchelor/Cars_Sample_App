@@ -54,7 +54,7 @@ public class Constants {
                 default:
             }
         } catch (PreferenceException | SQLException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "Exception in Contansts stativ initilization", ex);
         }
     }
 
@@ -72,7 +72,7 @@ public class Constants {
             Connection connection = ds.getConnection();
             return connection;
         } catch (NamingException | SQLException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "Exception getting connection from the pool", ex);
         }
         
         return null;
