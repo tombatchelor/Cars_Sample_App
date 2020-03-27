@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import com.supercars.Enquiry;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,13 +48,13 @@ public class EnquiryDataLoader {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch (Exception ex) {
-            logger.log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "SQLException getting Enquiry enquiryID: " + enquiryId, ex);
         }
         return enquiry;
     }
 
-    public List<Enquiry> getEnquirysForCar(int carId) {
+    public List<Enquiry> getEnquiriesForCar(int carId) {
 
         List<Enquiry> enquiries = new ArrayList<Enquiry>();
         try ( Connection connection = Constants.getDBConnection()) {
@@ -70,8 +71,8 @@ public class EnquiryDataLoader {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch (Exception ex) {
-            logger.log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "SQLException getting enquiries for carID: " + carId, ex);
         }
         return enquiries;
     }
@@ -86,8 +87,8 @@ public class EnquiryDataLoader {
             pstmt.execute();
             pstmt.close();
             connection.close();
-        } catch (Exception ex) {
-            logger.log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "SQLException saving enquiry: " + enquiry.toString(), ex);
         }
     }
 }

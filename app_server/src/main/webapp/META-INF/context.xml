@@ -7,7 +7,7 @@
               username="${database.username}" 
               password="${database.password}"
               driverClassName="com.mysql.cj.jdbc.Driver"
-              url="jdbc:mysql://mysql-rds:3306/supercars?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=America/Los_Angeles&amp;connectTimeout=1000&amp;socketTimeout=1000"
+              url="jdbc:mysql://mysql-rds:3306/supercars?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=America/Los_Angeles&amp;connectTimeout=2000&amp;socketTimeout=2000"
               maxIdle="4" />
               <!-- amp;queryInterceptors=brave.mysql8.TracingQueryInterceptor&amp;exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor -->
     <Resource name="jdbc/c3p0" 

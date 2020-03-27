@@ -87,7 +87,7 @@ public class Constants {
             Connection dbCon = ds.getConnection();
             return dbCon;
         } catch (NamingException | SQLException | PreferenceException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "Exception getting connection from the pool", ex);
         }
         
         return null;
@@ -98,7 +98,7 @@ public class Constants {
         try (Connection connection = getDBConnectionStandardPool(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'supercars' AND table_name = 'PREFERENCES'")) {
             exists = resultSet.next();
         } catch (NullPointerException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "Exception checking properties table exists", ex);
             SQLException se = new SQLException("NullPointerException when getting DB connection");
             se.addSuppressed(ex);
             throw se;
@@ -118,7 +118,7 @@ public class Constants {
         try {
             PreferenceManager.updatePreference("SCHEMA_VERSION", String.valueOf(version), "Schema Version", true);
         } catch (PreferenceException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "PreferenceException updating schema version", ex);
         }
     }
     
