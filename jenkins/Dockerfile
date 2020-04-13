@@ -7,6 +7,7 @@ ADD --chown=jenkins:jenkins jenkins/plugins /var/jenkins_home/plugins/
 ADD --chown=jenkins:jenkins jenkins/users /var/jenkins_home/users/
 ADD --chown=jenkins:jenkins jenkins/secrets /var/jenkins_home/secrets/
 COPY --chown=jenkins:jenkins jenkins/hudson.tasks.Shell.xml /var/jenkins_home/hudson.tasks.Shell.xml
+COPY --chown=jenkins:jenkins jenkins/org.datadog.jenkins.plugins.datadog.DatadogGlobalConfiguration.xml /var/jenkins_home/org.datadog.jenkins.plugins.datadog.DatadogGlobalConfiguration.xml
 RUN chmod 700 /var/jenkins_home/secrets
 
 ARG MAVEN_VERSION=3.6.3
