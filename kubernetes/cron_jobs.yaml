@@ -40,14 +40,4 @@ spec:
           - name: git-key
             secret:
               secretName: git-key
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: marshaller
-  name: marshaller
-data:
-  collector.url: https://collect.observe-staging.com/v1/observations/
-  customer.id: "126338107931"
   
