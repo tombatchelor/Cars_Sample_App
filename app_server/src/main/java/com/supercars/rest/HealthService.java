@@ -39,7 +39,7 @@ public class HealthService {
         for (int i = 0; i < 20; i++) {
             try ( Connection connection = Constants.getDBConnectionStandardPool()) {
                 if (connection == null) {
-                    logger.severe("Could not get DB connection");
+                    logger.severe("Could not connect to DB on port 3306");
                     dbError = true;
                 } else {
                     logger.fine("Got DB Connection Okay");

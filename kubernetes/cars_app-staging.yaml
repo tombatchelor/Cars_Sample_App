@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: tombatchelor/cars_web:3.0
+        image: tombatchelor/cars_web:5.0
         ports:
         - name: cars-web-port
           containerPort: 80
@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
       - name: insurance-quoter
-        image: tombatchelor/car-insurance:3.0
+        image: tombatchelor/car-insurance:5.0
         ports:
         - name: http
           containerPort: 8000
@@ -89,7 +89,7 @@ spec:
     spec:
       containers:
       - name: loan-quoter
-        image: tombatchelor/car-loan:3.0
+        image: tombatchelor/car-loan:5.0
         ports:
         - name: http
           containerPort: 80
@@ -197,7 +197,7 @@ spec:
     spec:
       containers:
       - name: jmeter
-        image: tombatchelor/carsloadgen:3.3
+        image: tombatchelor/carsloadgen:5.0
         args:
         - -n -t /tests/SuperCars.jmx
       affinity:
@@ -227,7 +227,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:4.2
+        image: tombatchelor/jenkins:5.0
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
@@ -299,7 +299,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:4.2
+            image: tombatchelor/carscleanup:5.0
             env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
@@ -350,7 +350,7 @@ spec:
           containers:
           - name: apply-data
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:3.6
+            image: tombatchelor/demo_marshaller:5.0
             env:
             - name: COLLECTOR_URL
               valueFrom:
@@ -402,7 +402,7 @@ spec:
         spec:
           containers:
           - name: jmeter
-            image: tombatchelor/scenario:3.0
+            image: tombatchelor/scenario:5.0
             imagePullPolicy: Always
             args:
             - -n -t /tests/Scenario.jmx 
