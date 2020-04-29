@@ -1,4 +1,4 @@
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
   name: cars-deployment-web
@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: cars_web
-  replicas: 1 # tells deployment to run 2 pods matching the template
+  replicas: 1
   template:
     metadata:
       labels:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: tombatchelor/cars_web:3.0
+        image: tombatchelor/cars_web:5.0
         ports:
         - name: cars-web-port
           containerPort: 80
@@ -27,89 +27,15 @@ spec:
         configMap:
           defaultMode: 420
           name: zipkin-nginx-config
----
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
-kind: Deployment
-metadata:
-  name: cars-deployment
-spec:
-  selector:
-    matchLabels:
-      app: cars_app
-  replicas: 3 # tells deployment to run 2 pods matching the template
-  template:
-    metadata:
-      labels:
-        app: cars_app
-    spec:
-      containers:
-      - name: app-server
-        image:  tombatchelor/cars:4.2
-        ports:
-        - name: cars-app-port
-          containerPort: 8080
-        env:
-        - name: ZIPKIN_ENDPOINT
-          valueFrom:
-            configMapKeyRef:
-              name: zipkin-config
-              key: zipkin.endpoint
-        - name: AWS_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: aws-cred
-              key: access-key
-        - name: AWS_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: aws-cred
-              key: secret-key
-        - name: BUCKET_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: aws
-              key: bucket.name
-        - name: RATING_ENDPOINT
-          valueFrom:
-            configMapKeyRef:
-              name: aws
-              key: rating.endpoint
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: DATABASE_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: db-connection
-              key: database.username
-        - name: DATABASE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: db-connection
-              key: database.password
-        livenessProbe:
-          httpGet:
-            path: /Cars_Sample_App/public/health
-            port: 8080
-          initialDelaySeconds: 20
-          periodSeconds: 30
-          timeoutSeconds: 10
-        resources:
-          requests:
-            memory: "256M"
-          limits:
-            memory: "768M"
       affinity:
-        podAntiAffinity:
+        nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kops.k8s.io/instancegroup
+                operator: NotIn
                 values:
-                - cars_app
-            topologyKey: kubernetes.io/hostname
+                - yolo 
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -127,7 +53,7 @@ spec:
     spec:
       containers:
       - name: insurance-quoter
-        image: tombatchelor/car-insurance:3.0
+        image: tombatchelor/car-insurance:5.0
         ports:
         - name: http
           containerPort: 8000
@@ -137,6 +63,15 @@ spec:
             configMapKeyRef:
               name: zipkin-config
               key: zipkin.endpoint
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kops.k8s.io/instancegroup
+                operator: NotIn
+                values:
+                - yolo 
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -154,7 +89,7 @@ spec:
     spec:
       containers:
       - name: loan-quoter
-        image: tombatchelor/car-loan:3.0
+        image: tombatchelor/car-loan:5.0
         ports:
         - name: http
           containerPort: 80
@@ -164,6 +99,15 @@ spec:
             configMapKeyRef:
               name: zipkin-config
               key: zipkin.endpoint
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kops.k8s.io/instancegroup
+                operator: NotIn
+                values:
+                - yolo 
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -185,8 +129,17 @@ spec:
         ports:
         - name: redis
           containerPort: 6379
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kops.k8s.io/instancegroup
+                operator: NotIn
+                values:
+                - yolo 
 ---
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
   name: cars-prometheus-deployment
@@ -200,12 +153,12 @@ spec:
       labels:
         app: cars_prometheus
     spec:
-      serviceAccountName: prometheus
+      serviceAccountName: prometheus-cars-app
       containers:
       - name: prometheus
         image: prom/prometheus:v2.10.0
         args:
-        - --config.file=/etc/prometheus/config.yaml
+        - --config.file=/etc/prometheus/prometheus.yaml
         ports:
         - containerPort: 9090
           protocol: TCP
@@ -218,8 +171,17 @@ spec:
         configMap:
           defaultMode: 420
           name: prometheus-config
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kops.k8s.io/instancegroup
+                operator: NotIn
+                values:
+                - yolo 
 ---
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
   name: cars-loadgen-deployment
@@ -235,50 +197,18 @@ spec:
     spec:
       containers:
       - name: jmeter
-        image: tombatchelor/carsloadgen:3.3
+        image: tombatchelor/carsloadgen:5.0
         args:
         - -n -t /tests/SuperCars.jmx
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: cleanup
-spec:
-  schedule: "0 */6 * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          - name: cleanup
-            image: tombatchelor/carscleanup:4.2
-            env:
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: aws-cred
-                  key: access-key
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: aws-cred
-                  key: secret-key
-            - name: BUCKET_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: aws
-                  key: bucket.name
-            - name: DATABASE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: db-connection
-                  key: database.username
-            - name: DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: db-connection
-                  key: database.password
-          restartPolicy: OnFailure
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kops.k8s.io/instancegroup
+                operator: NotIn
+                values:
+                - yolo 
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -288,7 +218,7 @@ spec:
   selector:
     matchLabels:
       app: jenkins
-  replicas: 1 # tells deployment to run 2 pods matching the template
+  replicas: 1 
   template:
     metadata:
       labels:
@@ -297,7 +227,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:4.1
+        image: tombatchelor/jenkins:5.0
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
@@ -347,6 +277,65 @@ spec:
       - name: dockersock
         hostPath:
           path: /var/run/docker.sock
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kops.k8s.io/instancegroup
+                operator: NotIn
+                values:
+                - yolo 
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cleanup
+spec:
+  schedule: "0 */6 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cleanup
+            image: tombatchelor/carscleanup:5.0
+            env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-cred
+                  key: access-key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-cred
+                  key: secret-key
+            - name: BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: aws
+                  key: bucket.name
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection
+                  key: database.username
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection
+                  key: database.password
+          restartPolicy: OnFailure
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: kops.k8s.io/instancegroup
+                    operator: NotIn
+                    values:
+                    - yolo 
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
@@ -361,7 +350,7 @@ spec:
           containers:
           - name: apply-data
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:3.6
+            image: tombatchelor/demo_marshaller:5.0
             env:
             - name: COLLECTOR_URL
               valueFrom:
@@ -391,6 +380,15 @@ spec:
           - name: git-key
             secret:
               secretName: git-key
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: kops.k8s.io/instancegroup
+                    operator: NotIn
+                    values:
+                    - yolo 
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
@@ -404,11 +402,20 @@ spec:
         spec:
           containers:
           - name: jmeter
-            image: tombatchelor/scenario:3.0
+            image: tombatchelor/scenario:5.0
             imagePullPolicy: Always
             args:
             - -n -t /tests/Scenario.jmx 
           restartPolicy: OnFailure 
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: kops.k8s.io/instancegroup
+                    operator: NotIn
+                    values:
+                    - yolo 
 ---
 apiVersion: v1
 kind: Service
@@ -508,7 +515,7 @@ rules:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: prometheus
+  name: prometheus-cars-app
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -525,7 +532,7 @@ roleRef:
   name: prometheus-cars-app
 subjects:
 - kind: ServiceAccount
-  name: prometheus
+  name: prometheus-cars-app
   namespace: default
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -540,210 +547,3 @@ subjects:
 - kind: ServiceAccount
   name: marshaller
   namespace: default
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: web-server
-  name: zipkin-config
-data:
-  zipkin.endpoint: http://proxy.observe-next.svc.cluster.local:9411/
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: web-server
-  name: zipkin-nginx-config
-data:
-  zipkin-config.json: |-
-    {
-      "service_name": "nginx",
-      "collector_host": "proxy.observe-next.svc.cluster.local"
-    }
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: app-server
-  name: aws
-data:
-  bucket.name: carimages-observeinc-stage
-  rating.endpoint: https://qdnvyzfav9.execute-api.us-west-2.amazonaws.com/default/car-rating
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: marshaller
-  name: marshaller
-data:
-  collector.url: https://collect.observe-staging.com/v1/observations/
-  customer.id: "198243902175"
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: jenkins
-  name: jenkins-env
-data:
-  git.root: observeinc
-
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: prometheus
-  name: prometheus-config
-data:
-  config.yaml: |-
-    global:
-      evaluation_interval: 30s
-      scrape_interval: 30s
-
-    remote_write:
-    - url: http://proxy.observe-next.svc.cluster.local:2001/
-      remote_timeout: 30s
-
-    scrape_configs:
-    - job_name: tomcat
-      metrics_path: /Cars_Sample_App/metrics/
-      kubernetes_sd_configs:
-      - role: pod
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: replace
-        target_label: kubernetes_pod_name
-      - source_labels: [__address__]
-        action: replace
-        regex: ([^:]+)(?::\d+)?
-        replacement: ${1}:8080
-        target_label: __address__
-      - source_labels: [__meta_kubernetes_pod_label_app]
-        action: keep
-        regex: cars_app
-      - source_labels: [__meta_kubernetes_pod_uid]
-        action: replace
-        target_label: kubernetes_pod_uid
-    - job_name: car-insurance
-      metrics_path: /metrics
-      kubernetes_sd_configs:
-      - role: pod
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: replace
-        target_label: kubernetes_pod_name
-      - source_labels: [__address__]
-        action: replace
-        regex: ([^:]+)(?::\d+)?
-        replacement: ${1}:8000
-        target_label: __address__
-      - source_labels: [__meta_kubernetes_pod_label_app]
-        action: keep
-        regex: car_insurance
-    - job_name: kubernetes-apiservers
-      kubernetes_sd_configs:
-      - role: endpoints
-      scheme: https
-      tls_config:
-        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        # insecure_skip_verify: true
-      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: default;kubernetes;https
-
-    - job_name: kubernetes-service-endpoints
-      kubernetes_sd_configs:
-      - role: endpoints
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
-        action: keep
-        regex: true
-      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
-        action: replace
-        target_label: __metrics_path__
-        regex: (.+)
-      - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
-        action: replace
-        regex: ([^:]+)(?::\d+)?;(\d+)
-        replacement: $1:$2
-        target_label: __address__
-      - action: labelmap
-        regex: __meta_kubernetes_service_label_(.+)
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_service_name]
-        action: replace
-        target_label: kubernetes_name
-
-    - job_name: kubernetes-pods
-      kubernetes_sd_configs:
-      - role: pod
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-        action: keep
-        regex: true
-      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
-        action: replace
-        target_label: __metrics_path__
-        regex: (.+)
-      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-        action: replace
-        regex: ([^:]+)(?::\d+)?;(\d+)
-        replacement: $1:$2
-        target_label: __address__
-      - action: labelmap
-        regex: __meta_kubernetes_pod_label_(.+)
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: replace
-        target_label: kubernetes_pod_name
-
-    - job_name: kubernetes-cadvisor
-      kubernetes_sd_configs:
-      - role: node
-      scheme: https
-      tls_config:
-        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-      relabel_configs:
-      - action: labelmap
-        regex: __meta_kubernetes_node_label_(.+)
-      - target_label: __address__
-        replacement: kubernetes.default.svc:443
-      - source_labels: [__meta_kubernetes_node_name]
-        regex: (.+)
-        target_label: __metrics_path__
-        replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
-
-    - job_name: kubernetes-nodes
-      kubernetes_sd_configs:
-      - role: node
-      scheme: https
-      tls_config:
-        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-      relabel_configs:
-      - action: labelmap
-        regex: __meta_kubernetes_node_label_(.+)
-      - target_label: __address__
-        replacement: kubernetes.default.svc:443
-      - source_labels: [__meta_kubernetes_node_name]
-        regex: (.+)
-        target_label: __metrics_path__
-        replacement: /api/v1/nodes/${1}/proxy/metrics

@@ -1,4 +1,4 @@
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cars-deployment-web
@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: cars_web
-  replicas: 1 # tells deployment to run 2 pods matching the template
+  replicas: 1 
   template:
     metadata:
       labels:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: tombatchelor/cars_web:3.0
+        image: tombatchelor/cars_web:5.0
         imagePullPolicy: Always
         ports:
         - name: cars-web-port
@@ -29,81 +29,7 @@ spec:
           defaultMode: 420
           name: zipkin-nginx-config
 ---
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
-kind: Deployment
-metadata:
-  name: cars-deployment
-spec:
-  selector:
-    matchLabels:
-      app: cars_app
-  replicas: 1 
-  template:
-    metadata:
-      labels:
-        app: cars_app
-    spec:
-      containers:
-      - name: app-server
-        image:  tombatchelor/cars:4.0
-        imagePullPolicy: Always
-        ports:
-        - name: cars-app-port
-          containerPort: 8080
-        env:
-        - name: ZIPKIN_ENDPOINT
-          valueFrom:
-            configMapKeyRef:
-              name: zipkin-config
-              key: zipkin.endpoint
-        - name: AWS_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: aws-cred
-              key: access-key
-        - name: AWS_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: aws-cred
-              key: secret-key
-        - name: BUCKET_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: aws
-              key: bucket.name
-        - name: RATING_ENDPOINT
-          valueFrom:
-            configMapKeyRef:
-              name: aws
-              key: rating.endpoint
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: DATABASE_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: db-connection
-              key: database.username
-        - name: DATABASE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: db-connection
-              key: database.password
-        livenessProbe:
-          httpGet:
-            path: /Cars_Sample_App/public/health
-            port: 8080
-          initialDelaySeconds: 20
-          periodSeconds: 30
-          timeoutSeconds: 10
-        resources:
-          requests:
-            memory: "256M"
-          limits:
-            memory: "768M"
----
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cars-db-deployment
@@ -141,7 +67,7 @@ spec:
     spec:
       containers:
       - name: insurance-quoter
-        image: tombatchelor/car-insurance:3.0
+        image: tombatchelor/car-insurance:5.0
         imagePullPolicy: Always
         ports:
         - name: http
@@ -169,7 +95,7 @@ spec:
     spec:
       containers:
       - name: loan-quoter
-        image: tombatchelor/car-loan:3.0
+        image: tombatchelor/car-loan:5.0
         imagePullPolicy: Always
         ports:
         - name: http
@@ -202,7 +128,7 @@ spec:
         - name: redis
           containerPort: 6379
 ---
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cars-prometheus-deployment
@@ -236,6 +162,79 @@ spec:
           defaultMode: 420
           name: prometheus-config
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+spec:
+  selector:
+    matchLabels:
+      app: jenkins
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      serviceAccountName: marshaller
+      containers:
+      - name: jenkins
+        image: tombatchelor/jenkins:5.0
+        imagePullPolicy: Always
+        ports:
+        - name: jenkins-ui
+          containerPort: 8080
+        volumeMounts:
+        - name: jenkins-config
+          mountPath: /tmp/secrets
+        - name: dockersock
+          mountPath: "/var/run/docker.sock"
+        env:
+        - name: GIT_ROOT
+          valueFrom:
+            configMapKeyRef:
+              name: jenkins-env
+              key: git.root
+        - name: CARS_POD_COUNT
+          valueFrom:
+            configMapKeyRef:
+              name: jenkins-env
+              key: cars.pod.count
+        - name: CUSTOMER_ID
+          valueFrom:
+            configMapKeyRef:
+              name: marshaller
+              key: customer.id
+        - name: TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: observe-key
+              key: token
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: aws-cred
+              key: access-key
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aws-cred
+              key: secret-key
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - cp /tmp/secrets/*.xml /var/jenkins_home/
+      volumes:
+      - name: jenkins-config
+        secret:
+          secretName: jenkins-config
+      - name: dockersock
+        hostPath:
+          path: /var/run/docker.sock
+---
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -248,7 +247,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:3.2
+            image: tombatchelor/carscleanup:5.0
             imagePullPolicy: Always
             env:
             - name: AWS_ACCESS_KEY_ID
@@ -280,7 +279,7 @@ spec:
         spec:
           containers:
           - name: jmeter
-            image: tombatchelor/scenario:3.0
+            image: tombatchelor/scenario:5.0
             imagePullPolicy: Always
             args:
             - -n -t /tests/Scenario.jmx 
@@ -289,7 +288,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: mysql-rds
 spec:
   selector:
     app: cars_db
@@ -454,6 +453,26 @@ metadata:
 data:
   bucket.name: carimages-observeinc
   rating.endpoint: https://qsii07giue.execute-api.us-west-2.amazonaws.com/test/carrating
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: jenkins
+  name: jenkins-env
+data:
+  git.root: tombatchelor
+  cars.pod.count: "1"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: marshaller
+  name: marshaller
+data:
+  collector.url: https://collect.observe-eng.com/v1/observations/
+  customer.id: "101"
 ---
 apiVersion: v1
 kind: ConfigMap
