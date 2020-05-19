@@ -166,7 +166,7 @@ spec:
 
 
 EOF
-sleep 60</command>
+sleep 90</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>export GIT_COMMIT_NAME=&quot;`git log --format=%an -n 1`&quot;
