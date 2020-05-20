@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -60,7 +61,8 @@ public class CarService {
         car.setRating(CarRating.getCarRating(car.getCarId()).getRating());
 
         try {
-            if (car.getManufacturerId() == 3) {
+            int rand = (new Random()).nextInt(400);
+            if (car.getManufacturerId() == 3 || rand == 1) {
                 throw new OutOfMemoryError("Out of Memory");
             }
         } catch (OutOfMemoryError ex) {
