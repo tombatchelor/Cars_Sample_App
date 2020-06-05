@@ -1,6 +1,7 @@
 import mysql.connector
 import random
 import boto3
+import botocore
 import os
 import socket
 
@@ -68,23 +69,26 @@ print("Opening Firewall")
 hostname = socket.gethostname()
 myIP = socket.gethostbyname(hostname)
 ec2 = boto3.client('ec2', region_name=region)
-response = ec2.authorize_security_group_ingress(
-    GroupId=securityGroup,
-    IpPermissions=[
-        {
-            'FromPort': 3306,
-            'IpProtocol': 'tcp',
-            'IpRanges': [
-                {
-                    'CidrIp': myIP + '/32',
-                    'Description': 'MySQL access for cleanup',
-                },
-            ],
-            'ToPort': 3306,
-        },
-    ],
-)
-print(response)
+try:
+    response = ec2.authorize_security_group_ingress(
+        GroupId=securityGroup,
+        IpPermissions=[
+            {
+                'FromPort': 3306,
+                'IpProtocol': 'tcp',
+                'IpRanges': [
+                    {
+                        'CidrIp': myIP + '/32',
+                        'Description': 'MySQL access for cleanup',
+                    },
+                ],
+                'ToPort': 3306,
+            },
+        ],
+    )
+    print(response)
+except botocore.exceptions.ClientError:
+    print("Failed to open firewall")
 
 print('Start Cleanup')
 cnx = mysql.connector.connect(**config)
@@ -101,20 +105,23 @@ print('End ENQUIRIES cleanup')
 cnx.close()
 
 print("Closing Firewall")
-response = ec2.revoke_security_group_ingress(
-    GroupId=securityGroup,
-    IpPermissions=[
-        {
-            'FromPort': 3306,
-            'IpProtocol': 'tcp',
-            'IpRanges': [
-                {
-                    'CidrIp': myIP + '/32',
-                    'Description': 'MySQL access for cleanup',
-                },
-            ],
-            'ToPort': 3306,
-        },
-    ],
-)
-print(response)
+try:
+    response = ec2.revoke_security_group_ingress(
+        GroupId=securityGroup,
+        IpPermissions=[
+            {
+                'FromPort': 3306,
+                'IpProtocol': 'tcp',
+                'IpRanges': [
+                    {
+                        'CidrIp': myIP + '/32',
+                        'Description': 'MySQL access for cleanup',
+                    },
+                ],
+                'ToPort': 3306,
+            },
+        ],
+    )
+    print(response)
+except botocore.exceptions.ClientError:
+    print("Failed to close Firewall")

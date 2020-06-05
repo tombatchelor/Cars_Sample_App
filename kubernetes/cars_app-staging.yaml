@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: cars_web
-  replicas: 1
+  replicas: 3
   template:
     metadata:
       labels:
@@ -227,7 +227,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:5.0
+        image: tombatchelor/jenkins:5.3
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
@@ -243,6 +243,11 @@ spec:
             configMapKeyRef:
               name: jenkins-env
               key: git.root
+        - name: CARS_POD_COUNT
+          valueFrom:
+            configMapKeyRef:
+              name: jenkins-env
+              key: cars.pod.count
         - name: CUSTOMER_ID
           valueFrom:
             configMapKeyRef:
@@ -292,14 +297,14 @@ kind: CronJob
 metadata:
   name: cleanup
 spec:
-  schedule: "0 */6 * * *"
+  schedule: "10 */1 * * *"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:5.0
+            image: tombatchelor/carscleanup:5.1
             env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
@@ -318,9 +323,9 @@ spec:
                   key: bucket.name
             - name: DATABASE_USERNAME
               valueFrom:
-                secretKeyRef:
-                  name: db-connection
-                  key: database.username
+                configMapKeyRef:
+                  name: db-user
+                  key: user
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -340,9 +345,9 @@ spec:
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: marshaller
+  name: daily_tasks
 spec:
-  schedule: "0 13 * * *"
+  schedule: "0 9 * * *"
   jobTemplate:
     spec:
       template:
@@ -350,7 +355,7 @@ spec:
           containers:
           - name: apply-data
             imagePullPolicy: Always
-            image: tombatchelor/demo_marshaller:5.0
+            image: tombatchelor/daily_tasks:5.0
             env:
             - name: COLLECTOR_URL
               valueFrom:
@@ -395,7 +400,7 @@ kind: CronJob
 metadata:
   name: scenario
 spec:
-  schedule: "0 */1 * * *"
+  schedule: "*/10 * * * *"
   jobTemplate:
     spec:
       template:
@@ -417,6 +422,44 @@ spec:
                     values:
                     - yolo 
 ---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: bad-config
+spec:
+  schedule: "17 4 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: bad-config
+          containers:
+          - name: apply-data
+            image: tombatchelor/config_change:5.0
+            env:
+            - name: MODE
+              value: BAD
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: config-automation
+spec:
+  schedule: "43 8 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: config-automation
+          containers:
+          - name: apply-data
+            image: tombatchelor/config_change:5.0
+            env:
+            - name: MODE
+              value: GOOD
+          restartPolicy: OnFailure
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -424,18 +467,6 @@ metadata:
 spec:
   type: ExternalName
   externalName: cars-db.ckmymsl26zdw.us-west-2.rds.amazonaws.com
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: cars-app
-spec:
-  selector:
-    app: cars_app
-  ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: cars-app-port
 ---
 apiVersion: v1
 kind: Service
@@ -484,6 +515,54 @@ spec:
   - protocol: TCP
     port: 6379
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: web-server
+  name: zipkin-config
+data:
+  zipkin.endpoint:  http://proxy.observe-demo.svc.cluster.local:9411/
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: web-server
+  name: aws
+data:
+  bucket.name: carimages-observeinc-stage
+  rating.endpoint: https://qdnvyzfav9.execute-api.us-west-2.amazonaws.com/default/car-rating
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: cleanup
+  name: db-user
+data:
+  user: admin
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: bad-config
+rules:
+- apiGroups: [""]
+  resources:
+  - configmaps
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: config-automation
+rules:
+- apiGroups: [""]
+  resources:
+  - configmaps
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
@@ -510,6 +589,7 @@ rules:
   - deployments
   - deployments/scale
   - pods
+  - services
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 apiVersion: v1
@@ -522,6 +602,16 @@ kind: ServiceAccount
 metadata:
   name: marshaller
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bad-config
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: config-automation
+---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
@@ -547,3 +637,27 @@ subjects:
 - kind: ServiceAccount
   name: marshaller
   namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: bad-config
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: bad-config
+subjects:
+- kind: ServiceAccount
+  name: bad-config
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: config-automation
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: config-automation
+subjects:
+- kind: ServiceAccount
+  name: config-automation

@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
           - name: apply-data
-            image: tombatchelor/demo_marshaller:3.6
+            image: tombatchelor/daily_tasks:5.0
             env:
             - name: COLLECTOR_URL
               valueFrom:
@@ -40,4 +40,41 @@ spec:
           - name: git-key
             secret:
               secretName: git-key
-  
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: bad-config
+spec:
+  schedule: "17 4 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: bad-config
+          containers:
+          - name: apply-data
+            image: tombatchelor/config_change:5.0
+            env:
+            - name: MODE
+              value: BAD
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: config-automation
+spec:
+  schedule: "43 8 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: config-automation
+          containers:
+          - name: apply-data
+            image: tombatchelor/config_change:5.0
+            env:
+            - name: MODE
+              value: GOOD
+          restartPolicy: OnFailure
