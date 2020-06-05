@@ -240,14 +240,14 @@ kind: CronJob
 metadata:
   name: cleanup
 spec:
-  schedule: "0 */6 * * *"
+  schedule: "10 */1 * * *"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:5.0
+            image: tombatchelor/carscleanup:5.1
             imagePullPolicy: Always
             env:
             - name: AWS_ACCESS_KEY_ID
@@ -265,6 +265,16 @@ spec:
                 configMapKeyRef:
                   name: aws
                   key: bucket.name
+            - name: DATABASE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: db-user
+                  key: user
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection
+                  key: database.password
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -356,6 +366,26 @@ spec:
   - protocol: TCP
     port: 6379
 ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: bad-config
+rules:
+- apiGroups: [""]
+  resources:
+  - configmaps
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: config-automation
+rules:
+- apiGroups: [""]
+  resources:
+  - configmaps
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
@@ -394,6 +424,16 @@ kind: ServiceAccount
 metadata:
   name: marshaller
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bad-config
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: config-automation
+---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
@@ -419,6 +459,30 @@ subjects:
 - kind: ServiceAccount
   name: marshaller
   namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: bad-config
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: bad-config
+subjects:
+- kind: ServiceAccount
+  name: bad-config
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: config-automation
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: config-automation
+subjects:
+- kind: ServiceAccount
+  name: config-automation
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -473,6 +537,15 @@ metadata:
 data:
   collector.url: https://collect.observe-eng.com/v1/observations/
   customer.id: "101"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: cleanup
+  name: db-user
+data:
+  user: root
 ---
 apiVersion: v1
 kind: ConfigMap
