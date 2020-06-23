@@ -18,6 +18,7 @@ import com.supercars.tracing.TracingHelper;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import com.supercars.preferences.PreferenceException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
@@ -25,6 +26,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -70,6 +73,13 @@ public class CarRating {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(carRatingEndpoint);
         target.register(TracingClientFilter.create(tracing));
+        Response response = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(ratingRequest, MediaType.APPLICATION_JSON));
+        MultivaluedMap<String,String> headers = response.getStringHeaders();
+        for (String key : headers.keySet()) {
+            System.out.print(key);
+            System.out.print(' ');
+            System.out.println(headers.get(key));
+        }
         return target.request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(ratingRequest, MediaType.APPLICATION_JSON), Rating.class);
     }
