@@ -74,12 +74,9 @@ public class CarRating {
         WebTarget target = client.target(carRatingEndpoint);
         target.register(TracingClientFilter.create(tracing));
         Response response = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(ratingRequest, MediaType.APPLICATION_JSON));
-        MultivaluedMap<String,String> headers = response.getStringHeaders();
-        for (String key : headers.keySet()) {
-            System.out.print(key);
-            System.out.print(' ');
-            System.out.println(headers.get(key));
-        }
+        String amzRequestId = response.getHeaderString("x-amzn-RequestId");
+        TracingHelper.tag(TracingHelper.CARS_APP_NAME, "AmazonRequestId", amzRequestId);
+        logger.log(Level.FINE, "Amazon request ID for lambda is : {0}", amzRequestId);
         return target.request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(ratingRequest, MediaType.APPLICATION_JSON), Rating.class);
     }
