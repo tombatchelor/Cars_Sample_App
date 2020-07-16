@@ -7,7 +7,7 @@
         "type:": "Customer",
         "status": "Gold",
         "country": "USA",
-        "comapny": "Observe"
+        "company": "Observe"
     },
     {
         "firstname": "Tom",
@@ -16,7 +16,7 @@
         "type:": "Customer",
         "status": "Silver",
         "country": "UK",
-        "comapny": "Observe"
+        "company": "Observe"
     },
     {
         "firstname": "Dave",
@@ -25,7 +25,7 @@
         "type:": "Customer",
         "status": "Gold",
         "country": "UK",
-        "comapny": "Acme"
+        "company": "Acme"
     },
     {
         "firstname": "Sentil",
@@ -34,7 +34,7 @@
         "type:": "Dealer",
         "status": "Gold",
         "country": "USA",
-        "comapny": "Mega Corp"
+        "company": "Mega Corp"
     },
     {
         "firstname": "Richard",
@@ -43,7 +43,7 @@
         "type:": "Customer",
         "status": "Platinum",
         "country": "UK",
-        "comapny": "Acme"
+        "company": "Acme"
     },
     {
         "firstname": "Bob",
@@ -52,7 +52,7 @@
         "type:": "Customer",
         "status": "Silver",
         "country": "USA",
-        "comapny": "Mega Corp"
+        "company": "Mega Corp"
     },
     {
         "firstname": "Geoff",
@@ -61,7 +61,7 @@
         "type:": "Dealer",
         "status": "Gold",
         "country": "USA",
-        "comapny": "Mega Corp"
+        "company": "Mega Corp"
     },
     {
         "firstname": "Fiona",
@@ -70,7 +70,7 @@
         "type:": "Customer",
         "status": "Platinum",
         "country": "USA",
-        "comapny": "Cool Startup"
+        "company": "Cool Startup"
     },
     {
         "firstname": "Sales",
@@ -79,7 +79,7 @@
         "type:": "Dealer",
         "status": "Bronze",
         "country": "USA",
-        "comapny": "Mega Corp"
+        "company": "Mega Corp"
     },
     {
         "firstname": "Billy",
@@ -88,7 +88,7 @@
         "type:": "Customer",
         "status": "Silver",
         "country": "UK",
-        "comapny": "Mega Corp"
+        "company": "Mega Corp"
     },
     {
         "firstname": "Support",
@@ -97,7 +97,7 @@
         "type:": "Dealer",
         "status": "Silver",
         "country": "USA",
-        "comapny": "Mega Corp"
+        "company": "Mega Corp"
     },
     {
         "firstname": "Jeremy",
@@ -106,7 +106,7 @@
         "type:": "Customer",
         "status": "Platinum",
         "country": "USA",
-        "comapny": "Observe"
+        "company": "Observe"
     },
     {
         "firstname": "Ross",
@@ -115,7 +115,7 @@
         "type:": "Customer",
         "status": "Gold",
         "country": "USA",
-        "comapny": "Observe"
+        "company": "Observe"
     },
     {
         "firstname": "Laura",
@@ -124,6 +124,6 @@
         "type:": "Dealer",
         "status": "Silver",
         "country": "USA",
-        "comapny": "Mega Corp"
+        "company": "Mega Corp"
     }
 ]
