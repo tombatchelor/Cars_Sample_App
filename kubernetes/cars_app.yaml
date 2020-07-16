@@ -282,7 +282,7 @@ kind: CronJob
 metadata:
   name: scenario
 spec:
-  schedule: "0 */1 * * *"
+  schedule: "*/10 * * * *"
   jobTemplate:
     spec:
       template:
@@ -491,7 +491,7 @@ metadata:
     app: web-server
   name: zipkin-config
 data:
-  zipkin.endpoint:  http://proxy.observe-staging.svc.cluster.local:9411/
+  zipkin.endpoint:  http://proxy.observe.svc.cluster.local:9411/
 #  zipkin.endpoint: http://192.168.99.1:9411/
 ---
 apiVersion: v1
@@ -504,7 +504,7 @@ data:
   zipkin-config.json: |-
     {
       "service_name": "nginx",
-      "collector_host": "proxy.observe-staging.svc.cluster.local",
+      "collector_host": "proxy.observe.svc.cluster.local",
       "collector_port": 9411
     }
 ---
@@ -535,8 +535,8 @@ metadata:
     app: marshaller
   name: marshaller
 data:
-  collector.url: https://collect.observe-eng.com/v1/observations/
-  customer.id: "101"
+  collector.url: https://collect.observe-staging.com/v1/observations/
+  customer.id: "126338107931"
 ---
 apiVersion: v1
 kind: ConfigMap
