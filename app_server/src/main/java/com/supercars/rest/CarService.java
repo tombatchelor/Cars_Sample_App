@@ -22,7 +22,9 @@ import com.supercars.Leak;
 import com.supercars.dataloader.CarDataLoader;
 import com.supercars.externaldata.CarRating;
 import com.supercars.externaldata.S3Images;
+import com.supercars.externaldata.Zendesk;
 import com.supercars.tracing.TracingHelper;
+import com.supercars.usermanagement.UserManager;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -33,6 +35,7 @@ import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 
 /**
@@ -47,7 +50,7 @@ public class CarService {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCar(@PathParam("id") int carID) {
+    public Response getCar(@PathParam("id") int carID,  @javax.ws.rs.core.Context HttpServletRequest request) {
         logger.log(Level.FINE, "GET request for carID: {0}", carID);
         Car car = new CarDataLoader().getCar(carID);
 
@@ -64,6 +67,8 @@ public class CarService {
         try {
             int rand = (new Random()).nextInt(400);
             if (Leak.shouldLeak() && (car.getManufacturerId() == 3 || rand == 1)) {
+                String username = UserManager.getUserForSession(request.getSession()).getUsername();
+                Zendesk.sendZendeskTicket(username, car.getManufacturer().getName());
                 throw new OutOfMemoryError("Out of Memory");
             }
         } catch (OutOfMemoryError ex) {
