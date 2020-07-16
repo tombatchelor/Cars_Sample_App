@@ -407,10 +407,12 @@ kind: ClusterRole
 metadata:
   name: marshaller
 rules:
-- apiGroups: ["apps", "extensions"]
+- apiGroups: ["apps", "extensions", ""]
   resources:
   - deployments
   - deployments/scale
+  - pods
+  - services
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 apiVersion: v1

@@ -127,6 +127,16 @@ spec:
             secretKeyRef:
               name: db-connection
               key: database.password
+        - name: CUSTOMER_ID
+          valueFrom:
+            configMapKeyRef:
+              name: marshaller
+              key: customer.id
+        - name: TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: observe-key
+              key: token
         livenessProbe:
           httpGet:
             path: /Cars_Sample_App/public/health
