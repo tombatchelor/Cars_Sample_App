@@ -64,4 +64,12 @@ public class Leak {
             HealthService.setAsUnhealthy();
         }
     }
+    
+    public static boolean shouldLeak() {
+        String shouldLeak = System.getenv("LEAKING");
+        if (shouldLeak != null && shouldLeak.equals("TRUE")) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -18,6 +18,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.Car;
+import com.supercars.Leak;
 import com.supercars.dataloader.CarDataLoader;
 import com.supercars.externaldata.CarRating;
 import com.supercars.externaldata.S3Images;
@@ -62,7 +63,7 @@ public class CarService {
 
         try {
             int rand = (new Random()).nextInt(400);
-            if (car.getManufacturerId() == 3 || rand == 1) {
+            if (Leak.shouldLeak() && (car.getManufacturerId() == 3 || rand == 1)) {
                 throw new OutOfMemoryError("Out of Memory");
             }
         } catch (OutOfMemoryError ex) {

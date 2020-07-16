@@ -29,7 +29,7 @@ public class LeakService {
     @Produces(MediaType.TEXT_PLAIN)
     public String leak(@PathParam("number") int number, @PathParam("size") int size) {
         logger.log(Level.FINE, "GET Increasing the leak size with {0} arrays of size {1} bytes", new Object[]{number, size});
-        if (shouldLeak()) {
+        if (Leak.shouldLeak()) {
             Leak.addToCollection(number, size);
             logger.log(Level.FINE, "Added to leak, size is now: {0}", Leak.getSize());
         } else {
@@ -50,13 +50,5 @@ public class LeakService {
         logger.fine("DELETE Draining leak");
         Leak.drainCollection();
         logger.fine("Leak drained");
-    }
-
-    public static boolean shouldLeak() {
-        String shouldLeak = System.getenv("LEAKING");
-        if (shouldLeak != null && shouldLeak.equals("TRUE")) {
-            return true;
-        }
-        return false;
     }
 }

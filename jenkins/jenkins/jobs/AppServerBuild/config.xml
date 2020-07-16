@@ -42,6 +42,12 @@
 mvn clean install
 </command>
     </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>cd app_server
+if [ `expr $BUILD_NUMBER % 2` -eq 0 ]; then
+  sed &apos;s/FALSE/TRUE/g&apos; Dockerfile
+fi</command>
+    </hudson.tasks.Shell>
     <com.nirima.jenkins.plugins.docker.builder.DockerBuilderPublisher plugin="docker-plugin@1.1.9">
       <dockerFileDirectory>app_server</dockerFileDirectory>
       <fromRegistry plugin="docker-commons@1.16"/>

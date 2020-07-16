@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: tombatchelor/cars_web:5.0
+        image: tombatchelor/cars_web:6.0
         imagePullPolicy: Always
         ports:
         - name: cars-web-port
@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: db-server
-        image: tombatchelor/carsdb:3.2
+        image: tombatchelor/carsdb:6.0
         imagePullPolicy: Always
         ports:
         - name: mysql
@@ -67,7 +67,7 @@ spec:
     spec:
       containers:
       - name: insurance-quoter
-        image: tombatchelor/car-insurance:5.0
+        image: tombatchelor/car-insurance:6.0
         imagePullPolicy: Always
         ports:
         - name: http
@@ -95,7 +95,7 @@ spec:
     spec:
       containers:
       - name: loan-quoter
-        image: tombatchelor/car-loan:5.0
+        image: tombatchelor/car-loan:6.0
         imagePullPolicy: Always
         ports:
         - name: http
@@ -179,7 +179,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:5.0
+        image: tombatchelor/jenkins:6.0
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
@@ -247,7 +247,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:5.1
+            image: tombatchelor/carscleanup:6.0
             imagePullPolicy: Always
             env:
             - name: AWS_ACCESS_KEY_ID
@@ -289,7 +289,7 @@ spec:
         spec:
           containers:
           - name: jmeter
-            image: tombatchelor/scenario:5.0
+            image: tombatchelor/scenario:6.0
             imagePullPolicy: Always
             args:
             - -n -t /tests/Scenario.jmx 

@@ -1,6 +1,6 @@
 # we are extending everything from tomcat:8.0 image ...
 FROM tomcat:8.5-jdk12-openjdk-oracle
-MAINTAINER your_name
+MAINTAINER Tom Batchelor
 # COPY path-to-your-application-war path-to-webapps-in-docker-tomcat
 COPY target/Cars_Sample_App.war /usr/local/tomcat/webapps/
 
@@ -24,8 +24,8 @@ COPY target/Cars_Sample_App/WEB-INF/lib/slf4j-api-1.7.25.jar /usr/local/tomcat/l
 COPY target/Cars_Sample_App/WEB-INF/lib/fst-2.57.jar /usr/local/tomcat/lib/
 COPY target/Cars_Sample_App/WEB-INF/lib/objenesis-2.5.1.jar /usr/local/tomcat/lib/
 
-# This set is the leak short circuits to no-op or not, if TRUE leak occures
+# This set if the leak short circuits to no-op or not, if TRUE leak occures
 ENV LEAKING=FALSE
 
-# Java Opts for DB Connectiong
+# Java Opts for DB Connection
 COPY setenv.sh /usr/local/tomcat/bin
