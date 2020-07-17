@@ -36,7 +36,7 @@ public class Zendesk {
             ticket.setPriority("HIGH");
             ticket.setAccount("Mega Corp");
         } else if (username.contains("acme")) {
-            ticket.setPriority("MEDUIM");
+            ticket.setPriority("MEDIUM");
             ticket.setAccount("Acme");
         } else if (username.contains("observeinc")) {
             ticket.setPriority("LOW");
