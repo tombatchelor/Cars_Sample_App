@@ -3,6 +3,7 @@ FROM python:2.7
 COPY applyData.sh /
 COPY sendJSON.py /
 COPY users.json /
+Copy companies.json /
 COPY HTTPCodes.json /
 
 RUN mkdir /root/.ssh

@@ -9,18 +9,19 @@ ssh-add /id_rsa
 cd /
 python sendJSON.py HTTPCodes.json httpcodes
 python sendJSON.py users.json users
+python sendJSON.py companies.json companies
 
 # Clone and make Git Commit
 cd /tmp
 git config --global user.email tom.batchelor@me.com
 git clone git@github.com:$GIT_ROOT/Cars_Sample_App.git
 cd Cars_Sample_App/app_server
-if  `grep -q 'TRUE' Dockerfile; then
-  sed 's/TRUE/FALSE/g' Dockerfile
+if  `grep -q 'TRUE' Dockerfile`; then
+  sed -i 's/TRUE/FALSE/g' Dockerfile
   git add Dockerfile
   git commit -m "Resolving mem leak issue"
 else
-  sed 's/FALSE/TRUE/g' Dockerfile
+  sed -i 's/FALSE/TRUE/g' Dockerfile
   git add Dockerfile
   git commit -m "Small change to cache code"
 fi
