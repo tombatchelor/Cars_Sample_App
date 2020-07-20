@@ -24,8 +24,8 @@ COPY target/Cars_Sample_App/WEB-INF/lib/slf4j-api-1.7.25.jar /usr/local/tomcat/l
 COPY target/Cars_Sample_App/WEB-INF/lib/fst-2.57.jar /usr/local/tomcat/lib/
 COPY target/Cars_Sample_App/WEB-INF/lib/objenesis-2.5.1.jar /usr/local/tomcat/lib/
 
-# This set if the leak short circuits to no-op or not, if TRUE leak occures
-ENV LEAKING=TRUE
+# This set if the leak short circuits to no-op or not, if FALSE leak occures
+ENV LEAKING=FALSE
 
 # Java Opts for DB Connection
 COPY setenv.sh /usr/local/tomcat/bin
