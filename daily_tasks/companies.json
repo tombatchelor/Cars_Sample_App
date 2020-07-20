@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Mega Corp",
+        "customerID": 6974268,
+        "tier": "1 - Global 500",
+        "ACV": "High - > $1M"
+    },
+    {
+        "name": "Acme",
+        "customerID": 3294176,
+        "tier": "2 - Mid - SaaS",
+        "ACV": "Medium - $500k - $1M"
+    },
+    {
+        "name": "Cool Startup",
+        "customerID": 715193,
+        "tier": "3 - Emerging",
+        "ACV": "Low - < $100k"
+    },
+    {
+        "name": "Observe",
+        "customerID": 1,
+        "tier": "99 - Exception",
+        "ACV": "Execption - Exception"
+    }
+]
