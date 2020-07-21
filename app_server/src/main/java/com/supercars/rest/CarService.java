@@ -66,7 +66,7 @@ public class CarService {
 
         try {
             int rand = (new Random()).nextInt(400);
-            if (Leak.shouldLeak() && (car.getManufacturerId() == 3 || rand == 1)) {
+            if (Leak.shouldLeak() && rand == 1) {
                 String username = UserManager.getUserForSession(request.getSession()).getUsername();
                 Zendesk.sendZendeskTicket(username, car.getManufacturer().getName());
                 throw new OutOfMemoryError("Out of Memory");
