@@ -3,14 +3,15 @@ kind: CronJob
 metadata:
   name: marshaller
 spec:
-  schedule: "0 5 * * *"
+  schedule: "55 0/2 * * *"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
           - name: apply-data
-            image: tombatchelor/daily_tasks:5.0
+            image: tombatchelor/daily_tasks:6.0
+            imagePullPolicy: Always
             env:
             - name: COLLECTOR_URL
               valueFrom:
@@ -36,6 +37,7 @@ spec:
             - name: git-key
               mountPath: /keys
           restartPolicy: OnFailure
+          
           volumes:
           - name: git-key
             secret:
@@ -54,7 +56,8 @@ spec:
           serviceAccountName: bad-config
           containers:
           - name: apply-data
-            image: tombatchelor/config_change:5.0
+            image: tombatchelor/config_change:6.0
+            imagePullPolicy: Always
             env:
             - name: MODE
               value: BAD
@@ -73,7 +76,8 @@ spec:
           serviceAccountName: config-automation
           containers:
           - name: apply-data
-            image: tombatchelor/config_change:5.0
+            image: tombatchelor/config_change:6.0
+            imagePullPolicy: Always
             env:
             - name: MODE
               value: GOOD

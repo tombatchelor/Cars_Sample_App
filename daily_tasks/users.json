@@ -6,7 +6,8 @@
         "email": "mike@observeinc.com",
         "type:": "Customer",
         "status": "Gold",
-        "country": "USA"
+        "country": "USA",
+        "company": "Observe"
     },
     {
         "firstname": "Tom",
@@ -14,79 +15,89 @@
         "email": "tom@observeinc.com",
         "type:": "Customer",
         "status": "Silver",
-        "country": "UK"
+        "country": "UK",
+        "company": "Observe"
     },
     {
         "firstname": "Dave",
         "lastname": "Niven",
-        "email": "dave@internet.org",
+        "email": "dave@acme.org",
         "type:": "Customer",
         "status": "Gold",
-        "country": "UK"
+        "country": "UK",
+        "company": "Acme"
     },
     {
         "firstname": "Sentil",
         "lastname": "Rajaopalan",
-        "email": "sentil@gmail.com",
+        "email": "sentil@megacorp.com",
         "type:": "Dealer",
         "status": "Gold",
-        "country": "USA"
+        "country": "USA",
+        "company": "Mega Corp"
     },
     {
         "firstname": "Richard",
         "lastname": "Hammond",
-        "email": "richard@grandtour.com",
+        "email": "richard@acme.com",
         "type:": "Customer",
         "status": "Platinum",
-        "country": "UK"
+        "country": "UK",
+        "company": "Acme"
     },
     {
         "firstname": "Bob",
         "lastname": "Meaden",
-        "email": "bob@test.com",
+        "email": "bob@megacorp.com",
         "type:": "Customer",
         "status": "Silver",
-        "country": "USA"
+        "country": "USA",
+        "company": "Mega Corp"
     },
     {
         "firstname": "Geoff",
         "lastname": "Murdock",
-        "email": "geoff@cars.som",
+        "email": "geoff@megacorp.som",
         "type:": "Dealer",
         "status": "Gold",
-        "country": "USA"
+        "country": "USA",
+        "company": "Mega Corp"
     },
     {
         "firstname": "Fiona",
         "lastname": "Williamson",
-        "email": "fiona@gmail.com",
+        "email": "fiona@coolstartup.com",
         "type:": "Customer",
         "status": "Platinum",
-        "country": "USA"
+        "country": "USA",
+        "company": "Cool Startup"
     },
     {
         "firstname": "Sales",
         "lastname": "Sales",
-        "email": "sales@carsrus.com",
+        "email": "sales@megacorp.com",
         "type:": "Dealer",
         "status": "Bronze",
-        "country": "USA"
+        "country": "USA",
+        "company": "Mega Corp"
     },
     {
         "firstname": "Billy",
         "lastname": "Butlins",
-        "email": "Bill@yahoo.co.uk",
+        "email": "bill@megacorp.co.uk",
         "type:": "Customer",
         "status": "Silver",
-        "country": "UK"
+        "country": "UK",
+        "company": "Mega Corp"
     },
     {
         "firstname": "Support",
         "lastname": "Support",
-        "email": "support@bigco.com",
+        "email": "support@megacorp.com",
         "type:": "Dealer",
         "status": "Silver",
-        "country": "USA"
+        "country": "USA",
+        "company": "Mega Corp"
     },
     {
         "firstname": "Jeremy",
@@ -94,7 +105,8 @@
         "email": "jeremy@observeinc.com",
         "type:": "Customer",
         "status": "Platinum",
-        "country": "USA"
+        "country": "USA",
+        "company": "Observe"
     },
     {
         "firstname": "Ross",
@@ -102,6 +114,16 @@
         "email": "ross@observeinc.com",
         "type:": "Customer",
         "status": "Gold",
-        "country": "USA"
+        "country": "USA",
+        "company": "Observe"
+    },
+    {
+        "firstname": "Laura",
+        "lastname": "Cunnigham",
+        "email": "laura@megacorp.com",
+        "type:": "Dealer",
+        "status": "Silver",
+        "country": "USA",
+        "company": "Mega Corp"
     }
 ]
