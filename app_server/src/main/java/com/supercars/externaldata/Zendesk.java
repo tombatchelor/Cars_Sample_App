@@ -32,18 +32,30 @@ public class Zendesk {
         ticket.setTicketCreator(username);
         ticket.setDescription("When I try to look at a " + manufacturer + " the site crashes");
         ticket.setTicketID((new Random()).nextInt(40000));
-        if (username.contains("megacorp")) {
+        if (username.contains("uber")) {
             ticket.setPriority("HIGH");
-            ticket.setAccount("Mega Corp");
-        } else if (username.contains("acme")) {
+            ticket.setAccount("Uber");
+        } else if (username.contains("Snowflake")) {
             ticket.setPriority("MEDIUM");
-            ticket.setAccount("Acme");
+            ticket.setAccount("Snowflake");
         } else if (username.contains("observeinc")) {
             ticket.setPriority("LOW");
             ticket.setAccount("Observe");
-        } else if (username.contains("coolstartup")) {
+        } else if (username.contains("calm")) {
             ticket.setPriority("MEDIUM");
-            ticket.setAccount("Cool Startup");
+            ticket.setAccount("Calm");
+        } else if (username.contains("slack")) {
+              ticket.setPriority("MEDIUM");
+              ticket.setAccount("Slack");
+        } else if (username.contains("docusign")) {
+              ticket.setPriority("MEDIUM");
+              ticket.setAccount("Docusign");
+        } else if (username.contains("box")) {
+              ticket.setPriority("MEDIUM");
+              ticket.setAccount("Box");
+        } else if (username.contains("crunchbase")) {
+              ticket.setPriority("LOW");
+              ticket.setAccount("Crunchbase");
         }
         
         ZendeskComment comment1 = new ZendeskComment();
