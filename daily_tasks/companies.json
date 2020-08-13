@@ -22,25 +22,25 @@
         "customerID": 1,
         "tier": "99 - Exception",
         "ACV": "Exception - Exception"
-    }
+    },
     {
         "name": "Slack",
         "customerID": 4274751,
         "tier": "2 - Mid - SaaS",
         "ACV": "Medium - $500k - $1M"
-    }
+    },
     {
         "name": "Docusign",
         "customerID": 995211,
         "tier": "2 - Mid - SaaS",
         "ACV": "Medium - $500k - $1M"
-    }
+    },
     {
         "name": "Box",
         "customerID": 3634804,
         "tier": "2 - Mid - SaaS",
         "ACV": "Medium - $500k - $1M"
-    }
+    },
     {
         "name": "Crunchbase",
         "customerID": 654111,
