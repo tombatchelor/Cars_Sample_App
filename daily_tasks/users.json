@@ -21,83 +21,101 @@
     {
         "firstname": "Dave",
         "lastname": "Niven",
-        "email": "dave@acme.org",
+        "email": "dave@snowflake.org",
         "type:": "Customer",
         "status": "Gold",
-        "country": "UK",
-        "company": "Acme"
+        "country": "USA",
+        "company": "Snowflake"
+    },
+    {
+        "firstname": "Victor",
+        "lastname": "Vega",
+        "email": "vic@snowflake.org",
+        "type:": "Customer",
+        "status": "Gold",
+        "country": "USA",
+        "company": "Snowflake"
+    },
+    {
+        "firstname": "Edward",
+        "lastname": "Cabot",
+        "email": "eddie@snowflake.org",
+        "type:": "Customer",
+        "status": "Gold",
+        "country": "USA",
+        "company": "Snowflake"
     },
     {
         "firstname": "Sentil",
         "lastname": "Rajaopalan",
-        "email": "sentil@megacorp.com",
+        "email": "sentil@uber.com",
         "type:": "Dealer",
         "status": "Gold",
         "country": "USA",
-        "company": "Mega Corp"
+        "company": "Uber"
     },
     {
         "firstname": "Richard",
         "lastname": "Hammond",
-        "email": "richard@acme.com",
+        "email": "richard@snowflake.com",
         "type:": "Customer",
-        "status": "Platinum",
-        "country": "UK",
-        "company": "Acme"
+        "status": "Gold",
+        "country": "USA",
+        "company": "Snowflake"
     },
     {
         "firstname": "Bob",
         "lastname": "Meaden",
-        "email": "bob@megacorp.com",
+        "email": "bob@uber.com",
         "type:": "Customer",
         "status": "Silver",
         "country": "USA",
-        "company": "Mega Corp"
+        "company": "Uber"
     },
     {
         "firstname": "Geoff",
         "lastname": "Murdock",
-        "email": "geoff@megacorp.som",
+        "email": "geoff@uber.com",
         "type:": "Dealer",
         "status": "Gold",
         "country": "USA",
-        "company": "Mega Corp"
+        "company": "Uber"
     },
     {
         "firstname": "Fiona",
         "lastname": "Williamson",
-        "email": "fiona@coolstartup.com",
+        "email": "fiona@calm.com",
         "type:": "Customer",
         "status": "Platinum",
         "country": "USA",
-        "company": "Cool Startup"
+        "company": "Calm"
     },
     {
         "firstname": "Sales",
         "lastname": "Sales",
-        "email": "sales@megacorp.com",
+        "email": "sales@uber.com",
         "type:": "Dealer",
         "status": "Bronze",
         "country": "USA",
-        "company": "Mega Corp"
+        "company": "Uber"
     },
     {
         "firstname": "Billy",
         "lastname": "Butlins",
-        "email": "bill@megacorp.co.uk",
+        "email": "bill@uber.co.uk",
         "type:": "Customer",
         "status": "Silver",
         "country": "UK",
-        "company": "Mega Corp"
+        "company": "Uber"
     },
     {
         "firstname": "Support",
         "lastname": "Support",
-        "email": "support@megacorp.com",
+        "email": "support@uber.com",
         "type:": "Dealer",
         "status": "Silver",
         "country": "USA",
-        "company": "Mega Corp"
+        "company": "Uber"
     },
     {
         "firstname": "Jeremy",
@@ -120,10 +138,91 @@
     {
         "firstname": "Laura",
         "lastname": "Cunnigham",
-        "email": "laura@megacorp.com",
+        "email": "laura@uber.com",
         "type:": "Dealer",
         "status": "Silver",
         "country": "USA",
-        "company": "Mega Corp"
+        "company": "Uber"
+    },
+    {
+        "firstname": "Valentine",
+        "lastname": "Smith",
+        "email": "valentine@slack.com",
+        "type:": "Customer",
+        "status": "Gold",
+        "country": "USA",
+        "company": "Slack"
+    },
+    {
+        "firstname": "Larry",
+        "lastname": "Dimmick",
+        "email": "larry@slack.com",
+        "type:": "Customer",
+        "status": "Gold",
+        "country": "USA",
+        "company": "Slack"
+    },
+    {
+        "firstname": "Frederick",
+        "lastname": "Newendyke",
+        "email": "freddy@slack.com",
+        "type:": "Customer",
+        "status": "Gold",
+        "country": "USA",
+        "company": "Slack"
+    },
+    {
+        "firstname": "Benjamin",
+        "lastname": "Caxton",
+        "email": "ben@docusign.com",
+        "type:": "Customer",
+        "status": "Bronze",
+        "country": "USA",
+        "company": "Docusign"
+    },
+    {
+        "firstname": "Jill",
+        "lastname": "Boardman",
+        "email": "jill@docusign.com",
+        "type:": "Customer",
+        "status": "Bronze",
+        "country": "USA",
+        "company": "Docusign"
+    },
+    {
+        "firstname": "Joseph",
+        "lastname": "Douglas",
+        "email": "joe@docusign.com",
+        "type:": "Customer",
+        "status": "Bronze",
+        "country": "USA",
+        "company": "Docusign"
+    },
+    {
+        "firstname": "Patty",
+        "lastname": "Paiwonski",
+        "email": "patty@docusign.com",
+        "type:": "Customer",
+        "status": "Bronze",
+        "country": "USA",
+        "company": "Docusign"
+    },
+    {
+        "firstname": "Andrew",
+        "lastname": "Wiggin",
+        "email": "andrew@box.com",
+        "type:": "Customer",
+        "status": "Bronze",
+        "country": "UK",
+        "company": "Box"
+    },
+    {
+        "firstname": "Arthur",
+        "lastname": "Dent",
+        "email": "art@crunchbase.com",
+        "type:": "Customer",
+        "status": "Bronze",
+        "country": "USA",
+        "company": "Crunchbase"
     }
 ]
