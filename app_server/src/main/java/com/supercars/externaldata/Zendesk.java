@@ -35,7 +35,7 @@ public class Zendesk {
         if (username.contains("uber")) {
             ticket.setPriority("HIGH");
             ticket.setAccount("Uber");
-        } else if (username.contains("Snowflake")) {
+        } else if (username.contains("snowflake")) {
             ticket.setPriority("MEDIUM");
             ticket.setAccount("Snowflake");
         } else if (username.contains("observeinc")) {
