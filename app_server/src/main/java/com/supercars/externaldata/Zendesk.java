@@ -6,7 +6,6 @@
 package com.supercars.externaldata;
 
 import brave.jaxrs2.TracingClientFilter;
-import com.supercars.InsuranceQuote;
 import com.supercars.ZendeskTicket;
 import java.util.Random;
 import com.supercars.ZendeskComment;
@@ -30,7 +29,22 @@ public class Zendesk {
         // Create the ticket
         ZendeskTicket ticket = new ZendeskTicket();
         ticket.setTicketCreator(username);
-        ticket.setDescription("When I try to look at a " + manufacturer + " the site crashes");
+        switch ((new Random()).nextInt(4)) {
+            case 0:
+                ticket.setDescription("I can't log in");
+                break;
+            case 1:
+                ticket.setDescription("The page fails to load when I add a filter");
+                break;
+            case 2:
+                ticket.setDescription("I don't get results for serching by item");
+                break;
+            case 3:
+                ticket.setDescription("I get a error on the home page");
+                break;
+            default:
+                ticket.setDescription("The site crashed for me just now");
+        }
         ticket.setTicketID((new Random()).nextInt(40000));
         if (username.contains("uber")) {
             ticket.setPriority("HIGH");

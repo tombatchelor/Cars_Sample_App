@@ -60,7 +60,7 @@ public class Leak {
         }
         
         if (keepAliveTime < System.currentTimeMillis()) {
-            logger.log(Level.SEVERE, "Out of Memory", new java.lang.OutOfMemoryError("Out of Memory"));
+            //logger.log(Level.SEVERE, "Out of Memory", new java.lang.OutOfMemoryError("Out of Memory"));
             HealthService.setAsUnhealthy();
         }
     }
