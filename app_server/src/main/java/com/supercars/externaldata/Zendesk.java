@@ -43,33 +43,43 @@ public class Zendesk {
                 ticket.setDescription("I get a error on the home page");
                 break;
             default:
+                // This shouldn't ever really happen
                 ticket.setDescription("The site crashed for me just now");
         }
         ticket.setTicketID((new Random()).nextInt(40000));
         if (username.contains("uber")) {
-            ticket.setPriority("HIGH");
             ticket.setAccount("Uber");
         } else if (username.contains("snowflake")) {
-            ticket.setPriority("MEDIUM");
             ticket.setAccount("Snowflake");
         } else if (username.contains("observeinc")) {
-            ticket.setPriority("LOW");
             ticket.setAccount("Observe");
         } else if (username.contains("calm")) {
-            ticket.setPriority("MEDIUM");
             ticket.setAccount("Calm");
         } else if (username.contains("slack")) {
-              ticket.setPriority("MEDIUM");
               ticket.setAccount("Slack");
         } else if (username.contains("docusign")) {
-              ticket.setPriority("MEDIUM");
               ticket.setAccount("Docusign");
         } else if (username.contains("box")) {
-              ticket.setPriority("MEDIUM");
               ticket.setAccount("Box");
         } else if (username.contains("crunchbase")) {
-              ticket.setPriority("LOW");
               ticket.setAccount("Crunchbase");
+        }
+        switch ((new Random()).nextInt(4)) {
+            case 0:
+                ticket.setPriority("HIGH");
+                break;
+            case 1:
+                ticket.setPriority("MEDIUM");
+                break;
+            case 2:
+                ticket.setPriority("MEDIUM");
+                break;
+            case 3:
+                ticket.setPriority("LOW");
+                break;
+            default:
+                // This also should never happen
+                ticket.setPriority("NONE");
         }
         
         ZendeskComment comment1 = new ZendeskComment();
