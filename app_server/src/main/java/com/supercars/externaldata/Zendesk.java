@@ -49,7 +49,7 @@ public class Zendesk {
         ticket.setTicketID((new Random()).nextInt(40000));
         if (username.contains("uber")) {
             ticket.setAccount("Uber");
-        } else if (username.contains("Snowflake")) {
+        } else if (username.contains("snowflake")) {
             ticket.setAccount("Snowflake");
         } else if (username.contains("observeinc")) {
             ticket.setAccount("Observe");
