@@ -42,6 +42,7 @@ public class Constants {
     static {
         try {
             int schemaVersion = getSchemaVersion();
+            // Fall through is intentional here
             switch (schemaVersion) {
                 case 1:
                     upgradeToSchema_2();
@@ -54,7 +55,7 @@ public class Constants {
                 default:
             }
         } catch (PreferenceException | SQLException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "Exception in Contansts stativ initilization", ex);
+            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "Exception in Contansts static initilization", ex);
         }
     }
 
@@ -109,7 +110,7 @@ public class Constants {
     private static int getSchemaVersion() throws SQLException, PreferenceException {
         int version = 1;
         if (checkPropertiesTableExist()) {
-            return Integer.parseInt(PreferenceManager.getPreference("SCHEMA_VERSION").getValue());
+            version = Integer.parseInt(PreferenceManager.getPreference("SCHEMA_VERSION").getValue());
         }
         return version;
     }
