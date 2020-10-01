@@ -1,0 +1,27 @@
+{
+  "payload": {
+    "summary": "Cars Deployment has more restarts than normal",
+    "timestamp": "2020-09-24T19:38:58.315+0000",
+    "source": "monitoringtool:observeinc:west-region-dc-01:852559987:cluster/api-stats-prod-003",
+    "severity": "error",
+    "component": "cars-deployment",
+    "component-type": "deployment",
+    "group": "prod",
+    "class": "running",
+    "custom_details": {
+      "restart_count": "1",
+      "deployment": "cars-deployment"
+    }
+  },
+  "routing_key": "bb9bb68f263c45acaa8da70b2d555a29",
+  "dedup_key":"DEDUP_KEY",
+  "links": [
+    {
+      "href": "https://cars.observeinc.com/",
+      "text": "Cars App"
+    }
+  ],
+  "event_action": "resolve",
+  "client": "Observe Monitoring Service",
+  "client_url": "https://monitoring.observeinc.com"
+}

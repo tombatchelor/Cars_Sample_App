@@ -176,7 +176,14 @@ spec:
 
 
 EOF
-sleep 90</command>
+sleep 90
+cd app_server
+cp -rf /var/jenkins_home/payloadCreate.json .
+if  `grep -q 'TRUE' Dockerfile`; then
+  REPLICA_SET=`kubectl get replicasets -o json | jq -r &apos;.items[] | select(.spec.template.spec.containers[].image==&quot;tombatchelor/carsdemo:&apos;$GIT_COMMIT&apos;&quot;) | .metadata.name&apos;`
+  sed -i 's/REPLICA_SET/'$REPLICA_SET'/g' payloadCreate.json
+  curl -s https://events.pagerduty.com/v2/enqueue -H 'Content-type: application/json' -d &quot;@payloadCreate.json&quot; | jq -r .dedup_key | xargs redis-cli -h redis set dedup
+fi</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>export GIT_COMMIT_NAME=&quot;`git log --format=%an -n 1`&quot;
@@ -187,27 +194,6 @@ export AUTH=&quot;Authorization: Bearer $CUSTOMER_ID $TOKEN&quot;
 curl  -X POST https://collect.observe-staging.com/v1/observations/jenkins -H &apos;Content-Type: application/json&apos; -H &quot;$AUTH&quot; -d &apos;{&quot;BUILD_NUMBER&quot;:&quot;&apos;$BUILD_NUMBER&apos;&quot;,&quot;BUILD_ID&quot;:&quot;&apos;$BUILD_ID&apos;&quot;,&quot;JOB_NAME&quot;:&quot;&apos;$JOB_NAME&apos;&quot;,&quot;GIT_COMMIT&quot;:&quot;&apos;$GIT_COMMIT&apos;&quot;,&quot;GIT_BRANCH&quot;:&quot;&apos;$GIT_BRANCH&apos;&quot;,&quot;GIT_COMMITTER_NAME&quot;:&quot;&apos;&quot;$GIT_COMMIT_NAME&quot;&apos;&quot;,&quot;GIT_COMMITTER_EMAIL&quot;:&quot;&apos;&quot;$GIT_COMMIT_EMAIL&quot;&apos;&quot;,&quot;GIT_COMMIT_SUBJECT&quot;:&quot;&apos;&quot;$GIT_COMMIT_SUBJECT&quot;&apos;&quot;,&quot;IMAGE&quot;:&quot;&apos;tombatchelor/carsdemo:$GIT_COMMIT&apos;&quot;,&quot;BUILD_STATUS&quot;:&quot;SUCCESS&quot;}&apos;</command>
     </hudson.tasks.Shell>
   </builders>
-  <publishers>
-    <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.9.0">
-      <config>
-        <scriptFiles>
-          <org.jenkinsci.plugins.postbuildscript.model.ScriptFile>
-            <results>
-              <string>SUCCESS</string>
-            </results>
-            <role>MASTER</role>
-            <executeOn>BOTH</executeOn>
-            <filePath>/var/jenkins_home/script/checkSecGroups.sh</filePath>
-            <scriptType>GENERIC</scriptType>
-            <sandboxed>false</sandboxed>
-          </org.jenkinsci.plugins.postbuildscript.model.ScriptFile>
-        </scriptFiles>
-        <groovyScripts/>
-        <buildSteps/>
-        <markBuildUnstable>false</markBuildUnstable>
-      </config>
-    </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
-  </publishers>
   <buildWrappers>
     <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.38">
       <deleteDirs>false</deleteDirs>
