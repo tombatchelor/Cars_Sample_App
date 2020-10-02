@@ -8,8 +8,8 @@ ssh-add /id_rsa
 # Send in ref data
 cd /
 python sendJSON.py HTTPCodes.json httpcodes
-python sendJSON.py users.json users
-python sendJSON.py companies.json companies
+python sendCSV.py users.csv users
+python sendCSV.py companies.csv companies
 
 # Clone and make Git Commit
 cd /tmp
