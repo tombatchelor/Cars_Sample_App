@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
           - name: apply-data
-            image: tombatchelor/daily_tasks:6.2
+            image: tombatchelor/daily_tasks:6.3
             imagePullPolicy: Always
             env:
             - name: COLLECTOR_URL

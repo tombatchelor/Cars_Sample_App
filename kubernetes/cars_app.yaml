@@ -569,8 +569,8 @@ data:
         min_backoff: "1s"
         max_backoff: "30s"
         max_shards: 20
-        max_samples_per_send: 200000
-        capacity: 5000000
+        max_samples_per_send: 5000
+        capacity: 15000
 
     scrape_configs:
     - job_name: tomcat
