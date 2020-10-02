@@ -2,10 +2,10 @@ FROM python:2.7-stretch
 
 COPY applyData.sh /
 COPY sendJSON.py /
-COPY users.json /
-COPY companies.json /
+COPY sendCSV.py /
+COPY users.csv /
+COPY companies.csv /
 COPY HTTPCodes.json /
-COPY payloadCreate.json /
 COPY payloadResolve.json /
 
 RUN mkdir /root/.ssh
