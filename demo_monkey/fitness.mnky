@@ -1,0 +1,66 @@
+;Demo skin for a fitness company
+[Options]
+@include[] = /^https://198243902175.observe-staging.com/.*$/
+
+[Variables]
+$prospect=Some fitness company//Set the name of your prospect. This will be used to name the application
+
+[Application]
+Customer=Location
+Kubernetes = $prospect
+Terraformed Demo = Observability
+cars-deployment = location-app
+cars-app = location-app
+k8s.sockshop.biz = k8s.fitNrdy.com
+
+[Companies]
+Slack = 6PetalumaBlvd N, Petaluma
+Box = 1775SolanoAve, Berkeley
+Uber = 1200VanNess, San Francisco
+Observe = 500ElCamino , San Mateo
+Snowflake = 373GellertBlvd, Daly City
+Calm  = 1775SolanoAve, Berkeley
+
+[Emails]
+slack.com = fitNrdy.com
+box.com = gmail.com
+uber.com = fitNrdy.com
+observe.com = hotmail.com
+snowflake.org = aol.com
+snowflake.com = aol.com
+crunchbase.com = yahoo.com
+docusign.com = fitNrdy.com
+calm.com = googlemail.com
+uber.co.uk = fitNrdy.com
+
+[Notifications]
+Ticket for customer: = Ticket for location:
+
+[Code]
+getCar = checkinUser
+searchCars = searchUser
+getManufacturer = getLocation
+/public/car/=/public/user/
+com.supercars.rest.CarService = com.fitNrdy.UserService
+com.supercars.rest.ManufacturerService = com.fitNrdy.rest.LocationService
+com.supercars.externaldata.CarRating = com.fitNrdy.LocationRating
+com.supercars.externaldata.S3Images = com.fitNrdy.externaldata.S3Images
+
+
+
+[Git/Build]
+tom.batchelor@me.com = tom.batchelor@fitNrdy.com
+tombatchelor/ = fitNrdy
+Small change to cache code = User checkin performance improvement
+
+
+[Tier]
+1 - Global 500 = Premiere
+2 - Mid - SaaS = Mid
+3 - Emerging = Growth
+99 - Exception = Exception
+ACV = Membership
+Medium - $500k - $1M = Medium
+Low - < $100k = Low
+High - > $1M = High
+Exception - Exception = Exception

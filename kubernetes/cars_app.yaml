@@ -179,7 +179,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:6.0
+        image: tombatchelor/jenkins:6.1
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
@@ -413,6 +413,7 @@ rules:
   - deployments/scale
   - pods
   - services
+  - replicasets
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 apiVersion: v1
@@ -562,8 +563,14 @@ data:
       scrape_interval: 30s
 
     remote_write:
-    - url: http://proxy.observe-staging.svc.cluster.local:2001/
+    - url: http://proxy.observe.svc.cluster.local:2001/
       remote_timeout: 30s
+      queue_config:
+        min_backoff: "1s"
+        max_backoff: "30s"
+        max_shards: 20
+        max_samples_per_send: 200000
+        capacity: 5000000
 
     scrape_configs:
     - job_name: tomcat
