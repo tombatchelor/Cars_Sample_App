@@ -7,6 +7,7 @@ ADD --chown=jenkins:jenkins jenkins/plugins /var/jenkins_home/plugins/
 ADD --chown=jenkins:jenkins jenkins/users /var/jenkins_home/users/
 ADD --chown=jenkins:jenkins jenkins/secrets /var/jenkins_home/secrets/
 COPY --chown=jenkins:jenkins jenkins/hudson.tasks.Shell.xml /var/jenkins_home/hudson.tasks.Shell.xml
+COPY --chown=jenkins:jenkins payloadCreate.json /var/jenkins_home/payloadCreate.json
 RUN chmod 700 /var/jenkins_home/secrets
 
 ARG MAVEN_VERSION=3.6.3
@@ -25,13 +26,9 @@ ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
 RUN apt-get -yqq update
-RUN apt-get -yqq install awscli
 RUN apt-get -yqq install jq
-RUN mkdir /var/jenkins_home/script
-COPY checkSecGroups.sh /var/jenkins_home/script/checkSecGroups.sh
-RUN chmod +x /var/jenkins_home/script/checkSecGroups.sh
-RUN mkdir /root/.aws
-COPY config /root/.aws/config
+RUN apt-get -yqq install redis-tools
+RUN apt-get -yqq install vim
 
 RUN curl -sSL https://get.docker.com/ | sh
 RUN usermod -g docker jenkins

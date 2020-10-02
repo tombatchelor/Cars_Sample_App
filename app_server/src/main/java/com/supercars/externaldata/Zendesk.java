@@ -47,23 +47,7 @@ public class Zendesk {
                 ticket.setDescription("The site crashed for me just now");
         }
         ticket.setTicketID((new Random()).nextInt(40000));
-        if (username.contains("uber")) {
-            ticket.setAccount("Uber");
-        } else if (username.contains("snowflake")) {
-            ticket.setAccount("Snowflake");
-        } else if (username.contains("observeinc")) {
-            ticket.setAccount("Observe");
-        } else if (username.contains("calm")) {
-            ticket.setAccount("Calm");
-        } else if (username.contains("slack")) {
-              ticket.setAccount("Slack");
-        } else if (username.contains("docusign")) {
-              ticket.setAccount("Docusign");
-        } else if (username.contains("box")) {
-              ticket.setAccount("Box");
-        } else if (username.contains("crunchbase")) {
-              ticket.setAccount("Crunchbase");
-        }
+        ticket.setAccount(username.substring(username.indexOf('@')+1, username.lastIndexOf('.')));
         switch ((new Random()).nextInt(4)) {
             case 0:
                 ticket.setPriority("HIGH");
