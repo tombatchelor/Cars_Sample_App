@@ -1,4 +1,4 @@
 #!/bin/bash
 
 git pull
-mvn tomcat7:redeploy 
+mvn tomcat7:redeploy
