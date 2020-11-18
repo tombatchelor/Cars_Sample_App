@@ -277,24 +277,6 @@ spec:
                   key: database.password
           restartPolicy: OnFailure
 ---
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: scenario
-spec:
-  schedule: "*/10 * * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          - name: jmeter
-            image: tombatchelor/scenario:6.0
-            imagePullPolicy: Always
-            args:
-            - -n -t /tests/Scenario.jmx 
-          restartPolicy: OnFailure 
----
 apiVersion: v1
 kind: Service
 metadata:
