@@ -61,4 +61,8 @@ public class HealthService {
     public static void setAsUnhealthy() {
         shouldSendUnhealthy = true;
     }
+    
+    public static boolean isHealthy() {
+        return shouldSendUnhealthy;
+    }
 }
