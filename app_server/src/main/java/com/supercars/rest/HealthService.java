@@ -24,13 +24,13 @@ public class HealthService {
 
     private final static Logger logger = Logger.getLogger(HealthService.class.getName());
 
-    private static boolean shouldSendUnhealthy = false;
+    private static boolean isHealthy = true;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getHealth() {
         logger.fine("GET Returning service health");
-        if (shouldSendUnhealthy) {
+        if (!isHealthy) {
             logger.log(Level.SEVERE, "Out of Memory", new java.lang.OutOfMemoryError("Out of Memory"));
             return Response.serverError().entity("Out of Memory").build();
         }
@@ -59,10 +59,10 @@ public class HealthService {
     }
 
     public static void setAsUnhealthy() {
-        shouldSendUnhealthy = true;
+        isHealthy = false;
     }
     
     public static boolean isHealthy() {
-        return shouldSendUnhealthy;
+        return isHealthy;
     }
 }
