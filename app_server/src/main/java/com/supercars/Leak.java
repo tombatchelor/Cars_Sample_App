@@ -25,7 +25,7 @@ public class Leak {
 
     private final static Logger logger = Logger.getLogger(Leak.class.getName());
 
-    static final Counter cacheSize = Counter.build().name("memory_usage").help("Total memory usage.").register();
+    static final Counter cacheSize = Counter.build().name("collection_size").help("Total collection size.").register();
 
     {
         cacheSize.inc(1564325 + ((new Random()).nextInt(10)*1000000));
