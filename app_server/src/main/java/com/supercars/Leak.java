@@ -19,7 +19,7 @@ import java.util.Random;
  */
 public class Leak {
 
-    private static List<int[]> leakyCollection = new LinkedList<>();
+    private static List<byte[]> leakyCollection = new LinkedList<>();
     private static long keepAliveTime = 0;
 
     private final static Logger logger = Logger.getLogger(Leak.class.getName());
@@ -27,15 +27,15 @@ public class Leak {
     public static void addToCollection(int number, int size) {
         checkShouldKill();
         for (int i = 0; i < number; i++) {
-            leakyCollection.add(new int[size]);
+            leakyCollection.add(new byte[size]);
         }
     }
 
     public static long getSize() {
         long size = 0L;
         try {
-            for (int[] ints : leakyCollection) {
-                size += ints.length;
+            for (byte[] bytes : leakyCollection) {
+                size += bytes.length;
             }
         } catch (ConcurrentModificationException ex) {
             logger.log(Level.SEVERE, null, ex);
