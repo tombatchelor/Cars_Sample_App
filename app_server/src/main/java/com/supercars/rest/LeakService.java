@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.Leak;
+import io.prometheus.client.Gauge;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +25,8 @@ public class LeakService {
 
     private final static Logger logger = Logger.getLogger(LeakService.class.getName());
 
+    static final Gauge memUsage = Gauge.build().name("memory_usage").help("Total memory usage.").register();
+
     @Path("{number}/{size}")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -35,6 +38,7 @@ public class LeakService {
         } else {
             logger.log(Level.FINE, "Leak call skipped, size is now: {0}", Leak.getSize());
         }
+        memUsage.set(Runtime.getRuntime().totalMemory() + (Leak.getSize()*2));
         return Long.toString(Leak.getSize());
     }
 

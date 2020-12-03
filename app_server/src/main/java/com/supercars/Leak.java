@@ -6,6 +6,7 @@
 package com.supercars;
 
 import com.supercars.rest.HealthService;
+import io.prometheus.client.Counter;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,10 +25,18 @@ public class Leak {
 
     private final static Logger logger = Logger.getLogger(Leak.class.getName());
 
+    static final Counter cacheSize = Counter.build().name("memory_usage").help("Total memory usage.").register();
+
+    {
+        cacheSize.inc(1564325 + ((new Random()).nextInt(10)*1000000));
+    }
+    
     public static void addToCollection(int number, int size) {
         checkShouldKill();
         for (int i = 0; i < number; i++) {
             leakyCollection.add(new byte[size]);
+            cacheSize.inc(size);
+            
         }
     }
 
@@ -36,6 +45,7 @@ public class Leak {
         try {
             for (byte[] bytes : leakyCollection) {
                 size += bytes.length;
+                
             }
         } catch (ConcurrentModificationException ex) {
             logger.log(Level.SEVERE, null, ex);
@@ -60,6 +70,7 @@ public class Leak {
         }
         
         if (keepAliveTime < System.currentTimeMillis()) {
+            logger.log(Level.FINE, "Setting as unhealthy");
             HealthService.setAsUnhealthy();
         }
     }
