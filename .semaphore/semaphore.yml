@@ -12,5 +12,5 @@ blocks:
           commands:
             - checkout
             - sem-version java 11
-            - cd app-server
+            - cd app_server
             - mvn -B package --file pom.xml
