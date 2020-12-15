@@ -511,7 +511,7 @@ metadata:
   name: jenkins-env
 data:
   git.root: tombatchelor
-  cars.pod.count: "1"
+  cars.pod.count: "3"
 ---
 apiVersion: v1
 kind: ConfigMap

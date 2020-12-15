@@ -13,7 +13,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         
-        <brave.version>5.6.10</brave.version>
+        <brave.version>5.13.2</brave.version>
         <prometheus.version>0.6.0</prometheus.version>
     </properties>
     
@@ -108,29 +108,34 @@
         <!-- The below are needed to report traces to http://localhost:9411/api/v2/spans -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.reporter2</groupId>
-            <artifactId>zipkin-sender-urlconnection</artifactId>
+            <artifactId>brave-instrumentation-okhttp3</artifactId>
+            <version>${brave.version}</version>
         </dependency>
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-httpclient</artifactId>
+            <version>${brave.version}</version>
         </dependency>
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-servlet</artifactId>
+            <version>${brave.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
+  <groupId>io.zipkin.reporter2</groupId>
+  <artifactId>zipkin-sender-okhttp3</artifactId>
+</dependency>
+        <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-mysql8</artifactId>
+            <version>${brave.version}</version>
         </dependency>
         <!-- Added to capture outgoing JAX RS 2 HTTP Sync Calls -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-jaxrs2</artifactId>
+            <version>${brave.version}</version>
         </dependency>
         <!-- Adding Prometheus -->
         <!-- The client -->
