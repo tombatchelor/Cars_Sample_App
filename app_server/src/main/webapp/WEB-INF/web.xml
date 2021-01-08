@@ -9,14 +9,6 @@
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>com.supercars.rest</param-value>
         </init-param>
-        <init-param>
-            <param-name>jersey.config.server.spi.container.ContainerRequestFilters</param-name>
-            <param-value>brave.jaxrs2.SpanCustomizingContainerFilter</param-value>
-        </init-param>
-        <init-param>
-            <param-name>jersey.config.server.tracing</param-name>
-            <param-value>ALL</param-value>
-        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
