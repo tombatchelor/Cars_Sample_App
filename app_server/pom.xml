@@ -45,17 +45,17 @@
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
-            <version>2.32</version>
+            <version>2.29.1</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-server</artifactId>
-            <version>2.32</version>
+            <version>2.29.1</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet-core</artifactId>
-            <version>2.32</version>
+            <version>2.29.1</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
-            <version>2.32</version>
+            <version>2.29.1</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -76,13 +76,13 @@
         <dependency>
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
-            <version>2.32</version>
+            <version>2.29.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/c3p0/c3p0 -->
         <dependency>
             <groupId>c3p0</groupId>
             <artifactId>c3p0</artifactId>
-            <version>0.9.1.2</version>
+            <version>0.9.1</version>
         </dependency>
         <!-- Added for migration to Java 12 -->
         <dependency>
@@ -109,28 +109,33 @@
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-okhttp3</artifactId>
+            <version>${brave.version}</version>
         </dependency>
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-httpclient</artifactId>
+            <version>${brave.version}</version>
         </dependency>
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-servlet</artifactId>
+            <version>${brave.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>io.zipkin.reporter2</groupId>
-            <artifactId>zipkin-sender-okhttp3</artifactId>
-        </dependency>
+  <groupId>io.zipkin.reporter2</groupId>
+  <artifactId>zipkin-sender-okhttp3</artifactId>
+</dependency>
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-mysql8</artifactId>
+            <version>${brave.version}</version>
         </dependency>
         <!-- Added to capture outgoing JAX RS 2 HTTP Sync Calls -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-jaxrs2</artifactId>
+            <version>${brave.version}</version>
         </dependency>
         <!-- Adding Prometheus -->
         <!-- The client -->
