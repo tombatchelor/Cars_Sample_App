@@ -82,7 +82,7 @@ public class Zendesk {
         ticket.setComments(comments);
         
         // Send to ticket to Observe
-        String observeURL = "https://collect.observe-eng.com/v1/observations/zendesk";
+        String observeURL = "https://collect.observe-staging.com/v1/observations/zendesk";
         String observeCustomerID = System.getenv("CUSTOMER_ID");
         String observeToken = System.getenv("TOKEN");
         String bearer = "Bearer " + observeCustomerID + " " + observeToken;
