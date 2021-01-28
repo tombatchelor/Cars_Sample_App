@@ -13,21 +13,11 @@ spec:
             image: tombatchelor/daily_tasks:7.0
             imagePullPolicy: Always
             env:
-            - name: COLLECTOR_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: marshaller
-                  key: collector.url
-            - name: CUSTOMER_ID
-              valueFrom:
-                configMapKeyRef:
-                  name: marshaller
-                  key: customer.id
-            - name: TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: observe-key
-                  key: token
+          - name: PROXY_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: zipkin-config
+                key: zipkin.endpoint
             - name: GIT_ROOT
               valueFrom:
                 configMapKeyRef:
