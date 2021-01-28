@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
           - name: apply-data
-            image: tombatchelor/daily_tasks:6.5
+            image: tombatchelor/daily_tasks:7.0
             imagePullPolicy: Always
             env:
             - name: COLLECTOR_URL
@@ -56,7 +56,7 @@ spec:
           serviceAccountName: bad-config
           containers:
           - name: apply-data
-            image: tombatchelor/config_change:6.0
+            image: tombatchelor/config_change:7.0
             imagePullPolicy: Always
             env:
             - name: MODE
@@ -76,7 +76,7 @@ spec:
           serviceAccountName: config-automation
           containers:
           - name: apply-data
-            image: tombatchelor/config_change:6.0
+            image: tombatchelor/config_change:7.0
             imagePullPolicy: Always
             env:
             - name: MODE

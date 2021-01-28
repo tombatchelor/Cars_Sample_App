@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: db-server
-        image: tombatchelor/carsdb:6.0
+        image: tombatchelor/carsdb:7.0
         imagePullPolicy: Always
         ports:
         - name: mysql
@@ -67,7 +67,7 @@ spec:
     spec:
       containers:
       - name: insurance-quoter
-        image: tombatchelor/car-insurance:6.0
+        image: tombatchelor/car-insurance:7.0
         imagePullPolicy: Always
         ports:
         - name: http
@@ -95,7 +95,7 @@ spec:
     spec:
       containers:
       - name: loan-quoter
-        image: tombatchelor/car-loan:6.0
+        image: tombatchelor/car-loan:7.0
         imagePullPolicy: Always
         ports:
         - name: http
@@ -179,7 +179,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:6.1
+        image: tombatchelor/jenkins:7.0
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
@@ -200,16 +200,6 @@ spec:
             configMapKeyRef:
               name: jenkins-env
               key: cars.pod.count
-        - name: CUSTOMER_ID
-          valueFrom:
-            configMapKeyRef:
-              name: marshaller
-              key: customer.id
-        - name: TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: observe-key
-              key: token
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
@@ -247,7 +237,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:6.0
+            image: tombatchelor/carscleanup:7.0
             imagePullPolicy: Always
             env:
             - name: AWS_ACCESS_KEY_ID
@@ -474,10 +464,9 @@ kind: ConfigMap
 metadata:
   labels:
     app: web-server
-  name: zipkin-config
+  name: proxy-config
 data:
-  zipkin.endpoint:  http://proxy.observe.svc.cluster.local:9411/
-#  zipkin.endpoint: http://192.168.99.1:9411/
+  proxy.endpoint: proxy.observe.svc.cluster.local
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -511,7 +500,7 @@ metadata:
   name: jenkins-env
 data:
   git.root: tombatchelor
-  cars.pod.count: "3"
+  cars.pod.count: "1"
 ---
 apiVersion: v1
 kind: ConfigMap
