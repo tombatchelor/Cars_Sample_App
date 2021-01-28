@@ -73,11 +73,11 @@ spec:
         - name: http
           containerPort: 8000
         env:
-        - name: ZIPKIN_ENDPOINT
+        - name: PROXY_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: zipkin-config
-              key: zipkin.endpoint
+              name: proxy-config
+              key: proxy.endpoint
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -101,11 +101,11 @@ spec:
         - name: http
           containerPort: 80
         env:
-        - name: ZIPKIN_ENDPOINT
+        - name: PROXY_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: zipkin-config
-              key: zipkin.endpoint
+              name: proxy-config
+              key: proxy.endpoint
 ---
 apiVersion: apps/v1
 kind: Deployment
