@@ -1,28 +1,28 @@
-name,customerID,tier,ACV
-Uber,6974268,1 - Global 500,High - > $1M
-Snowflake,3294176,1 - Global 500,High - > $1M
-Calm,715193,3 - Emerging,Low - < $100k
-ObserveInc,1,99 - Exception,Exception - Exception
-Slack,4274751,2 - Mid - SaaS,Medium - $500k - $1M
-Docusign,995211,2 - Mid - SaaS,Medium - $500k - $1M
-Box,3634804,2 - Mid - SaaS,Medium - $500k - $1M
-AirBnB,10001,2 - Mid - SaaS,Medium - $500k - $1M
-Lyft,10002,2 - Mid - SaaS,Medium - $500k - $1M
-ATT,10003,2 - Mid - SaaS,Medium - $500k - $1M
-DataRobot,10004,3 - Emerging,Low - < $100k
-ThoughtSpot,10005,3 - Emerging,Low - < $100k
-Vivent,10006,3 - Emerging,Low - < $100k
-Bill,10007,2 - Mid - SaaS,Medium - $500k - $1M
-SalesForce,10008,2 - Mid - SaaS,Medium - $500k - $1M
-Workday,10009,3 - Emerging,Low - < $100k
-WebEx,10010,2 - Mid - SaaS,Medium - $500k - $1M
-Zoom,10011,2 - Mid - SaaS,Medium - $500k - $1M
-Styra,10012,3 - Emerging,Low - < $100k
-Digital,10013,3 - Emerging,Low - < $100k
-Harness,10014,3 - Emerging,Low - < $100k
-SmartSheet,10015,2 - Mid - SaaS,Medium - $500k - $1M
-PeopleAI,10016,3 - Emerging,Low - < $100k
-ServiceNow,10017,2 - Mid - SaaS,Medium - $500k - $1M
-BlueJeans,10018,3 - Emerging,Low - < $100k
-Comcast,10019,2 - Mid - SaaS,Medium - $500k - $1M
-Instabase,10020,3 - Emerging,Low - < $100k
+name,customerID,tier,ACV,owner,techowner
+Uber,6974268,1 - Global 500,High - > $1M,keith@observeinc.com,tom@observeinc.com
+Snowflake,3294176,1 - Global 500,High - > $1M,dan@observeinc.com,brian.schofer@observeinc.com
+Calm,715193,3 - Emerging,Low - < $100k,jparisi@observeinc.com,ales@observeinc.com
+ObserveInc,1,99 - Exception,Exception - Exception,keith@observeinc.com,tom@observeinc.com
+Slack,4274751,2 - Mid - SaaS,Medium - $500k - $1M,scott@observeinc.com,ales@observeinc.com
+Docusign,995211,2 - Mid - SaaS,Medium - $500k - $1M,brian@observeinc.com,james@observeinc.com
+Box,3634804,2 - Mid - SaaS,Medium - $500k - $1M,scott@observeinc.com,ales@observeinc.com
+AirBnB,10001,2 - Mid - SaaS,Medium - $500k - $1M,scott.bloom@observeinc.com,james@observeinc.com
+Lyft,10002,2 - Mid - SaaS,Medium - $500k - $1M,dan@observeinc.com,brian.schofer@observeinc.com
+ATT,10003,2 - Mid - SaaS,Medium - $500k - $1M,brian@observeinc.com,james@observeinc.com
+DataRobot,10004,3 - Emerging,Low - < $100k,dan@observeinc.com,tom@observeinc.com
+ThoughtSpot,10005,3 - Emerging,Low - < $100k,scott.bloom@observeinc.com,brian.schofer@observeinc.com
+Vivent,10006,3 - Emerging,Low - < $100k,scott@observeinc.com,ales@observeinc.com
+Bill,10007,2 - Mid - SaaS,Medium - $500k - $1M,jparisi@observeinc.com,tom@observeinc.com
+SalesForce,10008,2 - Mid - SaaS,Medium - $500k - $1M,keith@observeinc.com,brian.schofer@observeinc.com
+Workday,10009,3 - Emerging,Low - < $100k,scott@observeinc.com,ales@observeinc.com
+WebEx,10010,2 - Mid - SaaS,Medium - $500k - $1M,jparisi@observeinc.com,brian.schofer@observeinc.com
+Zoom,10011,2 - Mid - SaaS,Medium - $500k - $1M,scott.bloom@observeinc.com,james@observeinc.com
+Styra,10012,3 - Emerging,Low - < $100k,jparisi@observeinc.com,tom@observeinc.com
+Digital,10013,3 - Emerging,Low - < $100k,scott@observeinc.com,ales@observeinc.com
+Harness,10014,3 - Emerging,Low - < $100k,brian@observeinc.com,alex@observeinc.com
+SmartSheet,10015,2 - Mid - SaaS,Medium - $500k - $1M,jparisi@observeinc.com,alex@observeinc.com
+PeopleAI,10016,3 - Emerging,Low - < $100k,dan@observeinc.com,brian.schofer@observeinc.com
+ServiceNow,10017,2 - Mid - SaaS,Medium - $500k - $1M,dan@observeinc.com,alex@observeinc.com
+BlueJeans,10018,3 - Emerging,Low - < $100k,scott.bloom@observeinc.com,james@observeinc.com
+Comcast,10019,2 - Mid - SaaS,Medium - $500k - $1M,brian@observeinc.com,james@observeinc.com
+Instabase,10020,3 - Emerging,Low - < $100k,keith@observeinc.com,tom@observeinc.com

@@ -14,6 +14,7 @@ python sendCSV.py companies.csv companies
 # Clone and make Git Commit
 cd /tmp
 git config --global user.email tom.batchelor@me.com
+git config --global user.name tombatchelor
 git clone git@github.com:$GIT_ROOT/Cars_Sample_App.git
 cd Cars_Sample_App/app_server
 if  `grep -q 'TRUE' Dockerfile`; then
