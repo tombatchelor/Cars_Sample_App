@@ -16,8 +16,8 @@ spec:
           - name: PROXY_ENDPOINT
             valueFrom:
               configMapKeyRef:
-                name: zipkin-config
-                key: zipkin.endpoint
+                name: proxy-config
+                key: proxy.endpoint
             - name: GIT_ROOT
               valueFrom:
                 configMapKeyRef:

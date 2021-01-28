@@ -193,8 +193,8 @@ spec:
         - name: PROXY_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: zipkin-config
-              key: zipkin.endpoint
+              name: proxy-config
+              key: proxy.endpoint
         - name: GIT_ROOT
           valueFrom:
             configMapKeyRef:
@@ -506,16 +506,6 @@ metadata:
 data:
   git.root: tombatchelor
   cars.pod.count: "1"
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: marshaller
-  name: marshaller
-data:
-  collector.url: https://collect.observe-staging.com/v1/observations/
-  customer.id: "126338107931"
 ---
 apiVersion: v1
 kind: ConfigMap
