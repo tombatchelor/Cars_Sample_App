@@ -32,10 +32,6 @@ Richard,Rajaopalan,richard.rajaopalan@zoom.com,Customer,Gold,USA,Zoom
 Bob,Hammond,bob.hammond@styra.com,Customer,Bronze,UK,Styra
 Geoff,Meaden,geoff.meaden@digital.com,Dealer,Gold,UK,Digital
 Fiona,Murdock,fiona.murdock@harness.com,Customer,Bronze,UK,Harness
-Sales,Williamson,sales.williamson@smartsheet.com,Dealer,Gold,UK,SmartSheet
-Billy,Sales,billy.sales@peopleai.com,Customer,Gold,UK,PeopleAI
-Support,Butlins,support.butlins@harness.com,Dealer,Gold,UK,Harness
-Laura,Support,laura.support@smartsheet.com,Dealer,Plantinum,UK,SmartSheet
 Valentine,Cunnigham,valentine.cunnigham@peopleai.com,Customer,Bronze,USA,PeopleAI
 Larry,Smith,larry.smith@zoom.com,Customer,Bronze,UK,Zoom
 Frederick,Dimmick,frederick.dimmick@styra.com,Customer,Bronze,UK,Styra
@@ -55,10 +51,7 @@ Geoff,Rajaopalan,geoff.rajaopalan@harness.com,Customer,Gold,USA,Harness
 Fiona,Hammond,fiona.hammond@smartsheet.com,Dealer,Gold,UK,SmartSheet
 Sales,Meaden,sales.meaden@peopleai.com,Customer,Bronze,UK,PeopleAI
 Billy,Murdock,billy.murdock@harness.com,Customer,Gold,UK,Harness
-Support,Williamson,support.williamson@smartsheet.com,Dealer,Gold,UK,SmartSheet
-Laura,Sales,laura.sales@peopleai.com,Customer,Gold,UK,PeopleAI
 Valentine,Butlins,valentine.butlins@zoom.com,Dealer,Bronze,UK,Zoom
-Larry,Support,larry.support@styra.com,Customer,Bronze,USA,Styra
 Frederick,Cunnigham,frederick.cunnigham@peopleai.com,Dealer,Plantinum,UK,PeopleAI
 Benjamin,Smith,benjamin.smith@harness.com,Dealer,Gold,USA,Harness
 Jill,Dimmick,jill.dimmick@smartsheet.com,Customer,Bronze,USA,SmartSheet
@@ -83,7 +76,5 @@ Larry,Hammond,larry.hammond@peopleai.com,Customer,Bronze,UK,PeopleAI
 Frederick,Meaden,frederick.meaden@zoom.com,Dealer,Gold,USA,Zoom
 Benjamin,Murdock,benjamin.murdock@styra.com,Dealer,Gold,UK,Styra
 Jill,Williamson,jill.williamson@digital.com,Customer,Bronze,UK,Digital
-Joseph,Sales,joseph.sales@harness.com,Customer,Bronze,USA,Harness
 Patty,Butlins,patty.butlins@smartsheet.com,Customer,Bronze,USA,SmartSheet
-Andrew,Support,andrew.support@peopleai.com,Customer,Bronze,UK,PeopleAI
 Arthur,Murdock,arthur.murdock@instabase.com,Customer,Bronze,UK,Instabase

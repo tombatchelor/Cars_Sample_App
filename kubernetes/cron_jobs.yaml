@@ -10,24 +10,14 @@ spec:
         spec:
           containers:
           - name: apply-data
-            image: tombatchelor/daily_tasks:6.4
+            image: tombatchelor/daily_tasks:7.0
             imagePullPolicy: Always
             env:
-            - name: COLLECTOR_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: marshaller
-                  key: collector.url
-            - name: CUSTOMER_ID
-              valueFrom:
-                configMapKeyRef:
-                  name: marshaller
-                  key: customer.id
-            - name: TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: observe-key
-                  key: token
+          - name: PROXY_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: proxy-config
+                key: proxy.endpoint
             - name: GIT_ROOT
               valueFrom:
                 configMapKeyRef:
@@ -56,7 +46,7 @@ spec:
           serviceAccountName: bad-config
           containers:
           - name: apply-data
-            image: tombatchelor/config_change:6.0
+            image: tombatchelor/config_change:7.0
             imagePullPolicy: Always
             env:
             - name: MODE
@@ -76,7 +66,7 @@ spec:
           serviceAccountName: config-automation
           containers:
           - name: apply-data
-            image: tombatchelor/config_change:6.0
+            image: tombatchelor/config_change:7.0
             imagePullPolicy: Always
             env:
             - name: MODE
