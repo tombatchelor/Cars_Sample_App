@@ -43,11 +43,11 @@ public class TracingBuilder {
     }
 
     private static String getZipkinEndpoint() {
-        String zipkinEndpoint = System.getenv("ZIPKIN_ENDPOINT");
-        if (zipkinEndpoint == null) {
-            zipkinEndpoint = "http://localhost:9411/";
+        String proxyEndpoint = System.getenv("PROXY_ENDPOINT");
+        if (proxyEndpoint == null) {
+            proxyEndpoint = "http://localhost:9411/";
         }
-        return zipkinEndpoint + "api/v2/spans";
+        return proxyEndpoint + ":9411/api/v2/spans";
     }
 
     public static TracingBuilder getInstance() {
