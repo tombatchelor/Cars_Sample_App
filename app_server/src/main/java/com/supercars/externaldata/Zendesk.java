@@ -82,17 +82,14 @@ public class Zendesk {
         ticket.setComments(comments);
         
         // Send to ticket to Observe
-        String observeURL = "https://collect.observe-staging.com/v1/observations/zendesk";
-        String observeCustomerID = System.getenv("CUSTOMER_ID");
-        String observeToken = System.getenv("TOKEN");
-        String bearer = "Bearer " + observeCustomerID + " " + observeToken;
+        String proxyEndpoint = System.getenv("PROXY_ENDPOINT");
+        String observeURL = proxyEndpoint + "/v1/observations/zendesk";
         
         logger.fine("Using sync HTTP call");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(observeURL);
         target.register(TracingClientFilter.create(tracing));
         target.request(MediaType.APPLICATION_JSON)
-                .header("Authorization", bearer)
                 .post(Entity.entity(ticket, MediaType.APPLICATION_JSON));
     }
 }
