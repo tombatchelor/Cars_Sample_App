@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: tombatchelor/cars_web:6.0
+        image: tombatchelor/cars_web:7.0
         imagePullPolicy: Always
         ports:
         - name: cars-web-port
@@ -471,7 +471,7 @@ metadata:
     app: web-server
   name: proxy-config
 data:
-  proxy.endpoint: proxy.observe.svc.cluster.local
+  proxy.endpoint: http://proxy.observe.svc.cluster.local
 ---
 apiVersion: v1
 kind: ConfigMap

@@ -7,9 +7,9 @@ ssh-add /id_rsa
 
 # Send in ref data
 cd /
-python sendJSON.py HTTPCodes.json httpcodes
-python sendCSV.py users.csv users
-python sendCSV.py companies.csv companies
+curl -s -v -H 'Content-Type: application/json' -X POST $PROXY_ENDPOINT/v1/observations/httpscodes -d @HTTPCodes.json
+curl -s -v -H 'Content-Type: text/csv' -X POST $PROXY_ENDPOINT/v1/observations/users -d @users.csv
+curl -s -v -H 'Content-Type: text/csv' -X POST $PROXY_ENDPOINT/v1/observations/companies -d companies.csv
 
 # Clone and make Git Commit
 cd /tmp
@@ -29,9 +29,3 @@ else
   IS_FAILING=TRUE
 fi
 git push
-cd /
-if [ $IS_FAILING == "FALSE" ]; then
-  DEDUP_KEY=`redis-cli -h redis --raw get dedup`
-  sed -i 's/DEDUP_KEY/'$DEDUP_KEY'/g' payloadResolve.json
-  curl -s https://events.pagerduty.com/v2/enqueue -H 'Content-type: application/json' -d "@payloadResolve.json"
-fi

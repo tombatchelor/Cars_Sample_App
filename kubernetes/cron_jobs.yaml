@@ -13,11 +13,11 @@ spec:
             image: tombatchelor/daily_tasks:7.0
             imagePullPolicy: Always
             env:
-          - name: PROXY_ENDPOINT
-            valueFrom:
-              configMapKeyRef:
-                name: proxy-config
-                key: proxy.endpoint
+            - name: PROXY_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: proxy-config
+                  key: proxy.endpoint
             - name: GIT_ROOT
               valueFrom:
                 configMapKeyRef:
