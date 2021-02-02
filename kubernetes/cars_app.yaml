@@ -189,6 +189,8 @@ spec:
           mountPath: /tmp/secrets
         - name: dockersock
           mountPath: "/var/run/docker.sock"
+        - name: git-key
+          mountPath: /keys
         env:
         - name: PROXY_ENDPOINT
           valueFrom:
@@ -220,9 +222,6 @@ spec:
             configMapKeyRef:
               name: jenkins-env
               key: git.root
-        volumeMounts:
-        - name: git-key
-          mountPath: /keys
         lifecycle:
           postStart:
             exec:
@@ -237,6 +236,9 @@ spec:
       - name: dockersock
         hostPath:
           path: /var/run/docker.sock
+      - name: git-key
+        secret:
+          secretName: git-key
 ---
 apiVersion: batch/v1beta1
 kind: CronJob

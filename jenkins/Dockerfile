@@ -38,6 +38,5 @@ RUN apt-get -yqq install vim
 RUN curl -sSL https://get.docker.com/ | sh
 RUN usermod -g docker jenkins
 VOLUME /var/run/docker.sock
-#ENTRYPOINT groupmod -g $(stat -c “%g” /var/run/docker.sock) docker && usermod -u $(stat -c “%u” /var/jenkins_home) jenkins && gosu jenkins /bin/tini – /usr/local/bin/jenkins.sh
 
 COPY --from=lachlanevenson/k8s-kubectl:v1.15.5 /usr/local/bin/kubectl /usr/local/bin/kubectl

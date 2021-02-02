@@ -13,7 +13,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://github.com/$GIT_ROOT/Cars_Sample_App/</url>
+        <url>git@github.com:$GIT_ROOT/Cars_Sample_App.git</url>
         <credentialsId>544a1f7f-fe5c-473e-bcb5-6d7fd9ebbf96</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -50,23 +50,23 @@ cd daily_tasks
 echo $PWD
 ls -ltrh
 # Send in ref data
-curl -s -v -H &apos;Content-Type: application/json&apos; -X POST $PROXY_ENDPOINT/v1/observations/httpscodes -d @HTTPCodes.json
-curl -s -v -H &apos;Content-Type: text/csv&apos; -X POST $PROXY_ENDPOINT/v1/observations/users -d @users.csv
-curl -s -v -H &apos;Content-Type: text/csv&apos; -X POST $PROXY_ENDPOINT/v1/observations/companies -d companies.csv
+curl -s -v -H 'Content-Type: application/json' -X POST $PROXY_ENDPOINT/v1/observations/httpscodes -d @HTTPCodes.json
+curl -s -v -H 'Content-Type: text/csv' -X POST $PROXY_ENDPOINT/v1/observations/users --data-binary @users.csv
+curl -s -v -H 'Content-Type: text/csv' -X POST $PROXY_ENDPOINT/v1/observations/companies --data-binary @companies.csv
 
 # Make Git Commit
 git config --global user.email tom.batchelor@me.com
 git config --global user.name tombatchelor
 cd ../app_server
-if  `grep -q &apos;TRUE&apos; Dockerfile`; then
-  sed -i &apos;s/TRUE/FALSE/g&apos; Dockerfile
+if  `grep -q 'TRUE' Dockerfile`; then
+  sed -i 's/TRUE/FALSE/g' Dockerfile
   git add Dockerfile
-  git commit -m &quot;Resolving mem leak issue&quot;
+  git commit -m "Resolving mem leak issue"
   IS_FAILING=FALSE
 else
-  sed -i &apos;s/FALSE/TRUE/g&apos; Dockerfile
+  sed -i 's/FALSE/TRUE/g' Dockerfile
   git add Dockerfile
-  git commit -m &quot;Small change to cache code&quot;
+  git commit -m "Small change to cache code"
   IS_FAILING=TRUE
 fi
 git push origin HEAD:master
