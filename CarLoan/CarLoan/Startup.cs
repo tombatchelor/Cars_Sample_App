@@ -43,7 +43,7 @@ namespace CarLoan
                 app.UseDeveloperExceptionPage();
             }
 
-            var zipkinEndpoint = Environment.GetEnvironmentVariable("ZIPKIN_ENDPOINT") + ":9411";
+            var zipkinEndpoint = Environment.GetEnvironmentVariable("PROXY_ENDPOINT") + ":9411";
 
             var lifetime = app.ApplicationServices.GetService<Microsoft.AspNetCore.Hosting.IApplicationLifetime>();
             lifetime.ApplicationStarted.Register(() => {

@@ -215,6 +215,14 @@ spec:
             secretKeyRef:
               name: aws-cred
               key: secret-key
+        - name: GIT_ROOT
+          valueFrom:
+            configMapKeyRef:
+              name: jenkins-env
+              key: git.root
+        volumeMounts:
+        - name: git-key
+          mountPath: /keys
         lifecycle:
           postStart:
             exec:
