@@ -353,26 +353,6 @@ spec:
   - protocol: TCP
     port: 6379
 ---
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: bad-config
-rules:
-- apiGroups: [""]
-  resources:
-  - configmaps
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: config-automation
-rules:
-- apiGroups: [""]
-  resources:
-  - configmaps
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
----
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
@@ -390,7 +370,7 @@ rules:
   verbs: ["get"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRole
+kind: Role
 metadata:
   name: marshaller
 rules:
@@ -401,6 +381,7 @@ rules:
   - pods
   - services
   - replicasets
+  - configmaps
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 apiVersion: v1
@@ -414,16 +395,6 @@ kind: ServiceAccount
 metadata:
   name: marshaller
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: bad-config
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: config-automation
----
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
@@ -443,36 +414,12 @@ metadata:
   name: marshaller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: Role
   name: marshaller
 subjects:
 - kind: ServiceAccount
   name: marshaller
   namespace: default
----
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: RoleBinding
-metadata:
-  name: bad-config
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: bad-config
-subjects:
-- kind: ServiceAccount
-  name: bad-config
----
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: RoleBinding
-metadata:
-  name: config-automation
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: config-automation
-subjects:
-- kind: ServiceAccount
-  name: config-automation
 ---
 apiVersion: v1
 kind: ConfigMap
