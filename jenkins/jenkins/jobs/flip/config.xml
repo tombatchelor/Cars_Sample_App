@@ -1,0 +1,76 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.5">
+      <projectUrl>https://github.com/$GIT_ROOT/Cars_Sample_App/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>0 0-21/3 * * *
+30 1-22/3 * * *</spec>
+    </hudson.triggers.TimerTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command># Add SSH key from Volume Mount
+cp /keys/id_rsa /id_rsa
+sed -i -e &apos;$a\&apos; /id_rsa
+chmod 600 /id_rsa
+eval &quot;$(ssh-agent -s)&quot;
+ssh-add /id_rsa
+
+git config --global user.email tom.batchelor@me.com
+git config --global user.name tombatchelor
+git clone git@github.com:$GIT_ROOT/Cars_Sample_App.git
+
+cd Cars_Sample_App
+
+cd daily_tasks
+echo $PWD
+ls -ltrh
+
+# Send in ref data
+curl -s -v -H &apos;Content-Type: application/json&apos; -X POST $PROXY_ENDPOINT/v1/observations/httpscodes -d @HTTPCodes.json
+curl -s -v -H &apos;Content-Type: text/csv&apos; -X POST $PROXY_ENDPOINT/v1/observations/users --data-binary @users.csv
+curl -s -v -H &apos;Content-Type: text/csv&apos; -X POST $PROXY_ENDPOINT/v1/observations/companies --data-binary @companies.csv
+
+# Make Git Commit
+git config --global user.email tom.batchelor@me.com
+git config --global user.name tombatchelor
+cd ../app_server
+if  `grep -q &apos;TRUE&apos; Dockerfile`; then
+  sed -i &apos;s/TRUE/FALSE/g&apos; Dockerfile
+  git add Dockerfile
+  git commit -m &quot;Resolving mem leak issue&quot;
+  IS_FAILING=FALSE
+else
+  sed -i &apos;s/FALSE/TRUE/g&apos; Dockerfile
+  git add Dockerfile
+  git commit -m &quot;Small change to cache code&quot;
+  IS_FAILING=TRUE
+fi
+git push origin HEAD:master
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.38">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+      <disableDeferredWipeout>false</disableDeferredWipeout>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+  </buildWrappers>
+</project>
