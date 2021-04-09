@@ -25,7 +25,7 @@ public class CarLogFormatter extends JSONFormatter {
 
     @Override
     public String format​(LogRecord record) {
-        String message = record.getMessage();
+        String message = super.formatMessage(record);
         Map<String, String> obj = new HashMap<>();
         obj.put("sessionID", SessionIDHolder.getSessionID());
         obj.put("spanID", getSpanID());
@@ -37,7 +37,9 @@ public class CarLogFormatter extends JSONFormatter {
             ex.printStackTrace();
         }
         record.setMessage(message);
-        return super.format(record);
+        message = super.format(record);
+        record.setMessage(message);
+        return message;
     }
 
     private String getSpanID() {
