@@ -8,20 +8,38 @@ package com.supercars.logging;
 import brave.Span;
 import brave.Tracer;
 import brave.Tracing;
+import io.github.devatherock.json.formatter.JSONFormatter;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.LogRecord;
-import java.util.logging.SimpleFormatter;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  *
  * @author tombatchelor
  */
-public class CarLogFormatter extends SimpleFormatter {
+public class CarLogFormatter extends JSONFormatter {
 
     @Override
     public String format​(LogRecord record) {
-        String sessionID = SessionIDHolder.getSessionID();
-        record.setMessage(sessionID + " " + getTraceID() + " " + getSpanID() + " " + record.getMessage());
-        return super.format(record);
+        String message = super.formatMessage(record);
+        Map<String, String> obj = new HashMap<>();
+        obj.put("sessionID", SessionIDHolder.getSessionID());
+        obj.put("spanID", getSpanID());
+        obj.put("traceID", getTraceID());
+        obj.put("message", message);
+        try {
+            message = (new ObjectMapper()).writeValueAsString(obj);
+        } catch (JsonProcessingException ex) {
+            ex.printStackTrace();
+        }
+        record.setMessage(message);
+        message = super.format(record);
+        record.setMessage(message);
+        return message;
     }
 
     private String getSpanID() {
@@ -30,12 +48,12 @@ public class CarLogFormatter extends SimpleFormatter {
             Span span = tracer.currentSpan();
             if (span != null) {
                 return span.context().spanIdString();
-                
+
             }
         }
         return "BLANK";
     }
-    
+
     private String getTraceID() {
         Tracer tracer = Tracing.currentTracer();
         if (tracer != null) {

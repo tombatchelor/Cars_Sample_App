@@ -26,3 +26,8 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+
+# VS Code
+.classpath
+.settings
+.project
