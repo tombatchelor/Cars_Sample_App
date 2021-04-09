@@ -12,11 +12,11 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
+
         <brave.version>5.13.2</brave.version>
         <prometheus.version>0.6.0</prometheus.version>
     </properties>
-    
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -28,7 +28,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-  
+
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>
@@ -123,9 +123,9 @@
             <type>jar</type>
         </dependency>
         <dependency>
-  <groupId>io.zipkin.reporter2</groupId>
-  <artifactId>zipkin-sender-okhttp3</artifactId>
-</dependency>
+            <groupId>io.zipkin.reporter2</groupId>
+            <artifactId>zipkin-sender-okhttp3</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-mysql8</artifactId>
@@ -184,6 +184,12 @@
             <groupId>org.redisson</groupId>
             <artifactId>redisson-tomcat-8</artifactId>
             <version>3.11.5</version>
+        </dependency>
+        <!-- Added for JSON logging -->
+        <dependency>
+            <groupId>io.github.devatherock</groupId>
+            <artifactId>jul-jsonformatter</artifactId>
+            <version>1.1.0</version>
         </dependency>
     </dependencies>
 
