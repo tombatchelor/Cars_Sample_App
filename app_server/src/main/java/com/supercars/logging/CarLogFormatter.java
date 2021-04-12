@@ -16,6 +16,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.LogRecord;
+import java.util.logging.Formatter;
 import java.util.logging.Level;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,7 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * @author tombatchelor
  */
-public class CarLogFormatter extends JSONFormatter {
+public class CarLogFormatter extends Formatter {
 
     public enum ExceptionKeys {
         exception_class, exception_message, stack_trace
@@ -67,9 +68,6 @@ public class CarLogFormatter extends JSONFormatter {
             ex.printStackTrace();
         }
 
-        record.setMessage(message);
-        message = super.format(record);
-        record.setMessage(message);
         return message;
     }
 
