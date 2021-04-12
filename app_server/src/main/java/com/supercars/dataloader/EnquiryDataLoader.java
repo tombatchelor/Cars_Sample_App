@@ -49,7 +49,7 @@ public class EnquiryDataLoader {
             statement.close();
             connection.close();
         } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "SQLException getting Enquiry enquiryID: " + enquiryId, ex);
+            logger.log(Level.SEVERE, "SQLException getting Enquiry enquiryID: " + Integer.toString(enquiryId), ex);
         }
         return enquiry;
     }
@@ -72,7 +72,7 @@ public class EnquiryDataLoader {
             statement.close();
             connection.close();
         } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "SQLException getting enquiries for carID: " + carId, ex);
+            logger.log(Level.SEVERE, "SQLException getting enquiries for carID: " + Integer.toString(carId), ex);
         }
         return enquiries;
     }
