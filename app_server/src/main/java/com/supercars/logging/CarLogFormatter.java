@@ -68,6 +68,7 @@ public class CarLogFormatter extends Formatter {
             ex.printStackTrace();
         }
 
+        record.setMessage(message);
         return message;
     }
 
