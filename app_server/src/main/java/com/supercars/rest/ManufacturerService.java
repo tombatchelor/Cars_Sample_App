@@ -31,7 +31,7 @@ public class ManufacturerService {
         logger.fine("GET Getting manufacturers");
         List<Manufacturer> manufacturers = new ManufacturerDataLoader().getManufacturers();
         
-        logger.log(Level.FINE, "Returning {0} manufacturers", manufacturers.size());
+        logger.log(Level.FINE, "Returning {0} manufacturers", Integer.toString(manufacturers.size()));
         return manufacturers;
     }
     

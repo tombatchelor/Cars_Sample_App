@@ -18,10 +18,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author v023094
- *
- * TODO To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
+ * @author tombatchelor
+ * 
  */
 public class CarDataLoader {
 
@@ -85,7 +83,7 @@ public class CarDataLoader {
             resultSet.close();
             statement.close();
         } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "SQLException getting carID: " + carId, ex);
+            logger.log(Level.SEVERE, "SQLException getting carID: " + Integer.toString(carId), ex);
         }
 
         return car;
@@ -116,7 +114,7 @@ public class CarDataLoader {
             statement.close();
             connection.close();
         } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "SQLException getting cars for manufacturerID: " + manufacturerId, ex);
+            logger.log(Level.SEVERE, "SQLException getting cars for manufacturerID: " + Integer.toString(manufacturerId), ex);
         }
         return cars;
     }

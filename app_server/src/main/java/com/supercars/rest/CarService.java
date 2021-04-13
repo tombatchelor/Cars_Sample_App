@@ -50,7 +50,7 @@ public class CarService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCar(@PathParam("id") int carID,  @javax.ws.rs.core.Context HttpServletRequest request) {
-        logger.log(Level.FINE, "GET request for carID: {0}", carID);
+        logger.log(Level.FINE, "GET request for carID: {0}", Integer.toString(carID));
         Car car = new CarDataLoader().getCar(carID);
 
         if (car != null) {
@@ -91,7 +91,7 @@ public class CarService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Car> getCarsForManufacturer(@PathParam("id") int id) {
-        logger.log(Level.FINE, "GET request for cars for manufacturerID: {0}", id);
+        logger.log(Level.FINE, "GET request for cars for manufacturerID: {0}", Integer.toString(id));
         List<Car> cars = new CarDataLoader().getCarsByManufacturer(id);
 
         for (Car car : cars) {
@@ -104,7 +104,7 @@ public class CarService {
         // Add number of cars to span
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
 
-        logger.log(Level.FINE, "Returning {0} cars for manufacturerID: {1}", new Object[]{cars.size(), id});
+        logger.log(Level.FINE, "Returning {0} cars for manufacturerID: {1}", new Object[]{Integer.toString(cars.size()), Integer.toString(id)});
         return cars;
     }
 
@@ -118,7 +118,7 @@ public class CarService {
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.SearchQuery", query);
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
 
-        logger.log(Level.FINE, "Returning {0} cars for query: {1}", new Object[]{cars.size(), query});
+        logger.log(Level.FINE, "Returning {0} cars for query: {1}", new Object[]{Integer.toString(cars.size()), query});
         return cars;
     }
 

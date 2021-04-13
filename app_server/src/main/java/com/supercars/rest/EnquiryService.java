@@ -34,7 +34,7 @@ public class EnquiryService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Enquiry getEnqury(@PathParam("id") int id) {
-        logger.log(Level.FINE, "GET Getting enquiry ID: {0}", id);
+        logger.log(Level.FINE, "GET Getting enquiry ID: {0}", Integer.toString(id));
         Enquiry enquiry = new EnquiryDataLoader().getEnquiry(id);
 
         logger.log(Level.FINE, "Returing enquiry {0}", enquiry.toString());
@@ -45,12 +45,12 @@ public class EnquiryService {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public List<Enquiry> getEnquiryForCar(@PathParam("carId") int carId) {
-        logger.log(Level.FINE, "POST Getting enquiries for carID: {0}", carId);
+        logger.log(Level.FINE, "POST Getting enquiries for carID: {0}", Integer.toString(carId));
         List<Enquiry> enquiries = new EnquiryDataLoader().getEnquiriesForCar(carId);
 
         // Add number of cars to span
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.EnquiryCount", enquiries.size());
-        logger.log(Level.FINE, "Returing {0} enquiries", enquiries.size());
+        logger.log(Level.FINE, "Returing {0} enquiries", Integer.toString(enquiries.size()));
         return enquiries;
     }
 

@@ -83,7 +83,7 @@ public class ManufacturerDataLoader {
             statement.close();
             connection.close();
         } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "SQLException getting Manufacturer ID:" + manufacturerId, ex);
+            logger.log(Level.SEVERE, "SQLException getting Manufacturer ID:" + Integer.toString(manufacturerId), ex);
         }
 
         return manufacturer;
