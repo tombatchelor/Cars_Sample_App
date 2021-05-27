@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: tombatchelor/cars_web:7.0
+        image: tombatchelor/cars_web:8.0
         imagePullPolicy: Always
         ports:
         - name: cars-web-port
@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: db-server
-        image: tombatchelor/carsdb:7.0
+        image: tombatchelor/carsdb:8.0
         imagePullPolicy: Always
         ports:
         - name: mysql
@@ -67,7 +67,7 @@ spec:
     spec:
       containers:
       - name: insurance-quoter
-        image: tombatchelor/car-insurance:7.0
+        image: tombatchelor/car-insurance:8.0
         imagePullPolicy: Always
         ports:
         - name: http
@@ -95,7 +95,7 @@ spec:
     spec:
       containers:
       - name: loan-quoter
-        image: tombatchelor/car-loan:7.0
+        image: tombatchelor/car-loan:8.0
         imagePullPolicy: Always
         ports:
         - name: http
@@ -247,7 +247,7 @@ spec:
         spec:
           containers:
           - name: cleanup
-            image: tombatchelor/carscleanup:7.0
+            image: tombatchelor/carscleanup:8.0
             imagePullPolicy: Always
             env:
             - name: AWS_ACCESS_KEY_ID
