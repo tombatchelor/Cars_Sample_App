@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:lts
+FROM jenkins/jenkins:2.204.1
 
 USER root
 
@@ -35,6 +35,7 @@ RUN apt-get -yqq install jq
 RUN apt-get -yqq install redis-tools
 RUN apt-get -yqq install vim
 
+ARG VERSION=19.03.15
 RUN curl -sSL https://get.docker.com/ | sh
 RUN usermod -g docker jenkins
 VOLUME /var/run/docker.sock
