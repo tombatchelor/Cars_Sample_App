@@ -31,3 +31,8 @@ msbuild.wrn
 .classpath
 .settings
 .project
+
+# Generated user files
+users.csv
+emails.csv
+companies.csv

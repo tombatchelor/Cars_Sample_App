@@ -18,3 +18,17 @@ spec:
         imagePullPolicy: Always
         args:
         - -n -Jthreads=1 -t /tests/SuperCars.jmx
+        volumeMounts:
+        - name: user-lists
+          mountPath: /tmp/users
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - cp /tmp/users/emails.csv /tests/users.csv
+      volumes:
+      - name: user-lists
+        secret:
+          secretName: user-lists

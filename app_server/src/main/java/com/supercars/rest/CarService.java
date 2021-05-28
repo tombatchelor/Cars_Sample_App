@@ -64,10 +64,11 @@ public class CarService {
         car.setRating(CarRating.getCarRating(car.getCarId()).getRating());
 
         try {
-            int rand = (new Random()).nextInt(4);
-            if (!HealthService.isHealthy() && rand == 1) {
+            Random random = new Random();
+            if (!HealthService.isHealthy() && random.nextInt(4) == 1) {
                 String username = UserManager.getUserForSession(request.getSession()).getUsername();
-                Zendesk.sendZendeskTicket(username, car.getManufacturer().getName());
+                if (random.nextInt(4) == 1)
+                    Zendesk.sendZendeskTicket(username, car.getManufacturer().getName());
                 throw new OutOfMemoryError("Out of Memory");
             }
         } catch (OutOfMemoryError ex) {
