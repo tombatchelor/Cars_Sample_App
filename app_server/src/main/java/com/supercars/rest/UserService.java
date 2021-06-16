@@ -36,6 +36,7 @@ public class UserService {
         HttpSession session = request.getSession();
         boolean loggedIn = UserManager.login(user, session);
         logger.log(Level.FINE, "User: {0} logged in: {1}", new Object[]{user.getUsername(), loggedIn});
+        //logger.log(Level.FINE, user.toJSON());
         return loggedIn;
     }
     

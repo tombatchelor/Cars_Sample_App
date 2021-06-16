@@ -14,13 +14,6 @@ import javax.servlet.http.HttpSession;
  */
 public class UserManager {
 
-    private static final User bob = new User("bob@test.com", "password");
-    private static final User geoff = new User("geoff@cars.com", "password");
-    private static final User bill = new User("bill@yahoo.co.uk", "password");
-    private static final User dave = new User("dave@internet.org", "password");
-
-    private static final User[] users = {bob, geoff, bill, dave};
-
     private static final String USER_ATTRIBUTE = "user";
     private static final String STANDARD_PASSWORD = "password";
 
@@ -31,20 +24,10 @@ public class UserManager {
 
         String username = user.getUsername();
         String password = user.getPassword();
-        for (User u : users) {
-            if (u.getUsername().equals(username)) {
-                if (u.getPassword().equals(password)) {
-                    session.setAttribute(USER_ATTRIBUTE, u.clone());
-                    TracingHelper.tag(TracingHelper.CARS_APP_NAME, "user.username", u.getUsername());
-                    return true;
-                }
-            }
-        }
 
         if (password.equals(STANDARD_PASSWORD)) {
-            User u = new User(username, password);
-            session.setAttribute(USER_ATTRIBUTE, u);
-            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "user.username", u.getUsername());
+            session.setAttribute(USER_ATTRIBUTE, user);
+            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "user.username", user.getUsername());
             return true;
         }
         
@@ -60,9 +43,6 @@ public class UserManager {
         User user = (User) session.getAttribute(USER_ATTRIBUTE);
         if (user == null) {
             user = new User();
-        } else {
-            user = user.clone();
-            user.setPassword(null);
         }
 
         return user;
