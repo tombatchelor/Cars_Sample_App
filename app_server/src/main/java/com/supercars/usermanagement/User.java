@@ -6,6 +6,8 @@
 package com.supercars.usermanagement;
 
 import java.io.Serializable;
+import java.util.Map;
+import java.util.HashMap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -205,7 +207,7 @@ public class User implements Serializable {
         obj.put("accountOwner", accountOwner);
         obj.put("techOwner", techOwner);
 
-        String jsonString;
+        String jsonString = "";
         try {
             jsonString = (new ObjectMapper()).writeValueAsString(obj);
         } catch (JsonProcessingException ex) {
