@@ -1,4 +1,4 @@
-apiVersion: apps/v1 
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cars-oom-deployment
@@ -13,6 +13,10 @@ spec:
         app: cars_oom
     spec:
       containers:
-      - name: jmeter
-        image: tombatchelor/oom:latest
-        imagePullPolicy: Always
+      - name: oom
+        image: tombatchelor/oom:1.0
+        resources:
+          requests:
+            memory: "256M"
+          limits:
+            memory: "768M"
