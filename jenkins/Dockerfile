@@ -31,8 +31,6 @@ ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
 RUN apt-get -yqq update
-RUN apt-get -yqq install jq
-RUN apt-get -yqq install redis-tools
 RUN apt-get -yqq install vim
 
 ARG VERSION=19.03.15
@@ -40,4 +38,4 @@ RUN curl -sSL https://get.docker.com/ | sh
 RUN usermod -g docker jenkins
 VOLUME /var/run/docker.sock
 
-COPY --from=lachlanevenson/k8s-kubectl:v1.15.5 /usr/local/bin/kubectl /usr/local/bin/kubectl
+COPY --from=lachlanevenson/k8s-kubectl:v1.18.5 /usr/local/bin/kubectl /usr/local/bin/kubectl

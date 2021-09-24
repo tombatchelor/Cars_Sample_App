@@ -74,6 +74,10 @@ spec:
     metadata:
       labels:
         app: cars_app
+      annotations:
+        prometheus.io/path: 'Cars_Sample_App/metrics/'
+        prometheus.io/port: '8080'
+        prometheus.io/scrape: 'true'
     spec:
       containers:
       - name: app-server
@@ -82,11 +86,11 @@ spec:
         - name: cars-app-port
           containerPort: 8080
         env:
-        - name: PROXY_ENDPOINT
+        - name: OBSREVE_NAMESPACE
           valueFrom:
             configMapKeyRef:
               name: proxy-config
-              key: proxy.endpoint
+              key: observe.namespace
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:

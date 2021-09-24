@@ -41,7 +41,7 @@ echo $PWD
 ls -ltrh
 
 # Send in ref data
-curl -s -v -H &apos;Content-Type: application/json&apos; -X POST $PROXY_ENDPOINT/v1/observations/httpscodes --data-binary @HTTPCodes.json
+curl -s -v -H &apos;Content-Type: application/json&apos; -X POST $PROXY_ENDPOINT/v1/observations/httpcodes -d @HTTPCodes.json
 curl -s -v -H &apos;Content-Type: text/csv&apos; -X POST $PROXY_ENDPOINT/v1/observations/users --data-binary @/tmp/users/users.csv
 curl -s -v -H &apos;Content-Type: text/csv&apos; -X POST $PROXY_ENDPOINT/v1/observations/companies --data-binary @/tmp/users/companies.csv
 
