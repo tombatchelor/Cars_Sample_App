@@ -23,7 +23,7 @@ import javax.ws.rs.core.MediaType;
  */
 public class Zendesk {
     
-    private final static Logger logger = Logger.getLogger(FuelPrices.class.getName());
+    private final static Logger logger = Logger.getLogger(Zendesk.class.getName());
     
     public static void sendZendeskTicket(String username, String manufacturer) {
         // Create the ticket

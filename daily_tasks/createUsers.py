@@ -1,9 +1,9 @@
 import csv
 import random
 
-firstNames = ["June", "Tom", "Vikram", "Vanessa", "Theo", "Priti", "Ken", "Melissa", "Gunter", "Alison", "John", "Victoria", "Prasad", "Anu", "Aditya", "Tara"]
-lastNames = ["Cunningham", "Ford", "Karumbunathan", "Welsh", "Hawley", "Kohler", "Nair", "Zhang", "Lenga", "Peterson", "Bekishhov", "Wong", "Williams", "Reuben"]
-countries = ["USA", "UK", "India", "Germany", "Japan", "Canada", "France", "Sweden"]
+firstNames = ["June", "Tom", "Vikram", "Vanessa", "Theo", "Priti", "Ken", "Melissa", "Gunter", "Alison", "John", "Victoria", "Prasad", "Anu", "Aditya", "Tara", "Connor", "Jen", "Raheem", "George", "Marie"]
+lastNames = ["Cunningham", "Ford", "Karumbunathan", "Welsh", "Hawley", "Kohler", "Nair", "Zhang", "Lenga", "Peterson", "Bekishhov", "Wong", "Williams", "Reuben", "Stirling", "Rashford", "Russell"]
+countries = ["USA", "UK", "India", "Germany", "Japan", "Canada", "France", "Sweden", "France", "South Africa", "Australia"]
 
 companyNames = []
 with open('companies.csv') as csvfile:
