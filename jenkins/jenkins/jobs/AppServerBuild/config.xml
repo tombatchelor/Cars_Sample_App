@@ -86,11 +86,11 @@ spec:
         - name: cars-app-port
           containerPort: 8080
         env:
-        - name: PROXY_ENDPOINT
+        - name: OBSREVE_NAMESPACE
           valueFrom:
             configMapKeyRef:
               name: proxy-config
-              key: proxy.endpoint
+              key: observe.namespace
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:

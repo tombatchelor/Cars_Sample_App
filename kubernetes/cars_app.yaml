@@ -395,6 +395,7 @@ metadata:
   name: proxy-config
 data:
   proxy.endpoint: http://proxy.observe.svc.cluster.local
+  observe.namespace: observe
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -406,7 +407,7 @@ data:
   zipkin-config.json: |-
     {
       "service_name": "nginx",
-      "collector_host": "proxy.observe.svc.cluster.local",
+      "collector_host": "otel-agent.observe.svc.cluster.local",
       "collector_port": 9411
     }
 ---

@@ -83,6 +83,10 @@ public class Zendesk {
         
         // Send to ticket to Observe
         String proxyEndpoint = System.getenv("PROXY_ENDPOINT");
+        String observeNamespace = System.getenv("OBSERVE_NAMESPACE");
+        if (proxyEndpoint == null && observeNamespace != null) {
+            proxyEndpoint = "http://proxy." + observeNamespace + ".svc.cluster.local";
+        }
         String observeURL = proxyEndpoint + "/v1/observations/zendesk";
         
         logger.fine("Using sync HTTP call");
