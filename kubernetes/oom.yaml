@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cars-oom-deployment
+spec:
+  selector:
+    matchLabels:
+      app: cars_oom
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cars_oom
+    spec:
+      containers:
+      - name: oom
+        image: tombatchelor/oom:1.0
+        resources:
+          requests:
+            memory: "256M"
+          limits:
+            memory: "768M"

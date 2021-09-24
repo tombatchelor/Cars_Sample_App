@@ -5,4 +5,4 @@ metadata:
     app: cleanup
   name: db-user
 data:
-  user: admin
+  user: root
