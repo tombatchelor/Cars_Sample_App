@@ -74,6 +74,10 @@ spec:
     metadata:
       labels:
         app: cars_app
+      annotations:
+        prometheus.io/path: 'Cars_Sample_App/metrics/'
+        prometheus.io/port: '8080'
+        prometheus.io/scrape: 'true'
     spec:
       containers:
       - name: app-server
