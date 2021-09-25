@@ -64,6 +64,10 @@ spec:
     metadata:
       labels:
         app: car_insurance
+      annotations:
+        prometheus.io/path: 'metrics'
+        prometheus.io/port: '8000'
+        prometheus.io/scrape: 'true'
     spec:
       containers:
       - name: insurance-quoter
@@ -131,40 +135,6 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cars-prometheus-deployment
-spec:
-  selector:
-    matchLabels:
-      app: cars_prometheus
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: cars_prometheus
-    spec:
-      serviceAccountName: prometheus
-      containers:
-      - name: prometheus
-        image: prom/prometheus:v2.10.0
-        imagePullPolicy: Always
-        args:
-        - --config.file=/etc/prometheus/config.yaml
-        ports:
-        - containerPort: 9090
-          protocol: TCP
-        volumeMounts:
-        - name: config
-          mountPath: /etc/prometheus
-          readOnly: true
-      volumes:
-      - name: config
-        configMap:
-          defaultMode: 420
-          name: prometheus-config
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: jenkins
 spec:
   selector:
@@ -179,7 +149,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:8.0
+        image: tombatchelor/jenkins:8.2
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
@@ -425,6 +395,7 @@ metadata:
   name: proxy-config
 data:
   proxy.endpoint: http://proxy.observe.svc.cluster.local
+  observe.namespace: observe
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -436,7 +407,7 @@ data:
   zipkin-config.json: |-
     {
       "service_name": "nginx",
-      "collector_host": "proxy.observe.svc.cluster.local",
+      "collector_host": "otel-agent.observe.svc.cluster.local",
       "collector_port": 9411
     }
 ---
@@ -468,164 +439,3 @@ metadata:
   name: db-user
 data:
   user: root
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: prometheus
-  name: prometheus-config
-data:
-  config.yaml: |-
-    global:
-      evaluation_interval: 30s
-      scrape_interval: 30s
-
-    remote_write:
-    - url: http://proxy.observe.svc.cluster.local:2001/
-      remote_timeout: 30s
-      queue_config:
-        min_backoff: "1s"
-        max_backoff: "30s"
-        max_shards: 20
-        max_samples_per_send: 5000
-        capacity: 15000
-
-    scrape_configs:
-    - job_name: tomcat
-      metrics_path: /Cars_Sample_App/metrics/
-      kubernetes_sd_configs:
-      - role: pod
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: replace
-        target_label: kubernetes_pod_name
-      - source_labels: [__address__]
-        action: replace
-        regex: ([^:]+)(?::\d+)?
-        replacement: ${1}:8080
-        target_label: __address__
-      - source_labels: [__meta_kubernetes_pod_label_app]
-        action: keep
-        regex: cars_app
-      - source_labels: [__meta_kubernetes_pod_uid]
-        action: replace
-        target_label: kubernetes_pod_uid
-    - job_name: car-insurance
-      metrics_path: /metrics
-      kubernetes_sd_configs:
-      - role: pod
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: replace
-        target_label: kubernetes_pod_name
-      - source_labels: [__address__]
-        action: replace
-        regex: ([^:]+)(?::\d+)?
-        replacement: ${1}:8000
-        target_label: __address__
-      - source_labels: [__meta_kubernetes_pod_label_app]
-        action: keep
-        regex: car_insurance
-    - job_name: kubernetes-apiservers
-      kubernetes_sd_configs:
-      - role: endpoints
-      scheme: https
-      tls_config:
-        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        # insecure_skip_verify: true
-      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: default;kubernetes;https
-
-    - job_name: kubernetes-service-endpoints
-      kubernetes_sd_configs:
-      - role: endpoints
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
-        action: keep
-        regex: true
-      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
-        action: replace
-        target_label: __metrics_path__
-        regex: (.+)
-      - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
-        action: replace
-        regex: ([^:]+)(?::\d+)?;(\d+)
-        replacement: $1:$2
-        target_label: __address__
-      - action: labelmap
-        regex: __meta_kubernetes_service_label_(.+)
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_service_name]
-        action: replace
-        target_label: kubernetes_name
-
-    - job_name: kubernetes-pods
-      kubernetes_sd_configs:
-      - role: pod
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-        action: keep
-        regex: true
-      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
-        action: replace
-        target_label: __metrics_path__
-        regex: (.+)
-      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-        action: replace
-        regex: ([^:]+)(?::\d+)?;(\d+)
-        replacement: $1:$2
-        target_label: __address__
-      - action: labelmap
-        regex: __meta_kubernetes_pod_label_(.+)
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: replace
-        target_label: kubernetes_pod_name
-
-    - job_name: kubernetes-cadvisor
-      kubernetes_sd_configs:
-      - role: node
-      scheme: https
-      tls_config:
-        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-      relabel_configs:
-      - action: labelmap
-        regex: __meta_kubernetes_node_label_(.+)
-      - target_label: __address__
-        replacement: kubernetes.default.svc:443
-      - source_labels: [__meta_kubernetes_node_name]
-        regex: (.+)
-        target_label: __metrics_path__
-        replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
-
-    - job_name: kubernetes-nodes
-      kubernetes_sd_configs:
-      - role: node
-      scheme: https
-      tls_config:
-        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-      relabel_configs:
-      - action: labelmap
-        regex: __meta_kubernetes_node_label_(.+)
-      - target_label: __address__
-        replacement: kubernetes.default.svc:443
-      - source_labels: [__meta_kubernetes_node_name]
-        regex: (.+)
-        target_label: __metrics_path__
-        replacement: /api/v1/nodes/${1}/proxy/metrics
