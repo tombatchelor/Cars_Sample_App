@@ -7,3 +7,4 @@ Adding a line to file
 no op
 Dummy change
 Wee bump
+bump
