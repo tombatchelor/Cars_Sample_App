@@ -44,7 +44,7 @@ resource "aws_elasticache_replication_group" "default" {
   snapshot_retention_limit = 5
   snapshot_window          = "00:00-05:00"
 
-  subnet_group_name          = "${aws_elasticache_subnet_group.default.name}"
+  subnet_group_name          = aws_elasticache_subnet_group.default.name
   automatic_failover_enabled = true
 
   cluster_mode {
