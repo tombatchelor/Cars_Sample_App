@@ -37,3 +37,8 @@ output "fargate_profiles" {
   description = "Map of fargate profiles"
   value       = module.eks.fargate_profiles
 }
+
+output "cluster_ca_certificates" {
+  description = "Clsuter CA Certs"
+  value       = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+}

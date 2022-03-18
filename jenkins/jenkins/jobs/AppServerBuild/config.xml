@@ -86,7 +86,7 @@ spec:
         - name: cars-app-port
           containerPort: 8080
         env:
-        - name: OBSREVE_NAMESPACE
+        - name: OBSERVE_NAMESPACE
           valueFrom:
             configMapKeyRef:
               name: proxy-config

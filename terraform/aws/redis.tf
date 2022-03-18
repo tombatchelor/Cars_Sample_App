@@ -6,9 +6,9 @@ resource "aws_elasticache_cluster" "session-store" {
   parameter_group_name = "default.redis6.x"
   engine_version       = "6.x"
   port                 = 6379
-  availability_zone    = "us-west-1c"
+  availability_zone    = "us-east-1d"
 }
-
+/*
 resource "aws_security_group" "default" {
   name_prefix = "session"
   vpc_id      = module.vpc.vpc_id
@@ -30,7 +30,7 @@ resource "aws_security_group" "default" {
 
 resource "aws_elasticache_subnet_group" "default" {
   name       = "session-cache-subnet"
-  subnet_ids = [aws_subnet.main.id]
+  subnet_ids = [data. aws_subnet.private1.id]
 }
 
 resource "aws_elasticache_replication_group" "default" {
@@ -52,3 +52,4 @@ resource "aws_elasticache_replication_group" "default" {
     num_node_groups         = "1"
   }
 }
+*/

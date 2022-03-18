@@ -39,7 +39,7 @@ public class FuelPrices {
 
     static FuelPrices prices = null;
     static long lastUpdate = 0l;
-    static int timeout = 0;
+    static int timeout = 30 * 60 * 1000; // 30 minutes
 
     static Tracing tracing = TracingHelper.getTracing(TracingHelper.FUEL_PRICES_NAME);
 
@@ -47,10 +47,6 @@ public class FuelPrices {
     
     public static FuelPrices getFuelPrices() {
         try {
-            if (timeout == 0) {
-                timeout = Integer.parseInt(PreferenceManager.getPreference("FUEL_CACHE_TIMEOUT").getValue());
-                timeout = timeout * 60 * 1000;
-            }
             if (prices == null || lastUpdate + timeout > System.currentTimeMillis()) {
                 logger.fine("Getting fresh fuel prices");
                 Preference preference = PreferenceManager.getPreference("REST_CLIENT");

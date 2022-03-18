@@ -80,18 +80,7 @@ public class Constants {
     }
     
     public static Connection getDBConnection() {
-        try {
-            String jndiName = PreferenceManager.getPreference("CONNECTION_POOL").getValue();
-            Context initContext = new InitialContext();
-            Context webContext = (Context) initContext.lookup("java:/comp/env");
-            DataSource ds = (DataSource) webContext.lookup(jndiName);
-            Connection dbCon = ds.getConnection();
-            return dbCon;
-        } catch (NamingException | SQLException | PreferenceException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "Exception getting connection from the pool", ex);
-        }
-        
-        return null;
+        return getDBConnectionStandardPool();
     }
     
     private static boolean checkPropertiesTableExist() throws SQLException {

@@ -4,7 +4,7 @@ module "eks" {
   cluster_name    = local.cluster_name
   cluster_version = "1.21"
   subnet_ids      = module.vpc.private_subnets
-
+  
   vpc_id = module.vpc.vpc_id
 
   self_managed_node_group_defaults = {
@@ -25,7 +25,7 @@ module "eks" {
           namespace = "default"
         },
         {
-          namespace = "observe-demo"
+          namespace = "observe"
         },
         {
           namespace = "cars-app"
