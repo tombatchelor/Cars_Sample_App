@@ -12,12 +12,9 @@ import com.supercars.Manufacturer;
 import com.supercars.Rating;
 import com.supercars.RatingRequest;
 import com.supercars.dataloader.CarDataLoader;
-import com.supercars.preferences.Preference;
-import com.supercars.preferences.PreferenceManager;
 import com.supercars.tracing.TracingHelper;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import com.supercars.preferences.PreferenceException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,19 +45,8 @@ public class CarRating {
         logger.log(Level.FINE, "Getting rating for carID: {0} manufacturerID: {1}", new Object[]{carID, manufacturer.getManufacturerId()});
         RatingRequest ratingRequest = new RatingRequest(manufacturer.getName(), car.getModel());
         try {
-            Preference preference = PreferenceManager.getPreference("REST_CLIENT");
-            switch (preference.getValue()) {
-                case "Jersey_Sync":
-                    rating = getCarRatingSync(ratingRequest);
-                    break;
-                case "Jersey_Async":
-                    rating =  getCarRatingAsync(ratingRequest).get();
-                    break;
-            }
+            rating = getCarRatingSync(ratingRequest);
             logger.log(Level.FINE, "Success getting rating for carID: {0}", carID);
-        } catch (InterruptedException | PreferenceException | ExecutionException ex) {
-            logger.log(Level.SEVERE, "Error getting rating for carID: " + carID + " manufacturerID: " + manufacturer.getManufacturerId(), ex);
-            return null;
         } catch (Exception ex) {
             logger.log(Level.SEVERE, "Error getting rating for carID: " + carID + " manufacturerID: " + manufacturer.getManufacturerId(), ex);
             return null;
