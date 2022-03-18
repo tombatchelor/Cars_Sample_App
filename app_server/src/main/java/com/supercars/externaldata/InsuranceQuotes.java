@@ -12,9 +12,6 @@ import com.supercars.Manufacturer;
 import com.supercars.InsuranceQuote;
 import com.supercars.InsuranceQuoteRequest;
 import com.supercars.dataloader.CarDataLoader;
-import com.supercars.preferences.Preference;
-import com.supercars.preferences.PreferenceException;
-import com.supercars.preferences.PreferenceManager;
 import com.supercars.tracing.TracingHelper;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -44,18 +41,10 @@ public class InsuranceQuotes {
         logger.log(Level.FINE, "Sending quote request: {0}", quoteRequest.toString());
         InsuranceQuote quote = null;
         try {
-            Preference preference = PreferenceManager.getPreference("REST_CLIENT");
-            switch (preference.getValue()) {
-                case "Jersey_Sync":
-                    quote = getQuoteJerseySync(quoteRequest);
-                    break;
-                case "Jersey_Async":
-                    quote = getQuoteJerseysAsync(quoteRequest).get();
-                    break;
-            }
+            quote = getQuoteJerseySync(quoteRequest);
             logger.log(Level.FINE, "Success getting insurance quote for carID: {0}", carID);
             logger.log(Level.FINE, "Quote price of ${0} from: {1}", new Object[]{quote.getPrice(), quote.getCompany()});
-        } catch (PreferenceException | InterruptedException | ExecutionException ex) {
+        } catch (Exception ex) {
             logger.log(Level.SEVERE, null, ex);
         }
 
