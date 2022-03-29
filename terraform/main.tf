@@ -2,8 +2,8 @@ module "aws" {
   source = "./aws"
 
   region           = "us-east-1"
-  observe_customer = "126338107931"
-  observe_token    = "OedWF9hA7Qk4EEoZH1CrQta9dfi_DgbX"
+  observe_customer = ""
+  observe_token    = ""
   observe_domain   = "observe-staging.com"
 }
 
@@ -30,13 +30,12 @@ provider "kubernetes" {
   }
 }
 
-/*
+
 module "observe_collection" {
   source = "github.com/observeinc/terraform-aws-collection"
 
   name             = "obsrve-demo-collection"
   observe_customer = "126338107931"
-  observe_token    = "OedWF9hA7Qk4EEoZH1CrQta9dfi_DgbX"
+  observe_token    = "ds1KmgHrvuefEhQmE4DY:LhedMK0EGV9XmAoPzig8ukjxmmKTL3XO"
   observe_domain   = "observe-staging.com"
 }
-*/
