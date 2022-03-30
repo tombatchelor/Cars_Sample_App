@@ -30,7 +30,8 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
 ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
-RUN apt-get -yqq update
+RUN apt-get update && apt-get upgrade -y
+RUN update-ca-certificates --fresh
 RUN apt-get -yqq install vim
 
 ARG VERSION=19.03.15
