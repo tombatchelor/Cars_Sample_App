@@ -2,17 +2,9 @@ module "aws" {
   source = "./aws"
 
   region           = "us-east-1"
-  observe_customer = ""
-  observe_token    = ""
+  observe_customer = "126338107931"
+  observe_token    = "ds1KmgHrvuefEhQmE4DY:LhedMK0EGV9XmAoPzig8ukjxmmKTL3XO"
   observe_domain   = "observe-staging.com"
-}
-
-module "kubernetes" {
-  depends_on = [
-    module.aws
-  ]
-
-  source = "./kubernetes"
 }
 
 provider "kubernetes" {
