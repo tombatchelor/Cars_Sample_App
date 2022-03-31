@@ -11,12 +11,7 @@ import com.supercars.Car;
 import com.supercars.LoanQuote;
 import com.supercars.LoanQuoteRequest;
 import com.supercars.dataloader.CarDataLoader;
-import com.supercars.preferences.Preference;
-import com.supercars.preferences.PreferenceException;
-import com.supercars.preferences.PreferenceManager;
 import com.supercars.tracing.TracingHelper;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
@@ -39,18 +34,10 @@ public class LoanQuotes {
         logger.log(Level.FINE, "Getting loan quote request of ${0} over term of {1}", new Object[]{quoteRequest.getLoanAmount(), quoteRequest.getTerm()});
         LoanQuote loanQuote = null;
         try {
-            Preference preference = PreferenceManager.getPreference("REST_CLIENT");
-            switch (preference.getValue()) {
-                case "Jersey_Sync":
-                    loanQuote = getQuoteJerseySync(quoteRequest);
-                    break;
-                case "Jersey_Async":
-                    loanQuote = getQuoteJerseysAsync(quoteRequest).get();
-                    break;
-            }
+            loanQuote = getQuoteJerseySync(quoteRequest);
             logger.fine("Success getting loan quote request");
             logger.log(Level.FINE, "Loan quote of {0}% APR recieved, monthly payment of {1}", new Object[]{loanQuote.getRate(), loanQuote.getPayment()});
-        } catch (PreferenceException | InterruptedException | ExecutionException ex) {
+        } catch (Exception ex) {
             logger.log(Level.SEVERE, null, ex);
         }
 
@@ -70,14 +57,5 @@ public class LoanQuotes {
         target.register(TracingClientFilter.create(tracing));
         return target.request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(loanQuoteRequest, MediaType.APPLICATION_JSON), LoanQuote.class);
-    }
-
-    private static Future<LoanQuote> getQuoteJerseysAsync(LoanQuoteRequest loanQuoteRequest) {
-        logger.fine("Using async HTTP call");
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://car-loan/carloan");
-        Future<LoanQuote> response = target.request(MediaType.APPLICATION_JSON).async()
-                .post(Entity.entity(loanQuoteRequest, MediaType.APPLICATION_JSON), LoanQuote.class);
-        return response;
     }
 }

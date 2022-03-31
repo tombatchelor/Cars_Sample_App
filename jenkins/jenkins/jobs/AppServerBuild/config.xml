@@ -18,7 +18,8 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/master</name>
+        <!-- Change before marge and release -->
+        <name>*/DEMO2_0</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -86,11 +87,6 @@ spec:
         - name: cars-app-port
           containerPort: 8080
         env:
-        - name: OBSERVE_NAMESPACE
-          valueFrom:
-            configMapKeyRef:
-              name: proxy-config
-              key: observe.namespace
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
@@ -125,6 +121,21 @@ spec:
             secretKeyRef:
               name: db-connection
               key: database.password
+        - name: OBSERVE_CUSTOMER
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: OBSERVE_CUSTOMER
+        - name: OBSERVE_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: OBSERVE_TOKEN
+        - name: OBSERVE_COLLECTOR_HOST
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: OBSERVE_COLLECTOR_HOST
         livenessProbe:
           httpGet:
             path: /Cars_Sample_App/public/health

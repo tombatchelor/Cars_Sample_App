@@ -24,6 +24,10 @@ import javax.ws.rs.core.MediaType;
 public class Zendesk {
     
     private final static Logger logger = Logger.getLogger(Zendesk.class.getName());
+
+    static String observeCustomer = System.getenv("OBSERVE_CUSTOMER");
+    static String observeToken = System.getenv("OBSERVE_TOKEN");
+    static String observeCollectionHost = System.getenv("OBSERVE_COLLECTION_HOST");
     
     public static void sendZendeskTicket(String username, String manufacturer) {
         // Create the ticket
@@ -82,12 +86,10 @@ public class Zendesk {
         ticket.setComments(comments);
         
         // Send to ticket to Observe
-        String proxyEndpoint = System.getenv("PROXY_ENDPOINT");
-        String observeNamespace = System.getenv("OBSERVE_NAMESPACE");
-        if (proxyEndpoint == null && observeNamespace != null) {
-            proxyEndpoint = "http://proxy." + observeNamespace + ".svc.cluster.local";
-        }
-        String observeURL = proxyEndpoint + "/v1/observations/zendesk";
+        String observeCustomer = System.getenv("OBSERVE_CUSTOMER");
+        String observeToken = System.getenv("OBSERVE_TOKEN");
+        String observeCollectionHost = System.getenv("OBSERVE_COLLECTION_HOST");
+        String observeURL = "https://" + observeCustomer  + ":\"" + observeToken + "\"@" + Zendesk.observeCollectionHost + "/v1/observations/zendesk";
         
         logger.fine("Using sync HTTP call");
         Client client = ClientBuilder.newClient();

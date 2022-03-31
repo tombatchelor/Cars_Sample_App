@@ -8,9 +8,6 @@
  */
 package com.supercars.dataloader;
 
-import com.supercars.preferences.Preference;
-import com.supercars.preferences.PreferenceException;
-import com.supercars.preferences.PreferenceManager;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,35 +26,6 @@ import javax.sql.DataSource;
 public class Constants {
     
     private final static Logger logger = Logger.getLogger(Constants.class.getName());
-    
-    private static final String PREFERENCES_TABLE = "CREATE TABLE PREFERENCES (\n"
-            + " PREFERENCE_ID MEDIUMINT NOT NULL AUTO_INCREMENT,\n"
-            + " NAME VARCHAR(30),"
-            + " VALUE VARCHAR(50),"
-            + " DESCRIPTION VARCHAR(100), "
-            + " HIDDEN INT(1), "
-            + " PRIMARY KEY (PREFERENCE_ID) "
-            + ");";
-    
-    static {
-        try {
-            int schemaVersion = getSchemaVersion();
-            // Fall through is intentional here
-            switch (schemaVersion) {
-                case 1:
-                    upgradeToSchema_2();
-                case 2:
-                    upgradeToSchema_3();
-                case 3:
-                    upgradeToSchema_4();
-                case 4:
-                    upgradeToSchema_5();
-                default:
-            }
-        } catch (PreferenceException | SQLException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "Exception in Contansts static initilization", ex);
-        }
-    }
 
     /**
      * Creates a new instance of Constants
@@ -73,7 +41,7 @@ public class Constants {
             Connection connection = ds.getConnection();
             return connection;
         } catch (NamingException | SQLException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "Exception getting connection from the pool", ex);
+            logger.log(Level.SEVERE, "Exception getting connection from the pool", ex);
         }
         
         return null;
@@ -81,57 +49,5 @@ public class Constants {
     
     public static Connection getDBConnection() {
         return getDBConnectionStandardPool();
-    }
-    
-    private static boolean checkPropertiesTableExist() throws SQLException {
-        boolean exists = false;
-        try (Connection connection = getDBConnectionStandardPool(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'supercars' AND table_name = 'PREFERENCES'")) {
-            exists = resultSet.next();
-        } catch (NullPointerException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "Exception checking properties table exists", ex);
-            SQLException se = new SQLException("NullPointerException when getting DB connection");
-            se.addSuppressed(ex);
-            throw se;
-        }
-        return exists;
-    }
-    
-    private static int getSchemaVersion() throws SQLException, PreferenceException {
-        int version = 1;
-        if (checkPropertiesTableExist()) {
-            version = Integer.parseInt(PreferenceManager.getPreference("SCHEMA_VERSION").getValue());
-        }
-        return version;
-    }
-    
-    private static void updateSchemaVersion(int version) throws SQLException {
-        try {
-            PreferenceManager.updatePreference("SCHEMA_VERSION", String.valueOf(version), "Schema Version", true);
-        } catch (PreferenceException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "PreferenceException updating schema version", ex);
-        }
-    }
-    
-    private static boolean upgradeToSchema_2() throws SQLException {
-        try (Connection connection = getDBConnectionStandardPool(); Statement statement = connection.createStatement()) {
-            statement.execute(PREFERENCES_TABLE);
-            updateSchemaVersion(2);
-        }
-        return true;
-    }
-    
-    private static void upgradeToSchema_3() throws PreferenceException, SQLException {
-        PreferenceManager.updatePreference(new Preference("REST_CLIENT", "Jersey_Sync", "Client to call fueleconomy.gov, either 'Jersey_Sync' or 'Jersey_Async'", false));
-        updateSchemaVersion(3);
-    }
-    
-    private static void upgradeToSchema_4() throws PreferenceException, SQLException {
-        PreferenceManager.updatePreference(new Preference("CONNECTION_POOL", "jdbc/standard", "Connection pool to use, either 'jdbc/standard' or 'jdbc/c3p0'", false));
-        updateSchemaVersion(4);
-    }
-    
-    private static void upgradeToSchema_5() throws PreferenceException, SQLException {
-        PreferenceManager.updatePreference(new Preference("FUEL_CACHE_TIMEOUT", "30", "Cache timeout for external fuel prices in minutes", false));
-        updateSchemaVersion(5);
     }
 }
