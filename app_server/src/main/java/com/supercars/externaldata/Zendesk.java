@@ -89,7 +89,7 @@ public class Zendesk {
         String observeCustomer = System.getenv("OBSERVE_CUSTOMER");
         String observeToken = System.getenv("OBSERVE_TOKEN");
         String observeCollectionHost = System.getenv("OBSERVE_COLLECTION_HOST");
-        String observeURL = "https://" + observeCustomer  + ":\"" + observeToken + "\"@" + Zendesk.observeCollectionHost + "/v1/observations/zendesk";
+        String observeURL = "https://" + observeCustomer  + ":\"" + observeToken + "\"@" + observeCollectionHost + "/v1/observations/zendesk";
         
         logger.fine("Using sync HTTP call");
         Client client = ClientBuilder.newClient();
