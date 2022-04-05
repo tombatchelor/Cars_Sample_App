@@ -362,7 +362,7 @@ metadata:
     app: app-server
   name: zipkin-config
 data:
-  zipkin.endpoint: observe-traces.observe.svc.cluster.local
+  zipkin.endpoint: http://observe-traces.observe.svc.cluster.local
 ---
 apiVersion: v1
 kind: ConfigMap
