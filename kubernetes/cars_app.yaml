@@ -106,7 +106,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:8.7
+        image: tombatchelor/jenkins:8.9
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
@@ -346,24 +346,23 @@ kind: ConfigMap
 metadata:
   labels:
     app: web-server
-  name: proxy-config
-data:
-  proxy.endpoint: http://proxy.observe.svc.cluster.local
-  observe.namespace: observe
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: web-server
   name: zipkin-nginx-config
 data:
   zipkin-config.json: |-
     {
       "service_name": "nginx",
-      "collector_host": "otel-agent.observe.svc.cluster.local",
+      "collector_host": "observe-traces.observe.svc.cluster.local",
       "collector_port": 9411
     }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: app-server
+  name: zipkin-config
+data:
+  zipkin.endpoint: observe-traces.observe.svc.cluster.local
 ---
 apiVersion: v1
 kind: ConfigMap

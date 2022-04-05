@@ -107,6 +107,11 @@ spec:
             configMapKeyRef:
               name: aws
               key: rating.endpoint
+        - name: ZIPKIN_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: zipkin-config
+              key: zipkin.endpoint
         - name: POD_NAME
           valueFrom:
             fieldRef:
