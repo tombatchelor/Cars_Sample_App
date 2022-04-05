@@ -89,9 +89,9 @@ public class Zendesk {
         String observeCustomer = System.getenv("OBSERVE_CUSTOMER");
         String observeToken = System.getenv("OBSERVE_TOKEN");
         String observeCollectionHost = System.getenv("OBSERVE_COLLECTION_HOST");
-        String observeURL = "https://" + observeCustomer  + ":\"" + observeToken + "\"@" + observeCollectionHost + "/v1/observations/zendesk";
+        String observeURL = "https://" + observeCustomer  + ":\"" + observeToken + "\"@" + observeCollectionHost + "/v1/http/zendesk";
         
-        logger.fine("Using sync HTTP call");
+        logger.fine("Using sync HTTP call to: " + observeURL);
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(observeURL);
         target.register(TracingClientFilter.create(tracing));
