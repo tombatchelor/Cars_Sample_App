@@ -1,13 +1,16 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: virtual-host-ingress
-  namespace: default
+  name: cars-ingress
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
 spec:
   rules:
-  - host: cars.cars.com
-    http:
-      paths:
-      - backend:
-          serviceName: cars-web
-          servicePort: 80
+    - http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: cars-web
+              servicePort: 80

@@ -25,9 +25,6 @@ import java.util.logging.Logger;
  */
 public class ManufacturerDataLoader {
 
-    Statement statement = null;
-    ResultSet resultSet = null;
-
     private final static Logger logger = Logger.getLogger(ManufacturerDataLoader.class.getName());
 
     static {
@@ -42,19 +39,17 @@ public class ManufacturerDataLoader {
         try ( Connection connection = Constants.getDBConnection()) {
             String sql = "SELECT MANUFACTURER_ID, NAME, WEB, EMAIL, LOGO FROM MANUFACTURER ORDER BY NAME";
 
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                manufacturer = new Manufacturer();
-                manufacturer.setManufacturerId(resultSet.getInt("MANUFACTURER_ID"));
-                manufacturer.setName(resultSet.getString("NAME"));
-                manufacturer.setWeb(resultSet.getString("WEB"));
-                manufacturer.setEmail(resultSet.getString("EMAIL"));
-                manufacturer.setLogo(resultSet.getString("LOGO"));
-                manufacturers.add(manufacturer);
+            try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    manufacturer = new Manufacturer();
+                    manufacturer.setManufacturerId(resultSet.getInt("MANUFACTURER_ID"));
+                    manufacturer.setName(resultSet.getString("NAME"));
+                    manufacturer.setWeb(resultSet.getString("WEB"));
+                    manufacturer.setEmail(resultSet.getString("EMAIL"));
+                    manufacturer.setLogo(resultSet.getString("LOGO"));
+                    manufacturers.add(manufacturer);
+                }
             }
-            resultSet.close();
-            statement.close();
             connection.close();
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, "SQLException getting Manufacturers", ex);
@@ -70,17 +65,15 @@ public class ManufacturerDataLoader {
         try ( Connection connection = Constants.getDBConnection()) {
             String sql = "SELECT MANUFACTURER_ID, NAME, WEB, EMAIL, LOGO FROM MANUFACTURER WHERE MANUFACTURER_ID = " + manufacturerId;
 
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
-            if (resultSet.next()) {
-                manufacturer.setManufacturerId(resultSet.getInt("MANUFACTURER_ID"));
-                manufacturer.setName(resultSet.getString("NAME"));
-                manufacturer.setWeb(resultSet.getString("WEB"));
-                manufacturer.setEmail(resultSet.getString("EMAIL"));
-                manufacturer.setLogo(resultSet.getString("LOGO"));
+            try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
+                if (resultSet.next()) {
+                    manufacturer.setManufacturerId(resultSet.getInt("MANUFACTURER_ID"));
+                    manufacturer.setName(resultSet.getString("NAME"));
+                    manufacturer.setWeb(resultSet.getString("WEB"));
+                    manufacturer.setEmail(resultSet.getString("EMAIL"));
+                    manufacturer.setLogo(resultSet.getString("LOGO"));
+                }
             }
-            resultSet.close();
-            statement.close();
             connection.close();
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, "SQLException getting Manufacturer ID:" + Integer.toString(manufacturerId), ex);

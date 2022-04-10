@@ -24,6 +24,10 @@ import javax.ws.rs.core.MediaType;
 public class Zendesk {
     
     private final static Logger logger = Logger.getLogger(Zendesk.class.getName());
+
+    static String observeCustomer = System.getenv("OBSERVE_CUSTOMER");
+    static String observeToken = System.getenv("OBSERVE_TOKEN");
+    static String observeCollectionHost = System.getenv("OBSERVE_COLLECTION_HOST");
     
     public static void sendZendeskTicket(String username, String manufacturer) {
         // Create the ticket
@@ -82,18 +86,18 @@ public class Zendesk {
         ticket.setComments(comments);
         
         // Send to ticket to Observe
-        String proxyEndpoint = System.getenv("PROXY_ENDPOINT");
-        String observeNamespace = System.getenv("OBSERVE_NAMESPACE");
-        if (proxyEndpoint == null && observeNamespace != null) {
-            proxyEndpoint = "http://proxy." + observeNamespace + ".svc.cluster.local";
-        }
-        String observeURL = proxyEndpoint + "/v1/observations/zendesk";
+        String observeCustomer = System.getenv("OBSERVE_CUSTOMER");
+        String observeToken = System.getenv("OBSERVE_TOKEN");
+        String observeCollectorHost = System.getenv("OBSERVE_COLLECTOR_HOST");
+        String observeURL = "https://" + observeCollectorHost + "/v1/http/zendesk";
+        String bearer = "Bearer " + observeCustomer + " " + observeToken;
         
-        logger.fine("Using sync HTTP call");
+        logger.fine("Using sync HTTP call to: " + observeURL);
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(observeURL);
         target.register(TracingClientFilter.create(tracing));
         target.request(MediaType.APPLICATION_JSON)
+                .header("Authorization", bearer)
                 .post(Entity.entity(ticket, MediaType.APPLICATION_JSON));
     }
 }
