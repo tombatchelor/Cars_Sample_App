@@ -41,22 +41,11 @@
     <hudson.tasks.Shell>
       <command>cd app_server
 mvn clean install
+docker login
+docker build . -t tombatchelor/carsdemo:$GIT_COMMIT
+docker push tombatchelor/carsdemo:$GIT_COMMIT
 </command>
     </hudson.tasks.Shell>
-    <com.nirima.jenkins.plugins.docker.builder.DockerBuilderPublisher plugin="docker-plugin@1.1.9">
-      <dockerFileDirectory>app_server</dockerFileDirectory>
-      <fromRegistry plugin="docker-commons@1.16"/>
-      <tags>
-        <string>tombatchelor/carsdemo:$GIT_COMMIT</string>
-      </tags>
-      <pushOnSuccess>true</pushOnSuccess>
-      <pushCredentialsId>TomDocker</pushCredentialsId>
-      <cleanImages>true</cleanImages>
-      <cleanupWithJenkinsJobDelete>false</cleanupWithJenkinsJobDelete>
-      <cloud>docker</cloud>
-      <noCache>false</noCache>
-      <pull>false</pull>
-    </com.nirima.jenkins.plugins.docker.builder.DockerBuilderPublisher>
     <hudson.tasks.Shell>
       <command>kubectl apply -f - &lt;&lt;EOF
 apiVersion: apps/v1
@@ -171,6 +160,8 @@ spec:
                 operator: NotIn
                 values:
                 - yolo
+      imagePullSecrets:
+      - name: dockerauth
 ---
 apiVersion: v1
 kind: Service

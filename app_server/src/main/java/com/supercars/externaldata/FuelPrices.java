@@ -39,7 +39,7 @@ public class FuelPrices {
     static Tracing tracing = TracingHelper.getTracing(TracingHelper.FUEL_PRICES_NAME);
 
     private final static Logger logger = Logger.getLogger(FuelPrices.class.getName());
-    
+
     public static FuelPrices getFuelPrices() {
         try {
             prices = getFuelPricesJerseySync();

@@ -7,10 +7,12 @@ ADD --chown=jenkins:jenkins jenkins/plugins /var/jenkins_home/plugins/
 ADD --chown=jenkins:jenkins jenkins/users /var/jenkins_home/users/
 ADD --chown=jenkins:jenkins jenkins/secrets /var/jenkins_home/secrets/
 COPY --chown=jenkins:jenkins jenkins/hudson.tasks.Shell.xml /var/jenkins_home/hudson.tasks.Shell.xml
-COPY --chown=jenkins:jenkins payloadCreate.json /var/jenkins_home/payloadCreate.json
+COPY --chown=root:jenkins postStart.sh /postStart.sh
+RUN chmod 755 /postStart.sh
 RUN chmod 700 /var/jenkins_home/secrets
 
 RUN mkdir /root/.ssh
+RUN mkdir /root/.docker
 RUN echo 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==' >> /root/.ssh/known_hosts
 
 RUN apt-get -y update
