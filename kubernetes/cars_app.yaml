@@ -58,8 +58,8 @@ spec:
         - name: PROXY_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: proxy-config
-              key: proxy.endpoint
+              name: zipkin-config
+              key: zipkin.endpoint
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -86,8 +86,8 @@ spec:
         - name: PROXY_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: proxy-config
-              key: proxy.endpoint
+              name: zipkin-config
+              key: zipkin.endpoint
 ---
 apiVersion: apps/v1
 kind: Deployment

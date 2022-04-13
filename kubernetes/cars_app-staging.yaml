@@ -58,8 +58,8 @@ spec:
         - name: PROXY_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: proxy-config
-              key: proxy.endpoint
+              name: zipkin-config
+              key: zipkin.endpoint
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -86,8 +86,8 @@ spec:
         - name: PROXY_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: proxy-config
-              key: proxy.endpoint
+              name: zipkin-config
+              key: zipkin.endpoint
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -371,8 +371,8 @@ metadata:
     app: app-server
   name: aws
 data:
-  bucket.name: carimages-observeinc
-  rating.endpoint: https://qsii07giue.execute-api.us-west-2.amazonaws.com/test/carrating
+  bucket.name: observe-demo-car-images-staging
+  rating.endpoint: https://0pqj3jrnn8.execute-api.us-east-1.amazonaws.com/default
 ---
 apiVersion: v1
 kind: ConfigMap
