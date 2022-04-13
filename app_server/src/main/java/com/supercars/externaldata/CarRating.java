@@ -40,7 +40,7 @@ public class CarRating {
         Car car = new CarDataLoader().getCar(carID);
         Manufacturer manufacturer = car.getManufacturer();
         logger.log(Level.FINE, "Getting rating for carID: {0} manufacturerID: {1}", new Object[]{carID, manufacturer.getManufacturerId()});
-        RatingRequest ratingRequest = new RatingRequest(manufacturer.getName(), car.getModel());
+        RatingRequest ratingRequest = new RatingRequest(manufacturer.getManufacturerId());
         try {
             rating = getCarRatingSync(ratingRequest);
             logger.log(Level.FINE, "Success getting rating for carID: {0}", carID);

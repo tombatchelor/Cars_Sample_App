@@ -11,38 +11,23 @@ package com.supercars;
  */
 public class RatingRequest {
 
-    public RatingRequest(String manufacturer, String model) {
-        this.manufacturer = manufacturer;
-        this.model = model;
+    public RatingRequest(int manufacturerId) {
+        this.manufacturerId = manufacturerId;
     }
     
     /**
      * @return the manufacturer
      */
-    public String getManufacturer() {
-        return manufacturer;
+    public int getManufacturerId() {
+        return manufacturerId;
     }
 
     /**
      * @param manufacturer the manufacturer to set
      */
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
+    public void setManufacturer(int manufacturerId) {
+        this.manufacturerId = manufacturerId;
     }
 
-    /**
-     * @return the model
-     */
-    public String getModel() {
-        return model;
-    }
-
-    /**
-     * @param model the model to set
-     */
-    public void setModel(String model) {
-        this.model = model;
-    }
-    private String manufacturer;
-    private String model;
+    private int manufacturerId;
 }
