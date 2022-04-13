@@ -28,7 +28,7 @@ public class Car {
     private boolean isManual;
     private String photo;
     private Manufacturer manufacturer;
-    private float rating;
+    private int rating;
 
     public String getPhoto() {
         // do this as a hack, there is only 1 car photo per manufacturer DEMO-18
@@ -152,14 +152,14 @@ public class Car {
         /**
      * @return the rating
      */
-    public float getRating() {
+    public int getRating() {
         return rating;
     }
 
     /**
      * @param rating the rating to set
      */
-    public void setRating(float rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
     

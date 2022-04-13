@@ -60,8 +60,15 @@ public class CarService {
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.Price", car.getPrice());
         }
 
-        S3Images.getImage("IMG_" + car.getCarId() + ".jpeg");
-        car.setRating(CarRating.getCarRating(car.getCarId()).getRating());
+        int rating = 0;
+        try {
+            S3Images.getImage("IMG_" + car.getCarId() + ".jpeg");
+            rating = CarRating.getCarRating(car.getCarId()).getRating();
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+
+        car.setRating(rating);
 
         try {
             Random random = new Random();
