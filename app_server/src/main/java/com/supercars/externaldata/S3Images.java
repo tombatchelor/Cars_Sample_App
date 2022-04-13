@@ -25,7 +25,7 @@ import javax.imageio.stream.ImageInputStream;
  */
 public class S3Images {
 
-    static final Regions CLIENT_REGION = Regions.US_EAST_!;
+    static final Regions CLIENT_REGION = Regions.US_EAST_1;
     static String bucketName = null;
     
     private final static Logger logger = Logger.getLogger(S3Images.class.getName());
