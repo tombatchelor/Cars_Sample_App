@@ -4,25 +4,27 @@
  * and open the template in the editor.
  */
 package com.supercars;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  *
  * @author tombatchelor
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Rating {
-    private float rating;
+    private int rating;
 
     /**
      * @return the rating
      */
-    public float getRating() {
+    public int getRating() {
         return rating;
     }
 
     /**
      * @param rating the rating to set
      */
-    public void setRating(float rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 }
