@@ -6,6 +6,7 @@ CREATE TABLE MANUFACTURER (
     WEB VARCHAR(50),
     EMAIL VARCHAR(50),
     LOGO VARCHAR(30),
+    RATING MEDIUMINT,
     PRIMARY KEY (MANUFACTURER_ID)
 );
 
@@ -33,16 +34,16 @@ CREATE TABLE ENQUIRIES (
     PRIMARY KEY (ENQUIRY_ID)
 );
 
-INSERT INTO MANUFACTURER (MANUFACTURER_ID, NAME, WEB, EMAIL, LOGO) VALUES
-    (1, 'Porsche', 'http://www.porsche.com', 'web@porsche.com', 'Porsche.gif'),
-    (2, 'Ferrari', 'http://www.ferrari.com/en_us/', 'web@ferrari.com','Ferrari.gif'),
-    (3, 'Aston Martin','http://www.astonmartin.com','web@astonmartin.com','AstonMartin.gif'),
-    (4, 'BMW', 'http://www.bmw.com/com/en/', 'web@bmw.com', 'Bmw.gif'),
-    (5, 'Ford', 'http://www.ford.com', 'web@ford.com', 'Ford.gif'),
-    (6, 'Jaguar', 'http://www.jaguarusa.com/index.html', 'web@jaguarusa.com', 'Jaguar.gif'),
-    (7, 'Lamborghini', 'http://www.lamborghini.com/en/home/', 'web@lamborghini.com', 'Lamborghini.gif'),
-    (8, 'Lotus', 'http://www.lotuscars.com', 'web@lotuscars.com', 'Lotus.gif'),
-    (9, 'McLaren', 'https://cars.mclaren.com/en', 'web@mclaren.com', 'McLaren.png');
+INSERT INTO MANUFACTURER (MANUFACTURER_ID, NAME, WEB, EMAIL, LOGO, RATING) VALUES
+    (1, 'Porsche', 'http://www.porsche.com', 'web@porsche.com', 'Porsche.gif', 89),
+    (2, 'Ferrari', 'http://www.ferrari.com/en_us/', 'web@ferrari.com','Ferrari.gif', 76),
+    (3, 'Aston Martin','http://www.astonmartin.com','web@astonmartin.com','AstonMartin.gif', 34),
+    (4, 'BMW', 'http://www.bmw.com/com/en/', 'web@bmw.com', 'Bmw.gif', 63),
+    (5, 'Ford', 'http://www.ford.com', 'web@ford.com', 'Ford.gif', 45),
+    (6, 'Jaguar', 'http://www.jaguarusa.com/index.html', 'web@jaguarusa.com', 'Jaguar.gif', 35),
+    (7, 'Lamborghini', 'http://www.lamborghini.com/en/home/', 'web@lamborghini.com', 'Lamborghini.gif', 73),
+    (8, 'Lotus', 'http://www.lotuscars.com', 'web@lotuscars.com', 'Lotus.gif', 23),
+    (9, 'McLaren', 'https://cars.mclaren.com/en', 'web@mclaren.com', 'McLaren.png', 71);
 
 INSERT INTO CARS(NAME, MODEL, DESCRIPTION, MANUFACTURER_ID, COLOUR, YEAR, PRICE, SUMMARY, PHOTO) VALUES
     ("GTB", "488", "Low mileage with high spec!", 2, "Red", 2018, 130000, "This is a excellent example offered at a price for a quick sale", "IMG_1.jpeg"),

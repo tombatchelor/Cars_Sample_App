@@ -32,28 +32,6 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cars-db-deployment
-spec:
-  selector:
-    matchLabels:
-      app: cars_db
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: cars_db
-    spec:
-      containers:
-      - name: db-server
-        image: tombatchelor/carsdb:8.0
-        imagePullPolicy: Always
-        ports:
-        - name: mysql
-          containerPort: 3306
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: car-insurance-go
 spec:
   selector:
@@ -114,27 +92,6 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-session-manager-deployment
-spec:
-  selector:
-    matchLabels:
-      app: redis_session_manager
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: redis_session_manager
-    spec:
-      containers:
-      - name: redis
-        image: redis:5.0
-        ports:
-        - name: redis
-          containerPort: 6379
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: jenkins
 spec:
   selector:
@@ -149,7 +106,7 @@ spec:
       serviceAccountName: marshaller
       containers:
       - name: jenkins
-        image: tombatchelor/jenkins:8.2
+        image: tombatchelor/jenkins:8.9
         imagePullPolicy: Always
         ports:
         - name: jenkins-ui
@@ -164,11 +121,6 @@ spec:
         - name: git-key
           mountPath: /keys
         env:
-        - name: PROXY_ENDPOINT
-          valueFrom:
-            configMapKeyRef:
-              name: proxy-config
-              key: proxy.endpoint
         - name: GIT_ROOT
           valueFrom:
             configMapKeyRef:
@@ -184,6 +136,21 @@ spec:
             configMapKeyRef:
               name: jenkins-env
               key: git.root
+        - name: OBSERVE_CUSTOMER
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: OBSERVE_CUSTOMER
+        - name: OBSERVE_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: OBSERVE_TOKEN
+        - name: OBSERVE_COLLECTOR_HOST
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: OBSERVE_COLLECTOR_HOST
         lifecycle:
           postStart:
             exec:
@@ -205,7 +172,7 @@ spec:
         secret:
           secretName: git-key
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: cleanup
@@ -237,9 +204,9 @@ spec:
                   key: bucket.name
             - name: DATABASE_USERNAME
               valueFrom:
-                configMapKeyRef:
-                  name: db-user
-                  key: user
+                secretKeyRef:
+                  name: db-connection
+                  key: database.username
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -255,10 +222,8 @@ metadata:
 spec:
   selector:
     app: cars_db
-  ports:
-  - protocol: TCP
-    port: 3306
-    targetPort: mysql
+  type: ExternalName
+  externalName: observe-demo-database.cluster-czxfzglmypvw.us-east-1.rds.amazonaws.com
 ---
 apiVersion: v1
 kind: Service
@@ -308,18 +273,7 @@ spec:
     port: 80
     targetPort: http
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis
-spec:
-  selector:
-    app: redis_session_manager
-  ports:
-  - protocol: TCP
-    port: 6379
----
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: prometheus
@@ -335,7 +289,7 @@ rules:
 - nonResourceURLs: ["/metrics"]
   verbs: ["get"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: marshaller
@@ -361,7 +315,7 @@ kind: ServiceAccount
 metadata:
   name: marshaller
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: prometheus
@@ -374,7 +328,7 @@ subjects:
   name: prometheus
   namespace: default
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: marshaller
@@ -392,24 +346,23 @@ kind: ConfigMap
 metadata:
   labels:
     app: web-server
-  name: proxy-config
-data:
-  proxy.endpoint: http://proxy.observe.svc.cluster.local
-  observe.namespace: observe
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: web-server
   name: zipkin-nginx-config
 data:
   zipkin-config.json: |-
     {
       "service_name": "nginx",
-      "collector_host": "otel-agent.observe.svc.cluster.local",
+      "collector_host": "observe-traces.observe.svc.cluster.local",
       "collector_port": 9411
     }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: app-server
+  name: zipkin-config
+data:
+  zipkin.endpoint: http://observe-traces.observe.svc.cluster.local
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -430,12 +383,3 @@ metadata:
 data:
   git.root: tombatchelor
   cars.pod.count: "1"
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: cleanup
-  name: db-user
-data:
-  user: root

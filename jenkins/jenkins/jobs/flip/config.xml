@@ -41,9 +41,9 @@ echo $PWD
 ls -ltrh
 
 # Send in ref data
-curl -s -v -H &apos;Content-Type: application/json&apos; -X POST $PROXY_ENDPOINT/v1/observations/httpcodes -d @HTTPCodes.json
-curl -s -v -H &apos;Content-Type: text/csv&apos; -X POST $PROXY_ENDPOINT/v1/observations/users --data-binary @/tmp/users/users.csv
-curl -s -v -H &apos;Content-Type: text/csv&apos; -X POST $PROXY_ENDPOINT/v1/observations/companies --data-binary @/tmp/users/companies.csv
+curl -s -v -H &apos;Content-Type: application/json&apos; -X POST https://$OBSERVE_CUSTOMER:&quot;$OBSERVE_TOKEN&quot;@$OBSERVE_COLLECTOR_HOST/v1/http/httpcodes -d @HTTPCodes.json
+curl -s -v -H &apos;Content-Type: text/csv&apos; -X POST https://$OBSERVE_CUSTOMER:&quot;$OBSERVE_TOKEN&quot;@$OBSERVE_COLLECTOR_HOST/v1/http/users --data-binary @/tmp/users/users.csv
+curl -s -v -H &apos;Content-Type: text/csv&apos; -X POST https://$OBSERVE_CUSTOMER:&quot;$OBSERVE_TOKEN&quot;@$OBSERVE_COLLECTOR_HOST/v1/http/companies --data-binary @/tmp/users/companies.csv
 
 # Make Git Commit
 git config --global user.email tom.batchelor@me.com

@@ -12,8 +12,6 @@ import com.supercars.LoanQuote;
 import com.supercars.LoanQuoteRequest;
 import com.supercars.dataloader.CarDataLoader;
 import com.supercars.tracing.TracingHelper;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
@@ -59,14 +57,5 @@ public class LoanQuotes {
         target.register(TracingClientFilter.create(tracing));
         return target.request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(loanQuoteRequest, MediaType.APPLICATION_JSON), LoanQuote.class);
-    }
-
-    private static Future<LoanQuote> getQuoteJerseysAsync(LoanQuoteRequest loanQuoteRequest) {
-        logger.fine("Using async HTTP call");
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://car-loan/carloan");
-        Future<LoanQuote> response = target.request(MediaType.APPLICATION_JSON).async()
-                .post(Entity.entity(loanQuoteRequest, MediaType.APPLICATION_JSON), LoanQuote.class);
-        return response;
     }
 }

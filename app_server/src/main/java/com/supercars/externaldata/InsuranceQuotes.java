@@ -13,8 +13,6 @@ import com.supercars.InsuranceQuote;
 import com.supercars.InsuranceQuoteRequest;
 import com.supercars.dataloader.CarDataLoader;
 import com.supercars.tracing.TracingHelper;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
@@ -58,14 +56,5 @@ public class InsuranceQuotes {
         target.register(TracingClientFilter.create(tracing));
         return target.request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(quoteRequest, MediaType.APPLICATION_JSON), InsuranceQuote.class);
-    }
-
-    private static Future<InsuranceQuote> getQuoteJerseysAsync(InsuranceQuoteRequest quoteRequest) {
-        logger.fine("Using async HTTP call");
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://insurance:8000/insurance/simpleQuote");
-        Future<InsuranceQuote> response = target.request(MediaType.APPLICATION_JSON).async()
-                .post(Entity.entity(quoteRequest, MediaType.APPLICATION_JSON), InsuranceQuote.class);
-        return response;
     }
 }

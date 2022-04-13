@@ -8,8 +8,6 @@ package com.supercars.externaldata;
 import brave.Tracing;
 import brave.jaxrs2.TracingClientFilter;
 import com.supercars.tracing.TracingHelper;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
@@ -44,10 +42,7 @@ public class FuelPrices {
 
     public static FuelPrices getFuelPrices() {
         try {
-            if (prices == null || lastUpdate + timeout > System.currentTimeMillis()) {
-                logger.fine("Getting fresh fuel prices");
-                prices = getFuelPricesJerseySync();
-            }
+            prices = getFuelPricesJerseySync();
             logger.fine("Fuel prices refreshed");
         } catch (Exception ex) {
             logger.log(Level.SEVERE, null, ex);
@@ -63,14 +58,6 @@ public class FuelPrices {
         target.register(TracingClientFilter.create(tracing));
         return target.request(MediaType.APPLICATION_XML)
                 .get(FuelPrices.class);
-    }
-
-    private static Future<FuelPrices> getFuelPriceJerseysAsync() {
-        logger.fine("Using async HTTP call");
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("https://www.fueleconomy.gov/ws/rest/fuelprices");
-        Future<FuelPrices> response = target.request(MediaType.APPLICATION_XML).async().get(FuelPrices.class);
-        return response;
     }
 
     /**

@@ -14,8 +14,6 @@ import com.supercars.RatingRequest;
 import com.supercars.dataloader.CarDataLoader;
 import com.supercars.tracing.TracingHelper;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
@@ -23,7 +21,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 /**
@@ -65,13 +62,5 @@ public class CarRating {
         logger.log(Level.FINE, "Amazon request ID for lambda is : {0}", amzRequestId);
         return target.request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(ratingRequest, MediaType.APPLICATION_JSON), Rating.class);
-    }
-
-    private static Future<Rating> getCarRatingAsync(RatingRequest ratingRequest) throws Exception {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(carRatingEndpoint);
-        Future<Rating> response = target.request(MediaType.APPLICATION_JSON).async()
-                .post(Entity.entity(ratingRequest, MediaType.APPLICATION_JSON), Rating.class);
-        return response;
     }
 }

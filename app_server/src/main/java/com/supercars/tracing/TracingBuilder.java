@@ -40,16 +40,11 @@ public class TracingBuilder {
     }
 
     private static String getZipkinEndpoint() {
-        String proxyEndpoint = System.getenv("PROXY_ENDPOINT");
-        String observeNamespace = System.getenv("OBSERVE_NAMESPACE");
-        String zipkinEndpoint = null;
-        if (proxyEndpoint == null && observeNamespace == null) {
+        String zipkinEndpoint = System.getenv("ZIPKIN_ENDPOINT");
+        if (zipkinEndpoint == null) {
             zipkinEndpoint = "http://localhost:9411/";
-        } else if (observeNamespace != null) {
-            zipkinEndpoint = "http://otel-agent." + observeNamespace + ".svc.cluster.local";
-        } else {
-            zipkinEndpoint = proxyEndpoint;
-        }
+        } 
+        
         return zipkinEndpoint + ":9411/api/v2/spans";
     }
 
