@@ -8,7 +8,7 @@ singleServerConfig:
   password: null
   subscriptionsPerConnection: 5
   clientName: null
-  address: "redis://tom.aocpcs.ng.0001.use1.cache.amazonaws.com:6379"
+  address: "redis://observe-demo-session-cache.27e2pd.ng.0001.use1.cache.amazonaws.com:6379"
   subscriptionConnectionMinimumIdleSize: 1
   subscriptionConnectionPoolSize: 50
   connectionMinimumIdleSize: 24
