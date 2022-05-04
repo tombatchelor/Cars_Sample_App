@@ -43,7 +43,7 @@ public class CarRating {
         RatingRequest ratingRequest = new RatingRequest(manufacturer.getManufacturerId());
         try {
             rating = getCarRatingSync(ratingRequest);
-            if (rating == null) {
+            if (rating.getRating() == 0) {
                 throw new Exception("Error getting car rating");
             }
             logger.log(Level.FINE, "Success getting rating for carID: {0}", carID);
