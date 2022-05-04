@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Rating {
     private int rating;
+    private String errorMessage;
 
     /**
      * @return the rating
@@ -26,5 +27,19 @@ public class Rating {
      */
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    /**
+     * @return the rating
+     */
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    /**
+     * @param rating the rating to set
+     */
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }
