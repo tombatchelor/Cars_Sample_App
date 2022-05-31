@@ -11,8 +11,9 @@ package com.supercars;
  */
 public class RatingRequest {
 
-    public RatingRequest(int manufacturerId) {
+    public RatingRequest(int manufacturerId, String traceId) {
         this.manufacturerId = manufacturerId;
+        this.traceId = traceId;
     }
     
     /**
@@ -29,5 +30,14 @@ public class RatingRequest {
         this.manufacturerId = manufacturerId;
     }
 
+    public String getTraceId() {
+        return traceId;
+    }
+
+    public void setTraceId(String traceId) {
+        this.traceId = traceId;
+    }
+
     private int manufacturerId;
+    private String traceId;
 }
