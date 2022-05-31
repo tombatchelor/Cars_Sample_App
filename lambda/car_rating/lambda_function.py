@@ -24,23 +24,24 @@ except:
     #print("DB Connection Failed")
 def lambda_handler(event, context):
     manufacturerId = event["manufacturerId"]
-    logger.log("INFO", {'requestType': 'rating', 'eventType': 'callStarting', 'manufacturerId': manufacturerId})
+    traceId = event["traceId"]
+    logger.log("INFO", {'requestType': 'rating', 'eventType': 'callStarting', 'manufacturerId': manufacturerId, 'traceId': traceId})
     with conn.cursor() as cur:
         qry = "SELECT RATING as rating FROM MANUFACTURER WHERE MANUFACTURER_ID = " + str(manufacturerId)
         cur.execute(qry)
         body = cur.fetchall()
     rating = body[0]["rating"]
-    logger.log("INFO", {'requestType': 'rating', 'eventType': 'gotRating', 'manufacturerId': manufacturerId, 'rating': rating})
+    logger.log("INFO", {'requestType': 'rating', 'eventType': 'gotRating', 'manufacturerId': manufacturerId, 'rating': rating, 'traceId': traceId})
     with conn.cursor() as cur:
         qry = "SELECT CAR_ID, NAME, MODEL, YEAR, PRICE, PHOTO FROM CARS WHERE MANUFACTURER_ID = " + str(manufacturerId)
         cur.execute(qry)
         cars = cur.fetchall()
-    logger.log("INFO", {'requestType': 'rating', 'eventType': 'gotCars', 'manufacturerId': manufacturerId, 'carCount':  len(cars)})
-    logger.log("DEBUG", {'requestType': 'rating', 'eventType': 'sampleCar', 'manufacturerId': manufacturerId, 'car': cars[0]})
+    logger.log("INFO", {'requestType': 'rating', 'eventType': 'gotCars', 'manufacturerId': manufacturerId, 'carCount':  len(cars), 'traceId': traceId})
+    logger.log("DEBUG", {'requestType': 'rating', 'eventType': 'sampleCar', 'manufacturerId': manufacturerId, 'car': cars[0], 'traceId': traceId})
     for car in cars:
       #car["memory"] = memory_consumer.consume_memory(256)
       car["RATING"] = rating
-    logger.log("INFO", {'requestType': 'rating', 'eventType': 'readyToReturn', 'manufacturerId': manufacturerId, 'carCount':  len(cars)})
+    logger.log("INFO", {'requestType': 'rating', 'eventType': 'readyToReturn', 'manufacturerId': manufacturerId, 'carCount':  len(cars), 'traceId': traceId})
     return {
         'statusCode': 200,
         'headers': {
