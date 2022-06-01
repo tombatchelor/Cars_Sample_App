@@ -5,9 +5,7 @@
  */
 package com.supercars.logging;
 
-import brave.Span;
-import brave.Tracer;
-import brave.Tracing;
+import com.supercars.tracing.TracingHelper;
 import io.github.devatherock.json.formatter.JSONFormatter;
 
 import java.io.PrintWriter;
@@ -42,8 +40,8 @@ public class CarLogFormatter extends Formatter {
         obj.put("class", record.getSourceClassName());
         obj.put("method", record.getSourceMethodName());
         obj.put("sessionID", SessionIDHolder.getSessionID());
-        obj.put("spanID", getSpanID());
-        obj.put("traceID", getTraceID());
+        obj.put("spanID", TracingHelper.getSpanID());
+        obj.put("traceID", TracingHelper.getTraceID());
         obj.put("message", message);
 
         if (null != record.getThrown()) {
@@ -70,29 +68,6 @@ public class CarLogFormatter extends Formatter {
 
         record.setMessage(message);
         return message;
-    }
-
-    private String getSpanID() {
-        Tracer tracer = Tracing.currentTracer();
-        if (tracer != null) {
-            Span span = tracer.currentSpan();
-            if (span != null) {
-                return span.context().spanIdString();
-
-            }
-        }
-        return "BLANK";
-    }
-
-    private String getTraceID() {
-        Tracer tracer = Tracing.currentTracer();
-        if (tracer != null) {
-            Span span = tracer.currentSpan();
-            if (span != null) {
-                return span.context().traceIdString();
-            }
-        }
-        return "BLANK";
     }
 
     private String renameLogLevel(Level logLevel) {

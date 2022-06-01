@@ -7,6 +7,7 @@ package com.supercars.tracing;
 
 import brave.Tracer;
 import brave.Tracing;
+import brave.Span;
 
 /**
  *
@@ -42,5 +43,28 @@ public class TracingHelper {
     
     public static void tag(String serviceName, String key, long value) {
         tag(serviceName, key, String.valueOf(value));
+    }
+
+    public static String getSpanID() {
+        Tracer tracer = Tracing.currentTracer();
+        if (tracer != null) {
+            Span span = tracer.currentSpan();
+            if (span != null) {
+                return span.context().spanIdString();
+
+            }
+        }
+        return "BLANK";
+    }
+
+    public static String getTraceID() {
+        Tracer tracer = Tracing.currentTracer();
+        if (tracer != null) {
+            Span span = tracer.currentSpan();
+            if (span != null) {
+                return span.context().traceIdString();
+            }
+        }
+        return "BLANK";
     }
 }
