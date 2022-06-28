@@ -1,4 +1,4 @@
-This is a change
+This is a change - a
 And another change
 Adding a line to file
 
