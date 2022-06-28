@@ -48,7 +48,7 @@ public class CarRating {
             }
             logger.log(Level.FINE, "Success getting rating for carID: {0}", carID);
         } catch (Exception ex) {
-            logger.log(Level.SEVERE, "Error getting rating for carID: " + carID + " manufacturerID: " + manufacturer.getManufacturerId(), ex);
+            logger.log(Level.WARNING, "Error getting rating for carID: " + carID + " manufacturerID: " + manufacturer.getManufacturerId(), ex);
             return null;
         }
 

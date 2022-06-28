@@ -65,7 +65,7 @@ public class CarService {
             S3Images.getImage("IMG_" + car.getCarId() + ".jpeg");
             rating = CarRating.getCarRating(car.getCarId()).getRating();
         } catch (Exception ex) {
-            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            logger.log(Level.WARNING, ex.getMessage(), ex);
         }
 
         car.setRating(rating);
