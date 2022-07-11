@@ -31,7 +31,7 @@ public class HealthService {
     public Response getHealth() {
         logger.fine("GET Returning service health");
         if (!isHealthy) {
-            logger.log(Level.SEVERE, "Out of Memory", new java.lang.OutOfMemoryError("Out of Memory"));
+            logger.log(Level.FINE, "Out of Memory", new java.lang.OutOfMemoryError("Out of Memory"));
             return Response.serverError().entity("Out of Memory").build();
         }
 
