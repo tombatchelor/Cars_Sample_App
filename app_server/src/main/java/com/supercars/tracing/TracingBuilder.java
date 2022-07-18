@@ -34,8 +34,6 @@ public class TracingBuilder {
                 .queuedMaxSpans(20000)
                 .queuedMaxBytes((int) (Runtime.getRuntime().totalMemory() * 0.05))
                 .build();
-        Thread t = new Thread(metrics);
-        t.start();
         tracings = new HashMap();
     }
 
