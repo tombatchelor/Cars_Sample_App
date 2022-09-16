@@ -5,6 +5,7 @@
  */
 package com.supercars.usermanagement;
 
+import com.supercars.dataloader.UserDataLoader;
 import com.supercars.tracing.TracingHelper;
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +18,8 @@ public class UserManager {
     private static final String USER_ATTRIBUTE = "user";
     private static final String STANDARD_PASSWORD = "password";
 
+    private static final UserDataLoader userDataLoader = new UserDataLoader();
+
     public static boolean login(User user, HttpSession session) {
         if (user == null || user.getUsername() == null || user.getPassword() == null) {
             return false;
@@ -26,6 +29,7 @@ public class UserManager {
         String password = user.getPassword();
 
         if (password.equals(STANDARD_PASSWORD)) {
+            user = userDataLoader.getUser(user);
             session.setAttribute(USER_ATTRIBUTE, user);
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "user.username", user.getUsername());
             return true;
