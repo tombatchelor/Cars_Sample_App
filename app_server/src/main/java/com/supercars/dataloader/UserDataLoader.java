@@ -7,7 +7,9 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.supercars.tracing.TracingHelper;
 import com.supercars.usermanagement.User;
+import com.supercars.logging.SessionIDHolder;
 
 /**
  * @author tombatchelor
@@ -43,6 +45,20 @@ public class UserDataLoader {
       logger.log(Level.SEVERE, "SQLException getting user: " + user.getUsername(), ex);
     }
 
+    //TODO: Find a more elegant way of doing this
+    StringBuilder sb = new StringBuilder();
+    sb.append("{\"spanID\":\"");
+    sb.append(TracingHelper.getSpanID());
+    sb.append("\",\"traceID\":\"0000000000000000");
+    sb.append(TracingHelper.getTraceID());
+    sb.append("\",\"@timestamp\":");
+    sb.append(System.nanoTime());
+    sb.append(",\"method\":\"getUser\",\"level\":\"DEBUG\",\"logger_name\":\"com.supercars.dataloader.UserDataLoader\",\"sessionID\":\"");
+    sb.append(SessionIDHolder.getSessionID());
+    sb.append("\",\"message\":");
+    sb.append(user.toJSON());
+    sb.append(",\"class\":\"com.supercars.dataloader.UserDataLoader\"}");
+    System.out.println(sb);
     return user;
   }
 }
