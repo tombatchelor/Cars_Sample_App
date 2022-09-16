@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
  */
 public class UserManager {
 
-    private static final String USER_ATTRIBUTE = "user";
+    public static final String USER_ATTRIBUTE = "user";
     private static final String STANDARD_PASSWORD = "password";
 
     private static final UserDataLoader userDataLoader = new UserDataLoader();

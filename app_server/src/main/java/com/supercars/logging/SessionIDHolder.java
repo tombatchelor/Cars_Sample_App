@@ -11,6 +11,7 @@ package com.supercars.logging;
  */
 public class SessionIDHolder {
     private static ThreadLocal<String> sessionID = new ThreadLocal<String>();
+    private static ThreadLocal<String> username = new ThreadLocal<String>();
     
     public static void setSessionID(String sessionID) {
         SessionIDHolder.sessionID.set(sessionID);
@@ -22,6 +23,19 @@ public class SessionIDHolder {
             return "BLANK";
         } else {
             return sessionID;
+        }
+    }
+
+    public static void setUserName(String username) {
+        SessionIDHolder.username.set(username);
+    }
+
+    public static String getUsername() {
+        String username = SessionIDHolder.username.get();
+        if (username == null) {
+            return "BLANK";
+        } else {
+            return username;
         }
     }
 }
