@@ -42,9 +42,9 @@ public class ObserveTagFilter implements Filter {
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "session.id", sessionID);
             if (user != null && user.getUsername() != null) {
                 TracingHelper.tag(TracingHelper.CARS_APP_NAME, "user.username", user.getUsername());
+                SessionIDHolder.setUserName(user.getUsername());
             }
             SessionIDHolder.setSessionID(sessionID);
-            SessionIDHolder.setUserName(user.getUsername());
         }
         chain.doFilter(request, response);
     }
