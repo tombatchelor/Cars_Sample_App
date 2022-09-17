@@ -30,7 +30,8 @@ public class ObserveTagFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
         if (System.getenv("POD_NAME") != null) {
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "kubernetes.pod.name", System.getenv("POD_NAME"));
         }
@@ -39,7 +40,9 @@ public class ObserveTagFilter implements Filter {
             String sessionID = httpServletRequest.getSession().getId();
             User user = (User) httpServletRequest.getSession().getAttribute(UserManager.USER_ATTRIBUTE);
             TracingHelper.tag(TracingHelper.CARS_APP_NAME, "session.id", sessionID);
-            TracingHelper.tag(TracingHelper.CARS_APP_NAME, "user.username", user.getUsername());
+            if (user != null && user.getUsername() != null) {
+                TracingHelper.tag(TracingHelper.CARS_APP_NAME, "user.username", user.getUsername());
+            }
             SessionIDHolder.setSessionID(sessionID);
             SessionIDHolder.setUserName(user.getUsername());
         }
