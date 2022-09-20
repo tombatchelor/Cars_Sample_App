@@ -40,7 +40,6 @@ public class CarLogFormatter extends Formatter {
         obj.put("class", record.getSourceClassName());
         obj.put("method", record.getSourceMethodName());
         obj.put("sessionID", SessionIDHolder.getSessionID());
-        obj.put("username", SessionIDHolder.getUsername());
         obj.put("spanID", TracingHelper.getSpanID());
         obj.put("traceID", "0000000000000000" + TracingHelper.getTraceID());
         obj.put("message", message);

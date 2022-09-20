@@ -202,8 +202,6 @@ public class User implements Serializable {
         obj.put("location", location);
         obj.put("companyId", companyId);
         obj.put("companyName", companyName);
-        obj.put("tier", tier);
-        obj.put("acv", acv);
         obj.put("accountOwner", accountOwner);
         obj.put("techOwner", techOwner);
 
