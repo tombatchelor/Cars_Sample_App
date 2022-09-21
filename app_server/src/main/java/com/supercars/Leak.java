@@ -6,6 +6,7 @@
 package com.supercars;
 
 import com.supercars.rest.HealthService;
+import com.supercars.util.GarbageCollectorThread;
 import io.prometheus.client.Counter;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
@@ -29,6 +30,10 @@ public class Leak {
 
     {
         cacheSize.inc(1564325 + ((new Random()).nextInt(10)*1000000));
+
+        // Standup manual GC thread
+        Thread t = new Thread(new GarbageCollectorThread());
+        t.run();
     }
     
     public static void addToCollection(int number, int size) {
@@ -36,7 +41,6 @@ public class Leak {
         for (int i = 0; i < number; i++) {
             leakyCollection.add(new byte[size]);
             cacheSize.inc(size);
-            
         }
     }
 
