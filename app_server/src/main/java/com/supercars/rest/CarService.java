@@ -73,17 +73,13 @@ public class CarService {
 
         try {
             Random random = new Random();
-            if (!HealthService.isHealthy() && random.nextInt(4) == 1) {
+            if (!HealthService.isHealthy()) {
                 // Added to test OOM stuff
-                while (true) {
-                    Leak.addToCollection(1000,1000000);
-                }
-                /*
+                Leak.addToCollection(100000,1000000);
                 String username = UserManager.getUserForSession(request.getSession()).getUsername();
                 if (random.nextInt(4) == 1)
                     Zendesk.sendZendeskTicket(username, car.getManufacturer().getName());
                 throw new OutOfMemoryError("Out of Memory");
-                */
             }
         } catch (OutOfMemoryError ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
