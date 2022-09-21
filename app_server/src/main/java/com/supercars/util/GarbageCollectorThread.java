@@ -8,6 +8,7 @@ public class GarbageCollectorThread implements Runnable {
   private final Logger logger = Logger.getLogger(GarbageCollectorThread.class.getName());
 
   public void run() {
+    logger.log(Level.FINE, "GC Thread Started");
     while(true) {
       try {
         Thread.sleep(300000);

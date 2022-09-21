@@ -8,6 +8,7 @@
  */
 package com.supercars.dataloader;
 
+import com.supercars.util.GarbageCollectorThread;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -29,6 +30,13 @@ public class Constants {
      * Creates a new instance of Constants
      */
     public Constants() {
+    }
+
+    {
+        // Standup manual GC thread
+        Thread t = new Thread(new GarbageCollectorThread());
+        logger.log(Level.FINE, "Creating GC Thread");
+        t.run();
     }
     
     public static Connection getDBConnectionStandardPool() {
