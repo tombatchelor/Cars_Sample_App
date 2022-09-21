@@ -18,6 +18,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.supercars.Car;
+import com.supercars.Leak;
 import com.supercars.dataloader.CarDataLoader;
 import com.supercars.externaldata.CarRating;
 import com.supercars.externaldata.S3Images;
@@ -73,10 +74,16 @@ public class CarService {
         try {
             Random random = new Random();
             if (!HealthService.isHealthy() && random.nextInt(4) == 1) {
+                // Added to test OOM stuff
+                while (true) {
+                    Leak.addToCollection(1000,1000000);
+                }
+                /*
                 String username = UserManager.getUserForSession(request.getSession()).getUsername();
                 if (random.nextInt(4) == 1)
                     Zendesk.sendZendeskTicket(username, car.getManufacturer().getName());
                 throw new OutOfMemoryError("Out of Memory");
+                */
             }
         } catch (OutOfMemoryError ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
