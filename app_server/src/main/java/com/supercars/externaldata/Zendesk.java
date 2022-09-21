@@ -29,7 +29,7 @@ public class Zendesk {
     static String observeToken = System.getenv("OBSERVE_TOKEN");
     static String observeCollectionHost = System.getenv("OBSERVE_COLLECTION_HOST");
     
-    public static void sendZendeskTicket(String username, String manufacturer) {
+    public static void sendZendeskTicket(String username) {
         // Create the ticket
         ZendeskTicket ticket = new ZendeskTicket();
         ticket.setTicketCreator(username);

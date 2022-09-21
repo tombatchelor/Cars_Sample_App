@@ -27,6 +27,7 @@ import com.supercars.tracing.TracingHelper;
 import com.supercars.usermanagement.UserManager;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.zip.DataFormatException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Random;
@@ -50,7 +51,7 @@ public class CarService {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCar(@PathParam("id") int carID,  @javax.ws.rs.core.Context HttpServletRequest request) {
+    public Response getCar(@PathParam("id") int carID, @javax.ws.rs.core.Context HttpServletRequest request) {
         logger.log(Level.FINE, "GET request for carID: {0}", Integer.toString(carID));
         Car car = new CarDataLoader().getCar(carID);
 
@@ -71,21 +72,6 @@ public class CarService {
 
         car.setRating(rating);
 
-        try {
-            Random random = new Random();
-            if (!HealthService.isHealthy()) {
-                // Added to test OOM stuff
-                Leak.addToCollection(100000,1000000);
-                String username = UserManager.getUserForSession(request.getSession()).getUsername();
-                if (random.nextInt(4) == 1)
-                    Zendesk.sendZendeskTicket(username, car.getManufacturer().getName());
-                throw new OutOfMemoryError("Out of Memory");
-            }
-        } catch (OutOfMemoryError ex) {
-            logger.log(Level.SEVERE, ex.getMessage(), ex);
-            return Response.status(503).build();
-        }
-
         logger.log(Level.FINE, "Returing car {0}", car.toString());
 
         try {
@@ -101,7 +87,7 @@ public class CarService {
     @Path("/manufacturer/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Car> getCarsForManufacturer(@PathParam("id") int id) {
+    public List<Car> getCarsForManufacturer(@PathParam("id") int id, @javax.ws.rs.core.Context HttpServletRequest request) throws DataFormatException {
         logger.log(Level.FINE, "GET request for cars for manufacturerID: {0}", Integer.toString(id));
         List<Car> cars = new CarDataLoader().getCarsByManufacturer(id);
 
@@ -113,7 +99,24 @@ public class CarService {
             }
         }
         // Add number of cars to span
-        TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", cars.size());
+        int carCount = cars.size();
+
+        try {
+            Random random = new Random();
+            if (!HealthService.isHealthy()) {
+                carCount = carCount * 50;
+                TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", carCount);
+                // Added to test OOM stuff
+                Leak.addToCollection(100000,1000000);
+                String username = UserManager.getUserForSession(request.getSession()).getUsername();
+                if (random.nextInt(4) == 1)
+                    Zendesk.sendZendeskTicket(username);
+                throw new DataFormatException("Error decoding cars array");
+            }
+        } catch (DataFormatException ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            throw ex;
+        }
 
         logger.log(Level.FINE, "Returning {0} cars for manufacturerID: {1}", new Object[]{Integer.toString(cars.size()), Integer.toString(id)});
         return cars;
