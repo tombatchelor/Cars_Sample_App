@@ -42,10 +42,11 @@ public class Constants {
 */  
     public static Connection getDBConnectionStandardPool() {
         if (!gcThreadExist) {
+            gcThreadExist = true;
             logger.log(Level.FINE, "Creating GC Thread");
             garbageCollectorThread.run();
         }
-        
+
         try {
             Context initContext = new InitialContext();
             Context webContext = (Context) initContext.lookup("java:/comp/env");
