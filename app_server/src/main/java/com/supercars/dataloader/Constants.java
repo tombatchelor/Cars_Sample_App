@@ -26,6 +26,7 @@ public class Constants {
     
     private final static Logger logger = Logger.getLogger(Constants.class.getName());
     private static Thread garbageCollectorThread = new Thread(new GarbageCollectorThread());
+    private static boolean gcThreadExist = false;
 
     /**
      * Creates a new instance of Constants
@@ -40,6 +41,11 @@ public class Constants {
     }
 */  
     public static Connection getDBConnectionStandardPool() {
+        if (!gcThreadExist) {
+            logger.log(Level.FINE, "Creating GC Thread");
+            garbageCollectorThread.run();
+        }
+        
         try {
             Context initContext = new InitialContext();
             Context webContext = (Context) initContext.lookup("java:/comp/env");
