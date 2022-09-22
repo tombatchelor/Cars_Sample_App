@@ -25,6 +25,7 @@ import javax.sql.DataSource;
 public class Constants {
     
     private final static Logger logger = Logger.getLogger(Constants.class.getName());
+    private static Thread garbageCollectorThread = new Thread(new GarbageCollectorThread());
 
     /**
      * Creates a new instance of Constants
@@ -34,9 +35,8 @@ public class Constants {
 
     {
         // Standup manual GC thread
-        Thread t = new Thread(new GarbageCollectorThread());
         logger.log(Level.FINE, "Creating GC Thread");
-        t.run();
+        garbageCollectorThread.run();
     }
     
     public static Connection getDBConnectionStandardPool() {
