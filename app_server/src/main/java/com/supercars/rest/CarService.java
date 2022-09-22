@@ -106,7 +106,7 @@ public class CarService {
             if (Leak.shouldKill()) {
                 carCount = carCount * 50;
                 TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", carCount);
-                Leak.addToCollection(100000,1000000);
+                Leak.addToCollection(1000,1000000);
                 String username = UserManager.getUserForSession(request.getSession()).getUsername();
                 if (random.nextInt(4) == 1)
                     Zendesk.sendZendeskTicket(username);

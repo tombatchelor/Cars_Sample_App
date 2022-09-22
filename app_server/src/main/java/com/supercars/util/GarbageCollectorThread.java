@@ -15,7 +15,7 @@ public class GarbageCollectorThread implements Runnable {
         logger.log(Level.FINE, "Running GC");
         System.gc();
       } catch (Exception ex) {
-
+        logger.log(Level.SEVERE, "GC Thread Error", ex);
       }
     }
   }
