@@ -57,12 +57,4 @@ public class HealthService {
         logger.fine("Service okay");
         return Response.ok("OK").build();
     }
-
-    public static void setAsUnhealthy() {
-        isHealthy = false;
-    }
-    
-    public static boolean isHealthy() {
-        return isHealthy;
-    }
 }

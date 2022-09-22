@@ -103,10 +103,9 @@ public class CarService {
 
         try {
             Random random = new Random();
-            if (!HealthService.isHealthy()) {
+            if (Leak.shouldKill()) {
                 carCount = carCount * 50;
                 TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", carCount);
-                // Added to test OOM stuff
                 Leak.addToCollection(100000,1000000);
                 String username = UserManager.getUserForSession(request.getSession()).getUsername();
                 if (random.nextInt(4) == 1)

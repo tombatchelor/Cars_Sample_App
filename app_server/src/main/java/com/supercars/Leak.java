@@ -32,7 +32,6 @@ public class Leak {
     }
     
     public static void addToCollection(int number, int size) {
-        checkShouldKill();
         for (int i = 0; i < number; i++) {
             leakyCollection.add(new byte[size]);
             cacheSize.inc(size);
@@ -58,23 +57,27 @@ public class Leak {
         System.gc();
     }
     
-    private static void checkShouldKill() {
-        if (keepAliveTime == 0) {
-            Random random = new Random();
-            keepAliveTime = random.nextInt(5)+20;
-            keepAliveTime *= 60;
-            keepAliveTime *= 1000;
-            keepAliveTime += System.currentTimeMillis();
-            logger.log(Level.FINE, "Setting JVM kill time to: {0} current time is: {1}", new Object[]{keepAliveTime, System.currentTimeMillis()});
+    public static boolean shouldKill() {
+        if (shouldBreak()) {
+            if (keepAliveTime == 0) {
+                Random random = new Random();
+                keepAliveTime = random.nextInt(5)+20;
+                keepAliveTime *= 60;
+                keepAliveTime *= 1000;
+                keepAliveTime += System.currentTimeMillis();
+                logger.log(Level.FINE, "Setting JVM kill time to: {0} current time is: {1}", new Object[]{keepAliveTime, System.currentTimeMillis()});
+            }
+            
+            if (keepAliveTime < System.currentTimeMillis()) {
+                logger.log(Level.FINE, "Setting as unhealthy");
+                return true;
+            }
         }
-        
-        if (keepAliveTime < System.currentTimeMillis()) {
-            logger.log(Level.FINE, "Setting as unhealthy");
-            HealthService.setAsUnhealthy();
-        }
+
+        return false;
     }
     
-    public static boolean shouldLeak() {
+    public static boolean shouldBreak() {
         String shouldLeak = System.getenv("LEAKING");
         if (shouldLeak != null && shouldLeak.equals("TRUE")) {
             return true;

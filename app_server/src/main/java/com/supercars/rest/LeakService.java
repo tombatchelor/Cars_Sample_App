@@ -32,12 +32,9 @@ public class LeakService {
     @Produces(MediaType.TEXT_PLAIN)
     public String leak(@PathParam("number") int number, @PathParam("size") int size) {
         logger.log(Level.FINE, "GET Increasing the leak size with {0} arrays of size {1} bytes", new Object[]{number, size});
-        if (Leak.shouldLeak()) {
-            Leak.addToCollection(number, size);
-            logger.log(Level.FINE, "Added to leak, size is now: {0}", Leak.getSize());
-        } else {
-            logger.log(Level.FINE, "Leak call skipped, size is now: {0}", Leak.getSize());
-        }
+        // TODO: Remove from load test so we can comment this back in
+        //Leak.addToCollection(number, size);
+        logger.log(Level.FINE, "Added to leak, size is now: {0}", Leak.getSize());
         memUsage.set(Runtime.getRuntime().totalMemory() + (Leak.getSize()*2));
         return Long.toString(Leak.getSize());
     }
