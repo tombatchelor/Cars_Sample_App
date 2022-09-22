@@ -32,13 +32,13 @@ public class Constants {
      */
     public Constants() {
     }
-
+/* 
     static {
         // Standup manual GC thread
         logger.log(Level.FINE, "Creating GC Thread");
         garbageCollectorThread.run();
     }
-    
+*/  
     public static Connection getDBConnectionStandardPool() {
         try {
             Context initContext = new InitialContext();
