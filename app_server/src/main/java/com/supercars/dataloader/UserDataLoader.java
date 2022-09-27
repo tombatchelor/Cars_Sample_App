@@ -51,7 +51,7 @@ public class UserDataLoader {
     sb.append("\",\"traceID\":\"0000000000000000");
     sb.append(TracingHelper.getTraceID());
     sb.append("\",\"@timestamp\":");
-    sb.append(System.currentTimeMillis() * 1000);
+    sb.append(System.currentTimeMillis() * 1000 * 1000);
     sb.append(",\"method\":\"getUser\",\"level\":\"DEBUG\",\"logger_name\":\"com.supercars.dataloader.UserDataLoader\",\"sessionID\":\"");
     sb.append(SessionIDHolder.getSessionID());
     sb.append("\",\"message\":");
