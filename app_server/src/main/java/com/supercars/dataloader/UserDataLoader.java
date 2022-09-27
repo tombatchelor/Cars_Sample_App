@@ -20,7 +20,6 @@ public class UserDataLoader {
   private final static Logger logger = Logger.getLogger(UserDataLoader.class.getName());
 
   public User getUser(User user) {
-    // SELECT USERS.FIRST_NAME, USERS.LAST_NAME, USERS.COUNTRY, COMPANIES.NAME, COMPANIES.TIER, COMPANIES.ACV, COMPANIES.OWNER, COMPANIES.TECH_OWNER FROM USERS LEFT JOIN COMPANIES ON USERS.COMPANY_NAME = COMPANIES.NAME WHERE USERS.EMAIL = 'alison.peterson@thetake.com';
     try (Connection connection = Constants.getDBConnection()) {
       String sql = "SELECT USERS.FIRST_NAME, USERS.LAST_NAME, USERS.COUNTRY, COMPANIES.COMPANY_ID, COMPANIES.NAME, COMPANIES.TIER, COMPANIES.ACV, COMPANIES.OWNER, COMPANIES.TECH_OWNER";
       sql += " FROM USERS LEFT JOIN COMPANIES ON USERS.COMPANY_NAME = COMPANIES.NAME";
@@ -52,7 +51,7 @@ public class UserDataLoader {
     sb.append("\",\"traceID\":\"0000000000000000");
     sb.append(TracingHelper.getTraceID());
     sb.append("\",\"@timestamp\":");
-    sb.append(System.nanoTime());
+    sb.append(System.currentTimeMillis() * 1000);
     sb.append(",\"method\":\"getUser\",\"level\":\"DEBUG\",\"logger_name\":\"com.supercars.dataloader.UserDataLoader\",\"sessionID\":\"");
     sb.append(SessionIDHolder.getSessionID());
     sb.append("\",\"message\":");
