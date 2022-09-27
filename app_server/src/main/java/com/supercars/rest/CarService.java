@@ -20,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import com.supercars.Car;
 import com.supercars.Leak;
 import com.supercars.dataloader.CarDataLoader;
+import com.supercars.dataloader.DataLoaderException;
 import com.supercars.externaldata.CarRating;
 import com.supercars.externaldata.S3Images;
 import com.supercars.externaldata.Zendesk;
@@ -87,7 +88,7 @@ public class CarService {
     @Path("/manufacturer/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Car> getCarsForManufacturer(@PathParam("id") int id, @javax.ws.rs.core.Context HttpServletRequest request) throws DataFormatException {
+    public List<Car> getCarsForManufacturer(@PathParam("id") int id, @javax.ws.rs.core.Context HttpServletRequest request) throws DataLoaderException {
         logger.log(Level.FINE, "GET request for cars for manufacturerID: {0}", Integer.toString(id));
         List<Car> cars = new CarDataLoader().getCarsByManufacturer(id);
 
@@ -110,9 +111,9 @@ public class CarService {
                 String username = UserManager.getUserForSession(request.getSession()).getUsername();
                 if (random.nextInt(4) == 1)
                     Zendesk.sendZendeskTicket(username);
-                throw new DataFormatException("Error decoding cars array");
+                throw new DataLoaderException("Error decoding cars array");
             }
-        } catch (DataFormatException ex) {
+        } catch (DataLoaderException ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
             throw ex;
         }
