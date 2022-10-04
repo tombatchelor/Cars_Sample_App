@@ -48,7 +48,7 @@ public class UserDataLoader {
     StringBuilder sb = new StringBuilder();
     sb.append("{\"spanID\":\"");
     sb.append(TracingHelper.getSpanID());
-    sb.append("\",\"traceID\":\"0000000000000000");
+    sb.append("\",\"traceID\":\"");
     sb.append(TracingHelper.getTraceID());
     sb.append("\",\"@timestamp\":");
     sb.append(System.currentTimeMillis() * 1000 * 1000);

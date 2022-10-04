@@ -5,13 +5,10 @@
  */
 package com.supercars.externaldata;
 
-import brave.Tracing;
-import brave.jaxrs2.TracingClientFilter;
 import com.supercars.Car;
 import com.supercars.LoanQuote;
 import com.supercars.LoanQuoteRequest;
 import com.supercars.dataloader.CarDataLoader;
-import com.supercars.tracing.TracingHelper;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
@@ -25,8 +22,6 @@ import javax.ws.rs.core.MediaType;
  * @author tombatchelor
  */
 public class LoanQuotes {
-
-    static Tracing tracing = TracingHelper.getTracing(TracingHelper.LOAN_NAME);
 
     private final static Logger logger = Logger.getLogger(LoanQuotes.class.getName());
     
@@ -54,7 +49,6 @@ public class LoanQuotes {
         logger.fine("Using sync HTTP call");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://car-loan/carloan");
-        target.register(TracingClientFilter.create(tracing));
         return target.request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(loanQuoteRequest, MediaType.APPLICATION_JSON), LoanQuote.class);
     }

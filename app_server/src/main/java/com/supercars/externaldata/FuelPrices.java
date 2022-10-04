@@ -5,9 +5,6 @@
  */
 package com.supercars.externaldata;
 
-import brave.Tracing;
-import brave.jaxrs2.TracingClientFilter;
-import com.supercars.tracing.TracingHelper;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
@@ -36,8 +33,6 @@ public class FuelPrices {
     static long lastUpdate = 0l;
     static int timeout = 30 * 60 * 1000; // 30 minutes
 
-    static Tracing tracing = TracingHelper.getTracing(TracingHelper.FUEL_PRICES_NAME);
-
     private final static Logger logger = Logger.getLogger(FuelPrices.class.getName());
 
     public static FuelPrices getFuelPrices() {
@@ -55,7 +50,6 @@ public class FuelPrices {
         logger.fine("Using sync HTTP call");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("https://www.fueleconomy.gov/ws/rest/fuelprices");
-        target.register(TracingClientFilter.create(tracing));
         return target.request(MediaType.APPLICATION_XML)
                 .get(FuelPrices.class);
     }

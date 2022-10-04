@@ -13,16 +13,15 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <brave.version>5.13.2</brave.version>
         <prometheus.version>0.6.0</prometheus.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.zipkin.brave</groupId>
-                <artifactId>brave-bom</artifactId>
-                <version>${brave.version}</version>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-bom</artifactId>
+                <version>1.18.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -105,38 +104,6 @@
             <artifactId>activation</artifactId>
             <version>1.1.1</version>
         </dependency>
-        <!-- The below are needed to report traces to http://localhost:9411/api/v2/spans -->
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-instrumentation-okhttp3</artifactId>
-            <version>${brave.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-instrumentation-httpclient</artifactId>
-            <version>${brave.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-instrumentation-servlet</artifactId>
-            <version>${brave.version}</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.reporter2</groupId>
-            <artifactId>zipkin-sender-okhttp3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-instrumentation-mysql8</artifactId>
-            <version>${brave.version}</version>
-        </dependency>
-        <!-- Added to capture outgoing JAX RS 2 HTTP Sync Calls -->
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-instrumentation-jaxrs2</artifactId>
-            <version>${brave.version}</version>
-        </dependency>
         <!-- Adding Prometheus -->
         <!-- The client -->
         <dependency>
@@ -191,6 +158,10 @@
             <artifactId>jul-jsonformatter</artifactId>
             <version>1.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-api</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -201,8 +172,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <compilerArguments>
                         <endorseddirs>${endorsed.dir}</endorseddirs>
                     </compilerArguments>

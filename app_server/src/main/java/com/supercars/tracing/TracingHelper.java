@@ -5,9 +5,9 @@
  */
 package com.supercars.tracing;
 
-import brave.Tracer;
-import brave.Tracing;
-import brave.Span;
+import io.opentelemetry.api.trace.Span;
+
+//import io.opentelemetry.api.Span;
 
 /**
  *
@@ -21,16 +21,9 @@ public class TracingHelper {
     public static final String RATING_NAME = "car-rating";
     public static final String LOAN_NAME = "car-loan";
     
-    public static Tracing getTracing(String serviceName) {
-        return TracingBuilder.getInstance().getTracing(serviceName);
-    }
-    
-    public static Tracer getTracer(String serviceName) {
-        return getTracing(serviceName).tracer();
-    }
-    
     public static void tag(String serviceName, String key, String value) {
-        getTracer(serviceName).currentSpanCustomizer().tag(key, value);
+        Span span = Span.current();
+        span.setAttribute(key, value);
     }
     
     public static void tag(String serviceName, String key, double value) {
@@ -46,24 +39,18 @@ public class TracingHelper {
     }
 
     public static String getSpanID() {
-        Tracer tracer = Tracing.currentTracer();
-        if (tracer != null) {
-            Span span = tracer.currentSpan();
-            if (span != null) {
-                return span.context().spanIdString();
+        Span span = Span.current();
+        if (span != null) {
+            return span.getSpanContext().getSpanId();
 
-            }
         }
         return "BLANK";
     }
 
     public static String getTraceID() {
-        Tracer tracer = Tracing.currentTracer();
-        if (tracer != null) {
-            Span span = tracer.currentSpan();
-            if (span != null) {
-                return span.context().traceIdString();
-            }
+        Span span = Span.current();
+        if (span != null) {
+            return span.getSpanContext().getTraceId();
         }
         return "BLANK";
     }

@@ -1,1 +1,1 @@
-export JAVA_OPTS="$JAVA_OPTS -Ddatabase.password=$DATABASE_PASSWORD -Ddatabase.username=$DATABASE_USERNAME -Xmx1024m"
+export JAVA_OPTS="$JAVA_OPTS -javaagent:/usr/local/tomcat/lib/opentelemetry-javaagent.jar -Dotel.service.name=cars-app -Ddatabase.password=$DATABASE_PASSWORD -Ddatabase.username=$DATABASE_USERNAME -Xmx1024m"
