@@ -88,7 +88,7 @@ public class CarService {
     @Path("/manufacturer/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Car> getCarsForManufacturer(@PathParam("id") int id, @javax.ws.rs.core.Context HttpServletRequest request) throws DataLoaderException {
+    public Response getCarsForManufacturer(@PathParam("id") int id, @javax.ws.rs.core.Context HttpServletRequest request) throws DataLoaderException {
         logger.log(Level.FINE, "GET request for cars for manufacturerID: {0}", Integer.toString(id));
         List<Car> cars = new CarDataLoader().getCarsByManufacturer(id);
 
@@ -112,14 +112,23 @@ public class CarService {
                 if (random.nextInt(4) == 1)
                     Zendesk.sendZendeskTicket(username);
                 throw new DataLoaderException("Error decoding cars array");
+            } else {
+                TracingHelper.tag(TracingHelper.CARS_APP_NAME, "supercars.CarCount", carCount);
             }
         } catch (DataLoaderException ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
-            throw ex;
+            return Response.status(503).build();
         }
 
         logger.log(Level.FINE, "Returning {0} cars for manufacturerID: {1}", new Object[]{Integer.toString(cars.size()), Integer.toString(id)});
-        return cars;
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(cars);
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
+        } catch (JsonProcessingException ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            return Response.status(503).build();
+        }
     }
 
     @Path("{query}")
