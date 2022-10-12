@@ -15,6 +15,13 @@ public class Rating {
     private int rating;
     private String errorMessage;
 
+    public Rating() {
+
+    }
+
+    public Rating(int rating) {
+        this.rating = rating;
+    }
     /**
      * @return the rating
      */
