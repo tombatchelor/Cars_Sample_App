@@ -58,7 +58,6 @@ public class CarRating {
         String amzRequestId = response.getHeaderString("x-amzn-RequestId");
         TracingHelper.tag(TracingHelper.CARS_APP_NAME, "AmazonRequestId", amzRequestId);
         logger.log(Level.FINE, "Amazon request ID for lambda is : {0}", amzRequestId);
-        return target.request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(ratingRequest, MediaType.APPLICATION_JSON), Rating.class);
+        return (Rating) response.getEntity();
     }
 }
