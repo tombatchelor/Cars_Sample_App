@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: tombatchelor/cars_web:8.1
+        image: tombatchelor/cars_web:8.2
         imagePullPolicy: Always
         ports:
         - name: cars-web-port
@@ -289,4 +289,4 @@ metadata:
   name: aws
 data:
   bucket.name: observe-demo-car-images-staging
-  rating.endpoint: https://0pqj3jrnn8.execute-api.us-east-1.amazonaws.com/default
+  rating.endpoint: https://cdc3n777jezui3du5w6e3ti37e0rftsy.lambda-url.us-east-1.on.aws/

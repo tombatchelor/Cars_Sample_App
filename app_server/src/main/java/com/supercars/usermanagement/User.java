@@ -214,4 +214,26 @@ public class User implements Serializable {
 
         return jsonString;
     }
+
+    public String toKVPairs() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("email=");
+        sb.append(username);
+        sb.append(" firstName=");
+        sb.append(firstName);
+        sb.append(" lastName=");
+        sb.append(lastName);
+        sb.append(" location=");
+        sb.append(location);
+        sb.append(" companyId=");
+        sb.append(companyId);
+        sb.append(" companyName=");
+        sb.append(companyName);
+        sb.append(" accountOwner=");
+        sb.append(accountOwner);
+        sb.append(" techOwner=");
+        sb.append(techOwner);
+
+        return sb.toString();
+    }
 }

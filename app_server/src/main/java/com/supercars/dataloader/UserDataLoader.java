@@ -44,20 +44,7 @@ public class UserDataLoader {
       logger.log(Level.SEVERE, "SQLException getting user: " + user.getUsername(), ex);
     }
 
-    //TODO: Find a more elegant way of doing this
-    StringBuilder sb = new StringBuilder();
-    sb.append("{\"spanID\":\"");
-    sb.append(TracingHelper.getSpanID());
-    sb.append("\",\"traceID\":\"");
-    sb.append(TracingHelper.getTraceID());
-    sb.append("\",\"@timestamp\":");
-    sb.append(System.currentTimeMillis() * 1000 * 1000);
-    sb.append(",\"method\":\"getUser\",\"level\":\"DEBUG\",\"logger_name\":\"com.supercars.dataloader.UserDataLoader\",\"sessionID\":\"");
-    sb.append(SessionIDHolder.getSessionID());
-    sb.append("\",\"message\":");
-    sb.append(user.toJSON());
-    sb.append(",\"class\":\"com.supercars.dataloader.UserDataLoader\"}");
-    System.out.println(sb);
+    logger.log(Level.FINE, user.toKVPairs());
     return user;
   }
 }
